@@ -3,18 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestion de Eventos</title>
-    <link rel="stylesheet" href="js/bootstrap.js">
-    <link rel="stylesheet" href="js/bootstrap.min.js">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <style>
+        .error{
+            background-color:yellow;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            
+            <div class="jumbotron">
+                <h1>Gestiones de Eventos</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Desplegar navegación</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" id="mostrarIndex">Gestion de Eventos</a>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Gestion Clientes <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="cli">Cliente</a></li>
+                                <li><a href="#">Listar Clientes</a></li>
+                                <li><a href="#">Contrato</a></li>
+                                <li><a href="#">Oferta</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Subcontrata</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Eventos<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Evento</a></li>
+                                <li><a href="#">Asistente</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Contenido del Evento <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Animación</a></li>
+                                <li><a href="#">Transporte</a></li>
+                                <li><a href="#">Lugar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="col-xs-12" id="uml">
+            <img src="img/uml.png" style="margin-left:33%;">
+        </div>
+    </div>
+    <!-- GESTION CLIENTE -->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuCliente" name="formuCliente">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Cliente</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">DNI:</label>
+                        <div class="col-md-5">
+                            <input id="dni" name="dni" type="text" placeholder="D.N.I. del Cliente" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombre">Nombre: </label>
+                        <div class="col-md-5">
+                            <input id="nombre" name="nombre" type="text" placeholder="Nombre del Cliente" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
+                        <div class="col-md-5">
+                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos del Cliente" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
+                        <div class="col-md-5">
+                            <input id="telefono" name="telefono" type="text" placeholder="Teléfono del Cliente" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" id="aceptar" name="aceptar" class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script src="js/principal.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script type="application/javascript">
+ocultarFormulario();
+
+   var formCli = document.getElementById("cli");
+   formCli.addEventListener("click",mostrarAltaCliente);
+
+   var formIndex = document.getElementById("mostrarIndex");
+   formIndex.addEventListener("click",mostrarUML);
+
+    var btnAceptar=document.getElementById("formuCliente");
+    btnAceptar.aceptar.addEventListener("click",altaCliente);
+</script>
 </body>
 </html>
