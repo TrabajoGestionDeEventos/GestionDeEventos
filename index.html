@@ -6,8 +6,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
     <style>
-        .error{
-            background-color:yellow;
+        .error {
+            background-color: yellow;
         }
     </style>
 </head>
@@ -48,7 +48,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                               Gestion Contrato<b class="caret"></b>
+                                Gestion Contrato<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Alta Contrato</a></li>
@@ -61,8 +61,8 @@
                                 Gestion Asistente<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Alta Asistente</a></li>
-                                <li><a href="#">Listar Asistentes</a></li>
+                                <li><a href="#" id="altaAsistente">Alta Asistente</a></li>
+                                <li><a href="#" id="listarAsistente">Listar Asistentes</a></li>
                             </ul>
                         </li>
 
@@ -71,12 +71,12 @@
                                 Gestión de Evento <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Alta Evento</a></li>
-                                <li><a href="#">Listar Evento</a></li>
+                                <li><a href="#" id="altaEvento">Alta Evento</a></li>
+                                <li><a href="#" id="listarEvento">Listar Evento</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Gestión Tranporte</a></li>
-                        <li><a href="#">Gestión Lugar</a></li>
+                        <li><a href="#" id="altaTransporte">Gestión Tranporte</a></li>
+                        <li><a href="#" id="altaLugar">Gestión Lugar</a></li>
                         <li><a href="#">Gestión Trabajadores</a></li>
                     </ul>
                 </div>
@@ -99,7 +99,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="dni">DNI:</label>
                         <div class="col-md-5">
-                            <input id="dni" name="dni" type="text" placeholder="D.N.I. del Cliente" class="form-control input-md" required="">
+                            <input id="dni" name="dni" type="text" placeholder="D.N.I. del Cliente"
+                                   class="form-control input-md" required="">
                         </div>
                     </div>
 
@@ -107,7 +108,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nombre">Nombre: </label>
                         <div class="col-md-5">
-                            <input id="nombre" name="nombre" type="text" placeholder="Nombre del Cliente" class="form-control input-md" required="">
+                            <input id="nombre" name="nombre" type="text" placeholder="Nombre del Cliente"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -116,7 +118,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
                         <div class="col-md-5">
-                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos del Cliente" class="form-control input-md" required="">
+                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos del Cliente"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -125,7 +128,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
                         <div class="col-md-5">
-                            <input id="telefono" name="telefono" type="text" placeholder="Teléfono del Cliente" class="form-control input-md" required="">
+                            <input id="telefono" name="telefono" type="text" placeholder="Teléfono del Cliente"
+                                   class="form-control input-md" required="">
                         </div>
                     </div>
 
@@ -140,24 +144,286 @@
             </form>
         </div>
     </div>
+
+    <!-- GESTION ASISTENTE -->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuAsistente" name="formuAsistente">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Asistente</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">DNI:</label>
+                        <div class="col-md-5">
+                            <input name="dni" type="text" placeholder="D.N.I. del Asistente"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombre">Nombre: </label>
+                        <div class="col-md-5">
+                            <input name="nombre" type="text" placeholder="Nombre del Asistente"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
+                        <div class="col-md-5">
+                            <input name="apellidos" type="text"
+                                   placeholder="Apellidos del Asistente" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
+                        <div class="col-md-5">
+                            <input name="telefono" type="text"
+                                   placeholder="Teléfono del Asistente" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Email:</label>
+                        <div class="col-md-5">
+                            <input name="email" type="email"
+                                   placeholder="Email del Asistente" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Eventos:</label>
+                        <div class="col-md-5">
+                            <select multiple="multiple" type="text" name="listaEventos" class="form-control input-md">
+                                <option style="color:grey">No hay eventos actuales</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- GESTION EVENTO-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuEvento" name="formuEvento">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Evento</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Fecha: </label>
+                        <div class="col-md-5">
+                            <input name="fecha" type="text" placeholder="Fecha del evento"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">Descripción:</label>
+                        <div class="col-md-5">
+                            <input name="descripcion" type="text" placeholder="Descripción del Evento"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Trabajadores:</label>
+                        <div class="col-md-5">
+                            <select multiple="multiple" type="text" name="listaTrabajadores" class="form-control input-md">
+                                <option style="color:grey">No hay trabajadores disponibles</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transportes:</label>
+                        <div class="col-md-5">
+                            <select multiple="multiple" type="text" name="listaTransportes" class="form-control input-md">
+                                <option style="color:grey">No hay pransportes disponibles</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- GESTION TRANSPORTE-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuTransporte" name="formuTransporte">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Transporte</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="id">ID:</label>
+                        <div class="col-md-5">
+                            <input id="id" name="id" type="text" placeholder="Identificación del transporte"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="tipo">Tipo: </label>
+                        <div class="col-md-5">
+                            <input id="tipo" name="tipo" type="text" placeholder="Tipo de transporte"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="plazas">Plazas: </label>
+                        <div class="col-md-5">
+                            <input id="plazas" name="plazas" type="text" placeholder="Plazas del transporte"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- GESTION LUGAR-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuLugar" name="formuLugar">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Lugares</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Descripción:</label>
+                        <div class="col-md-5">
+                            <input name="descripcion" type="text" placeholder="Descripción del lugar"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Dirección:</label>
+                        <div class="col-md-5">
+                            <input name="direccion" type="text" placeholder="Dirección del lugar"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Capacidad:</label>
+                        <div class="col-md-5">
+                            <input name="capacidad" type="text" placeholder="Capacidad"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
 </div>
 
-
+<script src="js/jquery.min.js"></script>
 <script src="js/principal.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
 <script type="application/javascript">
-ocultarFormulario();
+    ocultarFormulario();
 
-   var formCli = document.getElementById("cli");
-   formCli.addEventListener("click",mostrarAltaCliente);
+    var formIndex = document.getElementById("mostrarIndex");
+    formIndex.addEventListener("click", mostrarUML);
 
-   var formIndex = document.getElementById("mostrarIndex");
-   formIndex.addEventListener("click",mostrarUML);
+    var formCli = document.getElementById("cli");
+    formCli.addEventListener("click", mostrarAltaCliente);
 
-    var btnAceptar=document.getElementById("formuCliente");
-    btnAceptar.aceptar.addEventListener("click",altaCliente);
+    var btnAceptar = document.getElementById("formuCliente");
+    btnAceptar.aceptar.addEventListener("click", altaCliente);
+
+
+    var formAsis = document.getElementById("altaAsistente");
+    formAsis.addEventListener("click", mostrarAltaAsistente);
+
+    var btnAceptarAsistente = document.getElementById("formuAsistente");
+    btnAceptarAsistente.aceptar.addEventListener("click", altaAsistente);
+
+    var formEvento = document.getElementById("altaEvento");
+    formEvento.addEventListener("click", mostrarAltaEvento);
+
+    var btnAceptarEvento = document.getElementById("formuEvento");
+    btnAceptarEvento.aceptar.addEventListener("click", altaEvento);
+
+    var formTransporte = document.getElementById("altaTransporte");
+    formTransporte.addEventListener("click", mostrarAltaTransporte);
+
+    var btnAceptarTransporte = document.getElementById("formuTransporte");
+    btnAceptarTransporte.aceptar.addEventListener("click", altaTransporte);
+
+    var formLugar = document.getElementById("altaLugar");
+    formLugar.addEventListener("click", mostrarAltaLugar);
+
+    var btnAceptarLugar = document.getElementById("formuLugar");
+    btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
 </script>
 </body>
 </html>
