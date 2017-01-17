@@ -1,10 +1,16 @@
 function ocultarFormulario() {
     document.getElementById("uml").style.display = "none";
+    document.formuCliente.reset();
     document.formuCliente.style.display = "none";
+    document.formuAsistente.reset();
     document.formuAsistente.style.display = "none";
+    document.formuEvento.reset();
     document.formuEvento.style.display = "none";
+    document.formuTransporte.reset();
     document.formuTransporte.style.display = "none";
+    document.formuLugar.reset();
     document.formuLugar.style.display = "none";
+    ponerFechaActual();
 }
 
 function mostrarUML() {
@@ -12,6 +18,7 @@ function mostrarUML() {
     document.getElementById("uml").style.display = "block";
 }
 
+//FORMULARIO DE CLIENTES************************************************************************************************
 function mostrarAltaCliente() {
     ocultarFormulario();
     document.formuCliente.style.display = "block";
@@ -27,7 +34,6 @@ function altaCliente() {
 
     //Validar dni
     var oExpReg = /^\d{8}[a-zA-Z]$/;
-
     if (oExpReg.test(dni) == false) {
         if (bValido == true) {
             bValido = false;
@@ -45,7 +51,6 @@ function altaCliente() {
 
     //Validar nombre
     var oExpReg = /^[a-z][a-z]*/;
-
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
@@ -65,7 +70,6 @@ function altaCliente() {
     //Validar apellido
 
     var oExpReg = /^[a-z][a-z]*/;
-
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
@@ -84,7 +88,6 @@ function altaCliente() {
     //Validar telefono
 
     var oExpReg = /^[679]\d{8}/;
-
     if (oExpReg.test(telefono) == false) {
         if (bValido == true) {
             bValido = false;
@@ -108,17 +111,17 @@ function altaCliente() {
     }
 }
 
-
+//FORMULARIO DE ASISTENTES**********************************************************************************************
 function mostrarAltaAsistente() {
     ocultarFormulario();
     document.formuAsistente.style.display = "block";
 }
 
-
 function altaAsistente() {
     var oForm = document.formuAsistente;
     var dni = oForm.dni.value.trim();
     var nombre = oForm.nombre.value.trim();
+    var apellidos = oForm.apellidos.value.trim();
     var telefono = oForm.telefono.value.trim();
     var email = oForm.email.value.trim();
     var bValido = true;
@@ -126,7 +129,6 @@ function altaAsistente() {
 
     //Validar dni
     var oExpReg = /^\d{8}[a-zA-Z]$/;
-
     if (oExpReg.test(dni) == false) {
         if (bValido == true) {
             bValido = false;
@@ -144,7 +146,6 @@ function altaAsistente() {
 
     //Validar nombre
     var oExpReg = /^[a-z][a-z]*/;
-
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
@@ -161,10 +162,8 @@ function altaAsistente() {
     }
 
     //Validar apellido
-
     var oExpReg = /^[a-z][a-z]*/;
-
-    if (oExpReg.test(nombre) == false) {
+    if (oExpReg.test(apellidos) == false) {
         if (bValido == true) {
             bValido = false;
             document.formuAsistente.apellidos.focus();
@@ -206,7 +205,7 @@ function altaAsistente() {
             //Este campo obtiene el foco
             document.formuAsistente.email.focus();
         }
-        sMensaje += "Formato de Email incorrecto \n";
+        sMensaje += "Formato de Email incorrecto, Ej. ejemplo@gmail.es \n";
 
         //Marcar error
         document.formuAsistente.email.className = "form-control input-md error";
@@ -221,19 +220,18 @@ function altaAsistente() {
         alert(sMensaje);
     }
     else {
-        //tenemos que guardar los asistentes
+        //guardamos el asistente
+        document.formuAsistente.reset();
     }
 
 }
 
 
-
-
+//FORMULARIO DE EVENTOS*************************************************************************************************
 function mostrarAltaEvento() {
     ocultarFormulario();
     document.formuEvento.style.display = "block";
 }
-
 
 function altaEvento() {
     var oForm = document.formuEvento;
@@ -245,36 +243,90 @@ function altaEvento() {
     var sMensaje = "";
 
 
+    //Validar fecha
+    if(validarFormatoFecha(fecha)){
+        if(existeFecha(fecha)){
+            //Aquí se desmarca el error
+            document.formuEvento.fecha.className = "form-control input-md";
+        }else{
+            if (bValido == true) {
+                bValido = false;
+                document.formuEvento.fecha.focus();
+            }
+            sMensaje += "La fecha introducida no existe\n";
+            //Marcamos el error
+            document.formuEvento.fecha.className = "form-control input-md error";
+        }
+    }else{
+        if (bValido == true) {
+            bValido = false;
+            document.formuEvento.fecha.focus();
+        }
+        sMensaje += "La fecha no tiene un formato correcto\n";
+        //Marcamos el error
+        document.formuEvento.fecha.className = "form-control input-md error";
+    }
+
     //Validar descripcion
     var oExpReg = /^[a-z][a-z]*/;
 
     if (oExpReg.test(descripcion) == false) {
         if (bValido == true) {
             bValido = false;
-            document.formuAsistente.descripcion.focus();
+            document.formuEvento.descripcion.focus();
         }
         sMensaje += "La descripcion debe contener solo carácteres alfabéticos\n";
 
         //Marcamos el error
-        document.formuEvento.nombre.className = "form-control input-md error";
+        document.formuEvento.descripcion.className = "form-control input-md error";
     }
     else {
         //Aquí se desmarca el error
-        document.formuEvento.nombre.className = "form-control input-md";
+        document.formuEvento.descripcion.className = "form-control input-md";
     }
-
 
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
         alert(sMensaje);
     }
     else {
-        //tenemos que guardar los asistentes
+        //guardamos el evento
+        document.formuEvento.reset();
+        ponerFechaActual();
     }
 
 }
 
+function ponerFechaActual() {
+    var f = new Date();
+    if((f.getMonth() + 1)<10)
+        var mes = "0"+(f.getMonth() + 1);
+    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    document.getElementById("fechaEvento").value = actual;
+}
 
+function existeFecha(fecha){
+    var fechaf = fecha.split("/");
+    var day = fechaf[0];
+    var month = fechaf[1];
+    var year = fechaf[2];
+    var date = new Date(year,month,'0');
+    if((day-0)>(date.getDate()-0)){
+        return false;
+    }
+    return true;
+}
+
+function validarFormatoFecha(campo) {
+    var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+    if ((campo.match(RegExPattern)) && (campo!='')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//FORMULARIO DE TRANSPORTES*********************************************************************************************
 function mostrarAltaTransporte() {
     ocultarFormulario();
     document.formuTransporte.style.display = "block";
@@ -289,13 +341,12 @@ function altaTransporte() {
     var sMensaje = "";
 
     //Validar id
-    var oExpReg = /^[a-z][a-z]*/;
-    if (oExpReg.test(id) == false) {
+    if (id == "") {
         if (bValido == true) {
             bValido = false;
             document.formuTransporte.id.focus();
         }
-        sMensaje += "La idetificacion debe contener solo carácteres alfabéticos\n";
+        sMensaje += "La idetificacion debe contener solo carácteres alfanumericos\n";
 
         //Marcamos el error
         document.formuTransporte.id.className = "form-control input-md error";
@@ -323,7 +374,7 @@ function altaTransporte() {
     }
 
     //Validar plazas
-    var oExpReg = /^[a-z][a-z]*/;
+    var oExpReg = /^\d[1-2]*/;
     if (oExpReg.test(plazas) == false) {
         if (bValido == true) {
             bValido = false;
@@ -344,12 +395,14 @@ function altaTransporte() {
         alert(sMensaje);
     }
     else {
-        //tenemos que guardar los asistentes
+        //guardamos los transportes
+        document.formuTransporte.reset();
     }
 
 }
 
 
+//FORMULARIO DE LUGARES*************************************************************************************************
 function mostrarAltaLugar() {
     ocultarFormulario();
     document.formuLugar.style.display = "block";
@@ -357,9 +410,9 @@ function mostrarAltaLugar() {
 
 function altaLugar() {
     var oForm = document.formuLugar;
-    var descripcion = oForm.id.value.trim();
-    var direccion = oForm.tipo.value.trim();
-    var capacidad = oForm.plazas.value.trim();
+    var descripcion = oForm.descripcion.value.trim();
+    var direccion = oForm.direccion.value.trim();
+    var capacidad = oForm.capacidad.value.trim();
     var bValido = true;
     var sMensaje = "";
 
@@ -374,16 +427,15 @@ function altaLugar() {
         sMensaje += "La descripcion debe contener solo carácteres alfabéticos\n";
 
         //Marcamos el error
-        document.formuLugar.nombre.className = "form-control input-md error";
+        document.formuLugar.descripcion.className = "form-control input-md error";
     }
     else {
         //Aquí se desmarca el error
-        document.formuLugar.nombre.className = "form-control input-md";
+        document.formuLugar.descripcion.className = "form-control input-md";
     }
 
     //Validar direccion
-    var oExpReg = /^[a-z][a-z]*/;
-    if (oExpReg.test(direccion) == false) {
+    if (direccion == "") {
         if (bValido == true) {
             bValido = false;
             document.formuLugar.direccion.focus();
@@ -391,16 +443,15 @@ function altaLugar() {
         sMensaje += "La direccion debe contener solo carácteres alfabéticos\n";
 
         //Marcamos el error
-        document.formuLugar.nombre.className = "form-control input-md error";
+        document.formuLugar.direccion.className = "form-control input-md error";
     }
     else {
         //Aquí se desmarca el error
-        document.formuLugar.nombre.className = "form-control input-md";
+        document.formuLugar.direccion.className = "form-control input-md";
     }
 
-
     //Validar capacidad
-    var oExpReg = /^[a-z][a-z]*/;
+    var oExpReg = /^\d[1-6]*/;
     if (oExpReg.test(capacidad) == false) {
         if (bValido == true) {
             bValido = false;
@@ -421,7 +472,8 @@ function altaLugar() {
         alert(sMensaje);
     }
     else {
-        //tenemos que guardar los asistentes
+        //guardamos los lugares
+        document.formuLugar.reset();
     }
 
 }

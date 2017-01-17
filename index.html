@@ -10,6 +10,38 @@
             background-color: yellow;
         }
     </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+
+    <!--SCRIPT PARA DATEPICKER-->
+    <script>
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        $(function () {
+            $(".fechas").datepicker();
+        });
+    </script>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -235,8 +267,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Fecha: </label>
                         <div class="col-md-5">
-                            <input name="fecha" type="text" placeholder="Fecha del evento"
-                                   class="form-control input-md" required="">
+                            <input name="fecha" type="text"
+                                   class="form-control input-md fechas" id="fechaEvento" required="">
                         </div>
                     </div>
 
@@ -253,8 +285,9 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Trabajadores:</label>
                         <div class="col-md-5">
-                            <select multiple="multiple" type="text" name="listaTrabajadores" class="form-control input-md">
-                                <option style="color:grey">No hay trabajadores disponibles</option>
+                            <select multiple="multiple" type="text" name="listaTrabajadores"
+                                    class="form-control input-md">
+                                <option>No hay trabajadores disponibles</option>
                             </select>
                         </div>
                     </div>
@@ -263,8 +296,9 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Transportes:</label>
                         <div class="col-md-5">
-                            <select multiple="multiple" type="text" name="listaTransportes" class="form-control input-md">
-                                <option style="color:grey">No hay pransportes disponibles</option>
+                            <select  type="text" name="listaTransportes"
+                                    class="form-control input-md">
+                                <option>No hay transportes disponibles</option>
                             </select>
                         </div>
                     </div>
@@ -314,7 +348,7 @@
                         <label class="col-md-4 control-label" for="plazas">Plazas: </label>
                         <div class="col-md-5">
                             <input id="plazas" name="plazas" type="text" placeholder="Plazas del transporte"
-                                   class="form-control input-md" required="">
+                                   class="form-control input-md" required="" maxlength="2">
 
                         </div>
                     </div>
@@ -364,7 +398,7 @@
                         <label class="col-md-4 control-label">Capacidad:</label>
                         <div class="col-md-5">
                             <input name="capacidad" type="text" placeholder="Capacidad"
-                                   class="form-control input-md" required="">
+                                   class="form-control input-md" required="" maxlength="6">
                         </div>
                     </div>
 
@@ -382,10 +416,16 @@
     </div>
 
 </div>
+<!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
+<script type="text/JavaScript">
+    var f = new Date();
+    if((f.getMonth() + 1)<10)
+        var mes = "0"+(f.getMonth() + 1);
+    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    document.getElementById("fechaEvento").value = actual;
+</script>
 
-<script src="js/jquery.min.js"></script>
 <script src="js/principal.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
 <script type="application/javascript">
@@ -425,5 +465,6 @@
     var btnAceptarLugar = document.getElementById("formuLugar");
     btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
 </script>
+
 </body>
 </html>
