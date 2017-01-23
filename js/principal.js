@@ -1,3 +1,12 @@
+var oGestion = new Gestion();
+oGestion.altaLugar(new Lugar("Auditorio Rocio Jurado", "Camino de los Descubrimientos, s/n, 41092 Sevilla", "8000"));
+oGestion.altaLugar(new Lugar("Teatro Barceló", "Calle Barceló, 11, Madrid", "1200"));
+oGestion.altaLugar(new Lugar("Sala La Riviera", "Paseo Bajo de la Virgen del Puerto, 28005 Madrid, España", "600"));
+
+oGestion.altaTransporte(new Transporte("1", "Autobus", "40"));
+oGestion.altaTransporte(new Transporte("2", "Autobus", "50"));
+oGestion.altaTransporte(new Transporte("3", "Autobus", "30"));
+
 function ocultarFormulario()
 {
     document.getElementById("uml").style.display = "none";
@@ -677,6 +686,11 @@ function altaTransporte() {
     else {
         //guardamos los transportes
         document.formuTransporte.reset();
+
+        var oTransporte = new Transporte(id, tipo, plazas);
+
+        var sMensaje = oGestion.altaTransporte(oTransporte);
+        alert(sMensaje);
     }
 
 }
@@ -689,16 +703,16 @@ function mostrarAltaLugar() {
 
 function altaLugar() {
     var oForm = document.formuLugar;
-    var descripcion = oForm.descripcion.value.trim();
-    var direccion = oForm.direccion.value.trim();
-    var capacidad = oForm.capacidad.value.trim();
+    var sDescripcion = oForm.descripcion.value.trim();
+    var sDireccion = oForm.direccion.value.trim();
+    var iCapacidad = oForm.capacidad.value.trim();
     var bValido = true;
     var sMensaje = "";
 
 
     //Validar descripcion
     var oExpReg = /^[a-z][a-z]*/;
-    if (oExpReg.test(descripcion) == false) {
+    if (oExpReg.test(sDescripcion) == false) {
         if (bValido == true) {
             bValido = false;
             document.formuLugar.descripcion.focus();
@@ -714,7 +728,7 @@ function altaLugar() {
     }
 
     //Validar direccion
-    if (direccion == "") {
+    if (sDireccion == "") {
         if (bValido == true) {
             bValido = false;
             document.formuLugar.direccion.focus();
@@ -731,7 +745,7 @@ function altaLugar() {
 
     //Validar capacidad
     var oExpReg = /^\d[1-6]*/;
-    if (oExpReg.test(capacidad) == false) {
+    if (oExpReg.test(iCapacidad) == false) {
         if (bValido == true) {
             bValido = false;
             document.formuLugar.capacidad.focus();
@@ -753,10 +767,14 @@ function altaLugar() {
     else {
         //guardamos los lugares
         document.formuLugar.reset();
+
+        var oLugar = new Lugar(sDescripcion, sDireccion, iCapacidad);
+
+        var sMensaje = oGestion.altaLugar(oLugar);
+        alert(sMensaje);
     }
 
 }
-
 
 
 

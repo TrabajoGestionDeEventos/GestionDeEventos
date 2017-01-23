@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestion de Eventos</title>
+    <link rel="stylesheet" href="css/pikaday.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
     <style>
@@ -14,37 +15,13 @@
         }
     </style>
 
-    <script src="js/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-
-
-    <!--SCRIPT PARA DATEPICKER-->
-    <script>
-        $.datepicker.regional['es'] = {
-            closeText: 'Cerrar',
-            prevText: '<Ant',
-            nextText: 'Sig>',
-            currentText: 'Hoy',
-            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-            weekHeader: 'Sm',
-            dateFormat: 'dd/mm/yy',
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: ''
-        };
-        $.datepicker.setDefaults($.datepicker.regional['es']);
-        $(function () {
-            $(".fechas").datepicker();
-        });
-    </script>
+    <script src="js/jquery.min.js"></script>
+-->
 </head>
 <body>
 <div class="container-fluid">
@@ -670,7 +647,7 @@
     var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaInicio").value = actual;
 </script>
-
+<script src="js/objetos.js"></script>
 <script src="js/principal.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
@@ -734,6 +711,16 @@
     var btnAceptarLugar = document.getElementById("formuLugar");
     btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
 
+</script>
+<script src="js/pikaday.js"></script>
+<script>
+    var picker = new Pikaday({
+        field: document.getElementById('fechaEvento'),
+        firstDay: 1,
+        minDate: new Date(),
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2000,2020]
+    });
 </script>
 </body>
 </html>
