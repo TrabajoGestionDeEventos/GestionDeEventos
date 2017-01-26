@@ -52,6 +52,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="cli">Alta Cliente</a></li>
+                                <li><a href="#" id="cliBaja">Baja Cliente</a></li>
                                 <li><a href="#" id="listarCli">Listar Clientes</a></li>
                             </ul>
                         </li>
@@ -157,9 +158,47 @@
         </div>
     </div>
 
+ <!-- GESTION BAJA CLIENTE -->
+    <form class="form-horizontal" name="frmBajaCliente" id="frmBajaCliente">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Gestión Baja Cliente</legend>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="clienteBaja">Cliente a dar de baja:</label>
+                <div class="col-md-5">
+                    <select id="clienteBaja" name="clienteBaja" class="form-control">
+                    </select>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="aceptarBajaCli"></label>
+                <div class="col-md-4">
+                    <button type="button" id="aceptarBajaCli" name="aceptarBajaCli" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- MOSTRAR LISTA CLIENTES -->
+    <div id="idListaCli"></div>
+
+    <!--<ul class="claseEjemploLista">-->
+        <!--<li></li>-->
+    <!--</ul>-->
+    <!--<ul class="claseEjemploLista">-->
+        <!--<li></li>-->
+    <!--</ul>-->
+    <!--<ul class="claseEjemploLista">-->
+        <!--<li></li>-->
+    <!--</ul>-->
+
+
 
     <!-- GESTION DE CONTRATOS -->
-
     <div class="row">
         <div class="col-xs-12">
             <form class="form-horizontal" id="formularioContrato" name="frmGestionContrato">
@@ -687,14 +726,20 @@
     var formCli = document.getElementById("cli");
     formCli.addEventListener("click", mostrarAltaCliente);
 
+    var formCliBaja = document.getElementById('cliBaja');
+    formCliBaja.addEventListener("click", mostrarBajaCliente);
+
     var formIndex = document.getElementById("mostrarIndex");
     formIndex.addEventListener("click", mostrarUML);
 
     var formGestionTra = document.getElementById('mostrarGestionTrabajador');
     formGestionTra.addEventListener("click", mostrarTrabajador);
 
-    var btnAceptar = document.getElementById("formuCliente");
-    btnAceptar.aceptar.addEventListener("click", altaCliente);
+    var btnAceptarCliente = document.getElementById("formuCliente");
+    btnAceptarCliente.aceptar.addEventListener("click", altaCliente);
+
+    var btnBajaCliente = document.getElementById('aceptarBajaCli');
+    btnBajaCliente.addEventListener("click",bajaCliente);
 
     var radioArtista = document.getElementById('radioArtista');
     radioArtista.addEventListener("click", mostrarRadioArtista);
@@ -740,6 +785,10 @@
 
     var btnAceptarLugar = document.getElementById("formuLugar");
     btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
+
+    //Listados
+    var oListaCliente = document.getElementById('listarCli');
+    oListaCliente.addEventListener("click", mostrarListaClientes);
 
 </script>
 <script src="js/pikaday.js"></script>

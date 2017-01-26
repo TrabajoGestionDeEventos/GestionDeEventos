@@ -13,6 +13,16 @@ function loadXMLDoc(filename) {
 var oGestion = new Gestion();
 var oXML = loadXMLDoc("datos.xml");
 
+var oClientes = oXML.getElementsByTagName("cliente");
+for(var j = 0; j<oClientes.length;j++){
+    var dni = oClientes[j].getElementsByTagName("dni")[0].textContent;
+    var nombre = oClientes[j].getElementsByTagName("nombre")[0].textContent;
+    var apellidos = oClientes[j].getElementsByTagName("apellidos")[0].textContent;
+    var telefono = oClientes[j].getElementsByTagName("telefono")[0].textContent;
+
+    var oCliente = new Cliente(dni,nombre,apellidos,telefono);
+    oGestion.altaCliente(oCliente);
+}
 
 var oLugares = oXML.getElementsByTagName("lugar");
 for (var j = 0; j < oLugares.length; j++) {
@@ -62,6 +72,8 @@ function ocultarFormulario() {
     document.getElementById("uml").style.display = "none";
     document.formuCliente.reset();
     document.formuCliente.style.display = "none";
+    document.frmBajaCliente.reset();
+    document.frmBajaCliente.style.display = "none";
     document.frmTrabajador.reset();
     document.frmTrabajador.style.display = "none";
     document.frmGestionContrato.reset();
@@ -86,6 +98,9 @@ function ocultarFormulario() {
     for (var i = 0; i < errores.length; i++)
         errores[i].className = "form-control input-md";
 
+    //Ocultamos los listados
+    document.querySelector("#idListaCli").style.display="none";
+
 }
 
 function ocultarFormulariosRadio() {
@@ -98,6 +113,12 @@ function ocultarFormulariosRadio() {
 function mostrarAltaCliente() {
     ocultarFormulario();
     document.formuCliente.style.display = "block";
+}
+
+function mostrarBajaCliente() {
+    ocultarFormulario();
+    rellenaComboBajaCliente();
+    document.frmBajaCliente.style.display = "block";
 }
 
 function mostrarUML() {
@@ -139,7 +160,8 @@ function mostrarContrato() {
     document.frmGestionContrato.style.display = "block";
 }
 
-function altaCliente() {
+function altaCliente()
+{
     var oForm = document.formuCliente;
     var bValido = true;
     var sMensaje = "";
@@ -237,6 +259,38 @@ function altaCliente() {
         else {
             toastr.success("Cliente dado de alta", "Conseguido");
         }
+    }
+}
+
+function bajaCliente() {
+    var oForm = document.frmBajaCliente;
+    var bValido = true;
+    var sMensaje = "";
+    var clienteBaja = oForm.clienteBaja.value;
+    var clienteMod = clienteBaja.substr(0,9);
+
+    sMensaje = oGestion.darBajaCliente(clienteMod);
+    rellenaComboBajaCliente();
+
+    if(sMensaje == false){
+        toastr.success("Cliente dado de alta", "Conseguido");
+    }
+}
+
+function rellenaComboBajaCliente(){
+    var mod = document.frmBajaCliente.clienteBaja.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var comboClientes = oGestion.obtenerClientes();
+    mod = document.frmBajaCliente.clienteBaja;
+    for (i = 0; i < comboClientes.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", comboClientes[i]);
+        var texto = document.createTextNode(comboClientes[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
     }
 }
 
@@ -485,6 +539,40 @@ function ponerFechaActualInicio() {
         var mes = "0" + (f.getMonth() + 1);
     var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaInicio").value = actual;
+}
+
+function rellenaComboCliente(){
+    var mod = document.frmGestionContrato.selectObjetoCliente.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var comboClientes = oGestion.obtenerClientes();
+    mod = document.frmGestionContrato.selectObjetoCliente;
+    for (i = 0; i < comboClientes.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", comboClientes[i]);
+        var texto = document.createTextNode(comboClientes[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
+    }
+}
+
+function rellenaComboEventos(){
+    var mod = document.frmGestionContrato.selectObjetoCliente.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var comboClientes = oGestion.obtenerEventos();
+    mod = document.frmGestionContrato.selectObjetoCliente;
+    for (i = 0; i < comboClientes.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", comboClientes[i]);
+        var texto = document.createTextNode(comboClientes[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
+    }
 }
 
 //FORMULARIO DE ASISTENTES**********************************************************************************************
@@ -954,6 +1042,84 @@ function actualizarComboEventos() {
             lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha +")" );
         }
 }
+
+
+//LISTADOS
+
+function vaciarTablas(objetoPadre){
+    while (objetoPadre.children.length!=0){
+        objetoPadre.removeChild(objetoPadre.firstElementChild);
+    }
+}
+
+function mostrarListaClientes(){
+    ocultarFormulario();
+
+    vaciarTablas(document.querySelector("#idListaCli"));
+    document.querySelector("#idListaCli").style.display="block";
+
+    // vaciarTablas(document.querySelectorAll("ul.claseEjemploLista"));
+    // document.querySelectorAll("ul.claseEjemploLista").style.display="block";
+
+    var lista=oGestion.cogerTodosLosClientes();
+    var oTabla=document.createElement("table");
+
+
+    oTabla.setAttribute("class","table table-striped");
+
+    var oThead=oTabla.createTHead();
+    var oFila=oThead.insertRow(-1);
+
+    oCelda=document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("D.N.I"));
+
+    oCelda=document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Nombre"));
+
+    oCelda=document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Apellidos"));
+
+
+    oCelda=document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Telefono"));
+
+    document.querySelector("#idListaCli").appendChild(oTabla);
+
+    var oTBody=oTabla.createTBody();
+
+    for(i=0;i<lista.length;i++){
+        oFila=oTBody.insertRow(-1);
+        oCelda=oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].dniCliente));
+        oCelda=oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].nombre));
+        oCelda=oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+        oCelda=oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].telefono));
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -80,7 +80,7 @@ Sanitarios.prototype = Object.create(Trabajador.prototype);
 Sanitarios.prototype.constructor = Sanitarios;
 
 function Limpieza(dni, nombre, apellidos, compañia) {
-    Trabajador.call(dni, nombre, apellidos);
+    Trabajador.call(this, dni, nombre, apellidos);
     this.compañia = compañia;
 }
 
@@ -118,7 +118,7 @@ Gestion.prototype.altaCliente = function (oCliente) {
 
     // Busco por dni
     while (i < this.clientes.length && bEnc == false) {
-        if (this.clientes[i].dni == oCliente.dni) {
+        if (this.clientes[i].dniCliente == oCliente.dni) {
             bEnc = true;
         }
         i++;
@@ -126,6 +126,28 @@ Gestion.prototype.altaCliente = function (oCliente) {
 
     if (bEnc != true) {
         this.clientes.push(oCliente);
+    }
+
+    return bEnc;
+}
+
+Gestion.prototype.darBajaCliente = function (dniCliente) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+    var posicion = 0;
+    // Busco por descripcion
+    while (i < this.clientes.length && bEnc == false) {
+        if (this.clientes[i].dniCliente == dniCliente)
+        {
+            posicion=i;
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if (bEnc) {
+        this.clientes.splice(posicion,1);
     }
 
     return bEnc;
@@ -217,16 +239,59 @@ Gestion.prototype.altaTrabajador = function (oTrabajador) {
     var sMensaje = "";
 
     // Busco por dni
-    while (i < this.trabajador.length && bEnc == false) {
-        if (this.trabajador[i].dni == oTrabajador.dni) {
+    while (i < this.trabajadores.length && bEnc == false) {
+        if (this.trabajadores[i].dni == oTrabajador.dni) {
             bEnc = true;
         }
         i++;
     }
 
     if (bEnc != true) {
-        this.trabajador.push(oTrabajador);
+        this.trabajadores.push(oTrabajador);
     }
 
     return bEnc;
+}
+
+Gestion.prototype.obtenerClientes = function () {
+    var arrayClientes = [];
+
+    if(this.clientes.length!=0) {
+
+        for (var i = 0; i < this.clientes.length; i++) {
+            arrayClientes.push(this.clientes[i].dniCliente + " " + this.clientes[i].nombre);
+        }
+    }
+    else{
+        arrayClientes.push("No hay clientes registrados");
+    }
+    return arrayClientes;
+
+}
+
+/*Gestion.prototype.obtenerEventos = function () {
+    var arrayEventos = [];
+
+    if(this.clientes.length!=0) {
+
+        for (var i = 0; i < this.clientes.length; i++) {
+            arrayEventos.push(this.eventos[i].descripcion);
+        }
+    }
+    else{
+        arrayEventos.push("No hay eventos registrados");
+    }
+    return arrayEventos;
+
+}*/
+
+//LISTADOS
+Gestion.prototype.cogerTodosLosClientes = function () {
+    var arrayClientes = [];
+
+    for(var i = 0;i<this.clientes.length;i++){
+        arrayClientes.push(this.clientes[i]);
+    }
+
+    return arrayClientes;
 }
