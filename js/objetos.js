@@ -1,163 +1,92 @@
 ﻿// objeto Cliente*******************************************************************************************************
-function Cliente(sDniCliente, sNombre, sApellidos, iTelefono, contratos) {
+function Cliente(sDniCliente, sNombre, sApellidos, iTelefono) {
     this.dniCliente = sDniCliente;
     this.nombre = sNombre;
     this.apellidos = sApellidos;
     this.telefono = iTelefono;
-    this.contratos = contratos;
-}
-
-Cliente.prototype.toHTMLRow = function () {
-    var sFila = "<td>" + this.dniCliente + "</td>";
-    sFila += "<td>" + this.nombre + "</td>";
-    sFila += "<td>" + this.apellidos + "</td>";
-    sFila += "<td>" + this.telefono + "</td>";
-    sFila += "<td>";
-    var i = 0;
-    while (i < this.contratos.length) {
-        if (this.contratos[i] != false) {
-            sFila += this.contratos[i] + "<br>";
-        }
-        i++;
-    }
-    sFila += "</td>";
-    return sFila;
 }
 
 // objeto Contrato******************************************************************************************************
-function Contrato(dFecha, iIdContrato, sImporte, articulos, dniCliente, descripcion, idOferta, cif) {
+function Contrato(dFecha, iIdContrato, sImporte, articulos, dniCliente, descripcion) {
     this.fecha = dFecha;
     this.idContrato = iIdContrato;
     this.importe = sImporte;
     Cliente.call(this, dniCliente);
     Evento.call(this, descripcion);
-    Oferta.call(this, idOferta);
-    Subcontrata.call(this, cif);
 }
 
-// Aqui es donde heredamos propiedades y metodos del contrato
-Contrato.prototype = Object.create(Cliente.prototype);
-Contrato.prototype = Object.create(Evento.prototype);
-
-Contrato.prototype.constructor = Contrato;
-
-Contrato.prototype.toHTMLRow = function () {
-    var sFila = "<td>" + this.fecha.getDate() + "/" + (this.fecha.getMonth() + 1) + "/" + this.fecha.getFullYear() + "</td>";
-    sFila += "<td>" + this.idContrato + "</td>";
-    sFila += "<td>" + this.importe + "</td>";
-    sFila += "<td>" + this.dniCliente + "</td>";
-    sFila += "<td>" + this.descripcion + "</td>";
-    sFila += "<td>" + this.idOferta + "</td>";
-    sFila += "<td>" + this.cif + "</td>";
-    return sFila;
-}
-
-
-// objeto Oferta********************************************************************************************************
-function Oferta(iIdOferta, sNombre) {
-    this.oferta = iIdOferta;
+// objeto Asistente*****************************************************************************************************
+function Asistente(sDniAsistente, sNombre, sApellidos, iTelefono, sEmail/*, eventos*/) {
+    this.dniAsistente = sDniAsistente;
     this.nombre = sNombre;
+    this.apellidos = sApellidos;
+    this.telefono = iTelefono;
+    this.email = sEmail;
+    //this.eventos = eventos;
 }
 
-Oferta.prototype.toHTMLRow = function () {
-    var sFila = "<td>" + this.iIdOferta + "</td>";
-    sFila += "<td>" + this.sNombre + "</td>";
-    return sFila;
-}
-/*
- // objeto Subcontrata***************************************************************************************************
- function Subcontrata(sCif, sNombre, sTelefono, sDireccion, contratos) {
- this.cif = sCif;
- this.nombre = sNombre;
- this.telefono = sTelefono;
- this.direccion = sDireccion;
- this.contratos = contratos;
- }
-
- Subcontrata.prototype.toHTMLRow = function () {
- var sFila = "<td>" + this.cif + "</td>";
- sFila += "<td>" + this.nombre + "</td>";
- sFila += "<td>" + this.telefono + "</td>";
- sFila += "<td>" + this.direccion + "</td>";
- sFila += "<td>";
- var i = 0;
- while (i < this.contratos.length) {
- if (this.contratos[i] != false) {
- sFila += this.contratos[i] + "<br>";
- }
- i++;
- }
- sFila += "</td>";
- return sFila;
- }
-
- // objeto Animacion*****************************************************************************************************
- function Animacion(iId, sTipo, sDuracion, descripcion) {
- this.id = iId;
- this.tipo = sTipo;
- this.duracion = sDuracion;
- Evento.call(this, descripcion);
- }
-
- // Aqui es donde heredamos propiedades y metodos de la animacion
- Animacion.prototype = Object.create(Evento.prototype);
- Animacion.prototype.constructor = Animacion;
-
- Animacion.prototype.toHTMLRow = function () {
- var sFila = "<td>" + this.id + "</td>";
- sFila += "<td>" + this.tipo + "</td>";
- sFila += "<td>" + this.duracion + "</td>";
- sFila += "<td>" + this.descripcion + "</td>";
- return sFila;
- }
- */
 // objeto Transporte****************************************************************************************************
-function Transporte(iId, sTipo, iPlazas, descripcion) {
+function Transporte(iId, sTipo, iPlazas) {
     this.id = iId;
     this.tipo = sTipo;
     this.plazas = iPlazas;
-    Evento.call(this, descripcion);
 }
 
-// Aqui es donde heredamos propiedades y metodos de la animacion
-Transporte.prototype = Object.create(Evento.prototype);
-Transporte.prototype.constructor = Transporte;
-
-Transporte.prototype.toHTMLRow = function () {
-    var sFila = "<td>" + this.id + "</td>";
-    sFila += "<td>" + this.tipo + "</td>";
-    sFila += "<td>" + this.plazas + "</td>";
-    sFila += "<td>" + this.descripcion + "</td>";
-    return sFila;
-}
 
 // objeto Lugar*********************************************************************************************************
-function Lugar(sDescripcion, sDireccion, iCapacidad/* ,lLatitud, lLongitud, sFoto, descripcion*/) {
+function Lugar(sDescripcion, sDireccion, iCapacidad) {
     this.descripcion = sDescripcion;
     this.direccion = sDireccion;
     this.capacidad = iCapacidad;
-    /*
-     this.latitud = lLatitud;
-     this.longitud = lLongitud;
-     this.foto = sFoto;
-     Evento.call(this, descripcion);*/
 }
 
-// Aqui es donde heredamos propiedades y metodos de lugar
-//Lugar.prototype = Object.create(Evento.prototype);
-Lugar.prototype.constructor = Lugar;
 
-Lugar.prototype.toHTMLRow = function () {
-    var sFila = "<td>" + this.descripcionLugar + "</td>";
-    sFila += "<td>" + this.direccion + "</td>";
-    sFila += "<td>" + this.capacidad + "</td>";
-    /*
-     sFila += "<td>" + this.latitud + "</td>";
-     sFila += "<td>" + this.longitud + "</td>";
-     sFila += "<td>" + this.foto + "</td>";
-     sFila += "<td>" + this.descripcion + "</td>";*/
-    return sFila;
+//Objeto Trabajador*****************************************************************************************************
+function Trabajador(dni, nombre, apellidos) {
+    this.dni = dni;
+    this.nombre = nombre;
+    this.apellidos = apellidos;
 }
+
+//Herencia de Trabajador
+function Artista(dni, nombre, apellidos, especialidad, genero) {
+    Trabajador.call(this, dni, nombre, apellidos);
+    this.especialidad = especialidad;
+    this.genero = genero;
+}
+
+//Herencia de Trabajador
+Artista.prototype = Object.create(Trabajador.prototype);
+Artista.prototype.constructor = Artista;
+
+
+function Tecnicos(dni, nombre, apellidos, especialidad, herramientas) {
+    Trabajador.call(this, dni, nombre, apellidos);
+    this.especialidad = especialidad;
+    this.herramientas = herramientas;
+}
+
+//Herencia de Trabajador
+Tecnicos.prototype = Object.create(Trabajador.prototype);
+Tecnicos.prototype.constructor = Tecnicos;
+
+function Sanitarios(dni, nombre, apellidos, especialidad) {
+    Trabajador.call(this, dni, nombre, apellidos);
+    this.especialidad = especialidad;
+}
+
+//Herencia de Trabajador
+Sanitarios.prototype = Object.create(Trabajador.prototype);
+Sanitarios.prototype.constructor = Sanitarios;
+
+function Limpieza(dni, nombre, apellidos, compañia) {
+    Trabajador.call(dni, nombre, apellidos);
+    this.compañia = compañia;
+}
+
+//Herencia de Trabajador
+Limpieza.prototype = Object.create(Trabajador.prototype);
+Limpieza.prototype.constructor = Limpieza;
 
 
 // objeto Evento********************************************************************************************************
@@ -165,43 +94,60 @@ function Evento(dFecha, sDescripcion) {
     this.fecha = dFecha;
     this.descripcion = sDescripcion;
     this.asistente = [];
-    /*
-     this.animacion = [];*/
     this.transporte = [];
-    this.lugares = [];
+    this.lugar = [];
 }
+
 //**********************************************************************************************************************
 //Prototipos************************************************************************************************************
-
 
 function Gestion() {
     this.asistentes = [];
     this.transportes = [];
     this.lugares = [];
+    this.clientes = [];
+    this.trabajadores = [];
 }
 
-Gestion.prototype.altaLugar = function (oLugar) {
+
+Gestion.prototype.altaCliente = function (oCliente) {
     var i = 0;
     var bEnc = false;
     var sMensaje = "";
 
-    // Busco por descripcion
-    while (i < this.lugares.length && bEnc == false) {
-        if (this.lugares[i].descripcion == oLugar.descripcion) {
+    // Busco por dni
+    while (i < this.clientes.length && bEnc == false) {
+        if (this.clientes[i].dni == oCliente.dni) {
             bEnc = true;
         }
         i++;
     }
 
-    if (bEnc == true) {
-        sMensaje = "Lugar ya registrado";
-    }
-    else {
-        this.lugares.push(oLugar);
-        sMensaje = "Lugar dado de alta";
+    if (bEnc != true) {
+        this.clientes.push(oCliente);
     }
 
-    return sMensaje;
+    return bEnc;
+}
+
+Gestion.prototype.altaAsistente = function (oAsistente) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+
+    // Busco por descripcion
+    while (i < this.asistentes.length && bEnc == false) {
+        if (this.asistentes[i].id == oAsistente.id) {
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if (bEnc != true) {
+        this.asistentes.push(oAsistente);
+    }
+
+    return bEnc;
 }
 
 Gestion.prototype.altaTransporte = function (oTransporte) {
@@ -217,13 +163,51 @@ Gestion.prototype.altaTransporte = function (oTransporte) {
         i++;
     }
 
-    if (bEnc == true) {
-        sMensaje = "Transporte ya registrado";
-    }
-    else {
-        this.lugares.push(oTransporte);
-        sMensaje = "Transporte dado de alta";
+
+    if (bEnc != true) {
+        this.transportes.push(oTransporte);
     }
 
-    return sMensaje;
+    return bEnc;
+}
+
+Gestion.prototype.altaLugar = function (oLugar) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+
+    // Busco por descripcion
+    while (i < this.lugares.length && bEnc == false) {
+        if (this.lugares[i].descripcion == oLugar.descripcion) {
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if (bEnc != true) {
+        this.lugares.push(oLugar);
+    }
+
+    return bEnc;
+}
+
+
+Gestion.prototype.altaTrabajador = function (oTrabajador) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+
+    // Busco por dni
+    while (i < this.trabajador.length && bEnc == false) {
+        if (this.trabajador[i].dni == oTrabajador.dni) {
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if (bEnc != true) {
+        this.trabajador.push(oTrabajador);
+    }
+
+    return bEnc;
 }

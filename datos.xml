@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edited by XMLSpy -->
+<gestion>
+    <cliente>
+        <dni>49092533E</dni>
+        <nombre>Manuel</nombre>
+        <apellidos>Acosta Salguero</apellidos>
+        <telefono>650520403</telefono>
+    </cliente>
+    <cliente>
+        <dni>12345678A</dni>
+        <nombre>Adrian</nombre>
+        <apellidos>Cumplio Sanché</apellidos>
+        <telefono>654789123</telefono>
+    </cliente>
+    <cliente>
+        <dni>45678912J</dni>
+        <nombre>Javié</nombre>
+        <apellidos>Don Vargas</apellidos>
+        <telefono>690412715</telefono>
+    </cliente>
+    <cliente>
+        <dni>69328514L</dni>
+        <nombre>Isaac</nombre>
+        <apellidos>El Adalí</apellidos>
+        <telefono>784159248</telefono>
+    </cliente>
+
+    <transporte>
+        <id>1</id>
+        <tipo>Minibus</tipo>
+        <plazas>25</plazas>
+    </transporte>
+    <transporte>
+        <id>2</id>
+        <tipo>Autobus</tipo>
+        <plazas>45</plazas>
+    </transporte>
+    <transporte>
+        <id>3</id>
+        <tipo>Tren</tipo>
+        <plazas>99</plazas>
+    </transporte>
+    <transporte>
+        <id>4</id>
+        <tipo>Autobus</tipo>
+        <plazas>35</plazas>
+    </transporte>
+
+    <lugar>
+        <descripcion>Auditorio Rocio Jurado</descripcion>
+        <direccion>Camino de los Descubrimientos, s/n, 41092 Sevilla</direccion>
+        <capacidad>8000</capacidad>
+    </lugar>
+    <lugar>
+        <descripcion>Teatro Barceló</descripcion>
+        <direccion>Calle Barceló, 11, Madrid</direccion>
+        <capacidad>1200</capacidad>
+    </lugar>
+    <lugar>
+        <descripcion>Sala La Riviera</descripcion>
+        <direccion>Paseo Bajo de la Virgen del Puerto, 28005 Madrid, España</direccion>
+        <capacidad>600</capacidad>
+    </lugar>
+
+    <asistente>
+        <dni>47214872N</dni>
+        <nombre>Miguel</nombre>
+        <apellidos>Ramirez Ramos</apellidos>
+        <telefono>618245789</telefono>
+        <email>email@hotmail.com</email>
+        <eventoAsistente>FestivalOfColors</eventoAsistente>
+    </asistente>
+    <asistente>
+        <dni>47415872M</dni>
+        <nombre>Mario</nombre>
+        <apellidos>Jimenez Sousa</apellidos>
+        <telefono>625478965</telefono>
+        <email>email@gmail.com</email>
+        <eventoAsistente>FestivalOfColors</eventoAsistente>
+    </asistente>
+    <asistente>
+        <dni>48278542X</dni>
+        <nombre>Marta</nombre>
+        <apellidos>Ruiz Perez</apellidos>
+        <telefono>635416875</telefono>
+        <email>email@hotmail.es</email>
+        <eventoAsistente>FestivalOfColors</eventoAsistente>
+    </asistente>
+
+    <evento>
+        <fecha>15/05/2017</fecha>
+        <descripcion>FestivalOfColors</descripcion>
+        <trabajador>Juan Palomo</trabajador>
+        <transporteEvento>Minibus</transporteEvento>
+    </evento>
+    <evento>
+        <fecha>21/07/2018</fecha>
+        <descripcion>ColorRun</descripcion>
+        <trabajador>Juan Palomo</trabajador>
+        <transporteEvento>Minibus</transporteEvento>
+    </evento>
+</gestion>

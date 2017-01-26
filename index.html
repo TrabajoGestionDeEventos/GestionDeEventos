@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestion de Eventos</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/pikaday.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <style>
-        .error{
-            background-color:yellow;
+        .error {
+            background-color: yellow;
         }
-        #idTecnico,#idSanitario,#idLimpieza{
-            display:none;
+
+        #idTecnico, #idSanitario, #idLimpieza {
+            display: none;
         }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!--
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <script src="js/jquery.min.js"></script>
--->
+
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
             <div class="jumbotron">
-                <h1>Gestiones de Eventos</h1>
+                <div id="cabecera"><h1>Gestiones de Eventos</h1></div>
             </div>
         </div>
     </div>
@@ -94,61 +92,13 @@
                 </div>
             </nav>
         </div>
-
-        <!-- GESTION LUGAR-->
-        <div class="row">
-            <div class="col-xs-12">
-                <form class="form-horizontal" id="formuLugar" name="formuLugar">
-                    <fieldset>
-                        <!-- Form Name -->
-                        <legend>Gestión de Lugares</legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Descripción:</label>
-                            <div class="col-md-5">
-                                <input name="descripcion" type="text" placeholder="Descripción del lugar"
-                                       class="form-control input-md" required="">
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Dirección:</label>
-                            <div class="col-md-5">
-                                <input name="direccion" type="text" placeholder="Dirección del lugar"
-                                       class="form-control input-md" required="">
-                            </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Capacidad:</label>
-                            <div class="col-md-5">
-                                <input name="capacidad" type="text" placeholder="Capacidad"
-                                       class="form-control input-md" required="" maxlength="6">
-                            </div>
-                        </div>
-
-                        <!-- Button -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="aceptar"></label>
-                            <div class="col-md-4">
-                                <button type="button" name="aceptar" class="btn btn-primary">Aceptar
-                                </button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-
     </div>
 
-        <div class="col-xs-12" id="uml">
-            <img src="img/uml.png" style="margin-left:33%;">
-        </div>
+    <!-- UML -->
+    <div class="col-xs-12" id="uml">
+        <img src="img/uml.png" style="margin-left:33%;">
     </div>
+
     <!-- GESTION CLIENTE -->
     <div class="row">
         <div class="col-xs-12">
@@ -161,7 +111,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="dni">DNI:</label>
                         <div class="col-md-5">
-                            <input id="dni" name="dni" type="text" placeholder="D.N.I. del Cliente" class="form-control input-md" required="">
+                            <input id="dni" name="dni" type="text" placeholder="D.N.I. del Cliente"
+                                   class="form-control input-md" required="">
                         </div>
                     </div>
 
@@ -169,7 +120,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nombre">Nombre: </label>
                         <div class="col-md-5">
-                            <input id="nombre" name="nombre" type="text" placeholder="Nombre del Cliente" class="form-control input-md" required="">
+                            <input id="nombre" name="nombre" type="text" placeholder="Nombre del Cliente"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -178,7 +130,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
                         <div class="col-md-5">
-                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos del Cliente" class="form-control input-md" required="">
+                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos del Cliente"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -187,7 +140,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
                         <div class="col-md-5">
-                            <input id="telefono" name="telefono" type="text" placeholder="Teléfono del Cliente" class="form-control input-md" required="">
+                            <input id="telefono" name="telefono" type="text" placeholder="Teléfono del Cliente"
+                                   class="form-control input-md" required="">
                         </div>
                     </div>
 
@@ -203,166 +157,6 @@
         </div>
     </div>
 
-    <!-- GESTION TRABAJADOR -->
-    <div class="row">
-        <div class="col-xs-12">
-            <form class="form-horizontal" name="frmTrabajador" id="formuGestionTrabajador">
-                <fieldset>
-
-                    <!-- Form Name -->
-                    <legend>Gestión de Trabajadores</legend>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="dni">DNI:</label>
-                        <div class="col-md-5">
-                            <input id="dni" name="dni" type="text" placeholder="D.N.I" class="form-control input-md" required="">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="nombre">Nombre: </label>
-                        <div class="col-md-5">
-                            <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="form-control input-md" required="">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="apellido">Apellido</label>
-                        <div class="col-md-5">
-                            <input id="apellido" name="apellido" type="text" placeholder="Apellido" class="form-control input-md" required="">
-
-                        </div>
-                    </div>
-
-                    <!-- Multiple Radios (inline) -->
-                    <div class="form-group" id="radiosTipo">
-                        <label class="col-md-4 control-label" for="radios">Tipos</label>
-                        <div class="col-md-4">
-                            <label class="radio-inline" for="radios-0">
-                                <input type="radio" name="radios" id="radioArtista" value="artista" checked="checked">
-                                Artista
-                            </label>
-                            <label class="radio-inline" for="radios-1">
-                                <input type="radio" name="radios" id="radioTecnico" value="tecnico">
-                                Técnico
-                            </label>
-                            <label class="radio-inline" for="radios-2">
-                                <input type="radio" name="radios" id="radioSanitario" value="sanitarios">
-                                Sanitarios
-                            </label>
-                            <label class="radio-inline" for="radios-3">
-                                <input type="radio" name="radios" id="radioLimpieza" value="limpieza">
-                                Limpieza
-                            </label>
-                        </div>
-                    </div>
-
-                    <!--Artista-->
-                            <!-- Select Multiple -->
-                    <div id="idArtista">
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="selectInstrumentos">Instrumentos</label>
-                                <div class="col-md-5">
-                                    <select id="selectInstrumentos" name="selectInstrumentos[]" class="form-control" multiple="multiple">
-                                        <option value="Batería">Batería</option>
-                                        <option value="Guitarra">Guitarra</option>
-                                        <option value="Bajo">Bajo</option>
-                                        <option value="Piano">Piano</option>
-                                        <option value="Arpa">Arpa</option>
-                                        <option value="Lira">Lira</option>
-                                        <option value="Otros">Otros</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Select Basic -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="selectGenero">Género</label>
-                                <div class="col-md-5">
-                                    <select id="selectGenero" name="selectGenero" class="form-control">
-                                        <option value="Rock">Rock</option>
-                                        <option value="Rap">Rap</option>
-                                        <option value="Metal">Metal</option>
-                                        <option value="Electrónica">Electrónica</option>
-                                        <option value="Pop">Pop</option>
-                                    </select>
-                                </div>
-                            </div>
-                    </div>
-                    <!--Tecnicos-->
-                    <div id="idTecnico">
-                            <!-- Select Multiple -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="especialidadTec">Especialidad:</label>
-                                <div class="col-md-5">
-                                    <select id="especialidadTec" name="especialidadTec" class="form-control">
-                                        <option value="Técnico de Sonido">Técnico de Sonido</option>
-                                        <option value="Mecánico">Mecánico</option>
-                                        <option value="Profesor de JS que le gusta saturar a sus alumnos con prácticas">Profesor de JS que le gusta saturar a sus alumnos con prácticas</option>
-                                        <option value="Pipas">Pipas</option>
-                                        <option value="Otros">Otros</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Multiple Radios (inline) -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="radiosHerramientas">¿Herramientas Propias?</label>
-                                <div class="col-md-4">
-                                    <label class="radio-inline" for="radiosHerramientas-0">
-                                        <input type="radio" name="radiosHerramientas" id="radiosHerramientas-0" value="Sí" checked="checked">
-                                        Sí
-                                    </label>
-                                    <label class="radio-inline" for="radiosHerramientas-1">
-                                        <input type="radio" name="radiosHerramientas" id="radiosHerramientas-1" value="No">
-                                        No
-                                    </label>
-                                </div>
-                            </div>
-                    </div>
-                    <!-- Sanitario -->
-                    <div id="idSanitario">
-                            <!-- Select Multiple -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="especialidadSanitaria">Especialidad:</label>
-                                <div class="col-md-5">
-                                    <select id="especialidadSani" name="especialidadSani" class="form-control">
-                                        <option value="Auxiliar">Auxiliar</option>
-                                        <option value="Enfermero/a">Enfermero/a</option>
-                                        <option value="Médico/a">Médico/a</option>
-                                        <option value="Camillero/a">Camillero/a</option>
-                                    </select>
-                                </div>
-                            </div>
-                    </div>
-                    <!-- Limpieza -->
-                    <div id="idLimpieza">
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="limpieza">Limpieza:</label>
-                                <div class="col-md-5">
-                                    <input id="limpieza" name="limpieza" type="text" placeholder="Compañía de Limpieza" class="form-control input-md">
-
-                                </div>
-                            </div>
-                    </div>
-                    <!-- Button -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="aceptarTrabajador"></label>
-                        <div class="col-md-4">
-                            <button type="button" id="aceptarTrabajador" name="aceptarTrabajador" class="btn btn-primary">Aceptar</button>
-                        </div>
-                    </div>
-
-                </fieldset>
-            </form>
-        </div>
-    </div>
 
     <!-- GESTION DE CONTRATOS -->
 
@@ -377,7 +171,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="idcontrato">ID Contrato:</label>
                         <div class="col-md-5">
-                            <input id="idcontrato" name="idcontrato" type="text" placeholder="ID Contrato" class="form-control input-md" required="">
+                            <input id="idcontrato" name="idcontrato" type="text" placeholder="ID Contrato"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -386,7 +181,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="fechaInicio">Fecha Inicio:</label>
                         <div class="col-md-5">
-                            <input id="fechaInicio" name="fechaInicio" type="text" placeholder="YYYY/MM/DD" class="form-control input-md fechas" required="">
+                            <input id="fechaInicio" name="fechaInicio" type="text" placeholder="DD/MM/AAAA"
+                                   class="form-control input-md fechas" required="">
                         </div>
                     </div>
 
@@ -394,7 +190,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="fechaFin">Fecha Fin:</label>
                         <div class="col-md-5">
-                            <input id="fechaFin" name="fechaFin" type="text" placeholder="YYYY/MM/DD" class="form-control input-md fechas" required="">
+                            <input id="fechaFin" name="fechaFin" type="text" placeholder="DD/MM/AAAA"
+                                   class="form-control input-md fechas" required="">
 
                         </div>
                     </div>
@@ -403,7 +200,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="importe">Importe</label>
                         <div class="col-md-5">
-                            <input id="importe" name="importe" type="text" placeholder="Importe" class="form-control input-md" required="">
+                            <input id="importe" name="importe" type="text" placeholder="Importe"
+                                   class="form-control input-md" required="">
 
                         </div>
                     </div>
@@ -432,257 +230,489 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="aceptarContrato"></label>
                         <div class="col-md-4">
-                            <button id="aceptarContrato" type="button" name="aceptarContrato" class="btn btn-primary">Aceptar</button>
+                            <button id="aceptarContrato" type="button" name="aceptarContrato" class="btn btn-primary">
+                                Aceptar
+                            </button>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
-</div>
 
-<!-- GESTION ASISTENTE -->
-<div class="row">
-    <div class="col-xs-12">
-        <form class="form-horizontal" id="formuAsistente" name="formuAsistente">
-            <fieldset>
-                <!-- Form Name -->
-                <legend>Gestión de Asistente</legend>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="dni">DNI:</label>
-                    <div class="col-md-5">
-                        <input name="dni" type="text" placeholder="D.N.I. del Asistente"
-                               class="form-control input-md" required="">
+    <!-- GESTION ASISTENTE -->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuAsistente" name="formuAsistente">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Asistente</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">DNI:</label>
+                        <div class="col-md-5">
+                            <input name="dni" type="text" placeholder="D.N.I. del Asistente"
+                                   class="form-control input-md" required="">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="nombre">Nombre: </label>
-                    <div class="col-md-5">
-                        <input name="nombre" type="text" placeholder="Nombre del Asistente"
-                               class="form-control input-md" required="">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombre">Nombre: </label>
+                        <div class="col-md-5">
+                            <input name="nombre" type="text" placeholder="Nombre del Asistente"
+                                   class="form-control input-md" required="">
 
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
-                    <div class="col-md-5">
-                        <input name="apellidos" type="text"
-                               placeholder="Apellidos del Asistente" class="form-control input-md" required="">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellidos">Apellidos: </label>
+                        <div class="col-md-5">
+                            <input name="apellidos" type="text"
+                                   placeholder="Apellidos del Asistente" class="form-control input-md" required="">
 
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
-                    <div class="col-md-5">
-                        <input name="telefono" type="text"
-                               placeholder="Teléfono del Asistente" class="form-control input-md" required="">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="telefono">Teléfono:</label>
+                        <div class="col-md-5">
+                            <input name="telefono" type="text"
+                                   placeholder="Teléfono del Asistente" class="form-control input-md" required="">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Email:</label>
-                    <div class="col-md-5">
-                        <input name="email" type="email"
-                               placeholder="Email del Asistente" class="form-control input-md" required="">
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Email:</label>
+                        <div class="col-md-5">
+                            <input name="email" type="email"
+                                   placeholder="Email del Asistente" class="form-control input-md" required="">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Eventos:</label>
-                    <div class="col-md-5">
-                        <select multiple="multiple" type="text" name="listaEventos" class="form-control input-md">
-                            <option style="color:grey">No hay eventos actuales</option>
-                        </select>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Eventos:</label>
+                        <div class="col-md-5">
+                            <select multiple="multiple" type="text" name="listaEventos" class="form-control input-md">
+                                <option style="color:grey">No hay eventos actuales</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Button -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="aceptar"></label>
-                    <div class="col-md-4">
-                        <button type="button" name="aceptar" class="btn btn-primary">Aceptar
-                        </button>
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- GESTION EVENTO-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuEvento" name="formuEvento">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Evento</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Fecha: </label>
+                        <div class="col-md-5">
+                            <input name="fecha" type="text"
+                                   class="form-control input-md fechas" id="fechaEvento" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">Descripción:</label>
+                        <div class="col-md-5">
+                            <input name="descripcion" type="text" placeholder="Descripción del Evento"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Trabajadores:</label>
+                        <div class="col-md-5">
+                            <select multiple="multiple" type="text" name="listaTrabajadores"
+                                    class="form-control input-md">
+                                <option>No hay trabajadores disponibles</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transportes:</label>
+                        <div class="col-md-5">
+                            <select type="text" name="listaTransportes"
+                                    class="form-control input-md">
+                                <option>No hay transportes disponibles</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Lugares:</label>
+                        <div class="col-md-5">
+                            <select type="text" name="listaLugares" class="form-control input-md">
+                                <option style="color:grey">No hay lugares actualmente</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- GESTION TRANSPORTE-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuTransporte" name="formuTransporte">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Transporte</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="id">ID:</label>
+                        <div class="col-md-5">
+                            <input id="id" name="id" type="text" placeholder="Identificación del transporte"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="tipo">Tipo: </label>
+                        <div class="col-md-5">
+                            <input id="tipo" name="tipo" type="text" placeholder="Tipo de transporte"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="plazas">Plazas: </label>
+                        <div class="col-md-5">
+                            <input id="plazas" name="plazas" type="text" placeholder="Plazas del transporte"
+                                   class="form-control input-md" required="" maxlength="2">
+
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <!-- GESTION LUGAR-->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" id="formuLugar" name="formuLugar">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Gestión de Lugares</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Descripción:</label>
+                        <div class="col-md-5">
+                            <input name="descripcion" type="text" placeholder="Descripción del lugar"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Dirección:</label>
+                        <div class="col-md-5">
+                            <input name="direccion" type="text" placeholder="Dirección del lugar"
+                                   class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Capacidad:</label>
+                        <div class="col-md-5">
+                            <input name="capacidad" type="text" placeholder="Capacidad"
+                                   class="form-control input-md" required="" maxlength="6">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptar"></label>
+                        <div class="col-md-4">
+                            <button type="button" name="aceptar" class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- GESTION TRABAJADOR -->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" name="frmTrabajador" id="formuGestionTrabajador">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>Gestión de Trabajadores</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dni">DNI:</label>
+                        <div class="col-md-5">
+                            <input id="dni" name="dni" type="text" placeholder="D.N.I" class="form-control input-md"
+                                   required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nombre">Nombre: </label>
+                        <div class="col-md-5">
+                            <input id="nombre" name="nombre" type="text" placeholder="Nombre"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="apellidos">Apellidos</label>
+                        <div class="col-md-5">
+                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Multiple Radios (inline) -->
+                    <div class="form-group" id="radiosTipo">
+                        <label class="col-md-4 control-label" for="radios">Tipos</label>
+                        <div class="col-md-4">
+                            <label class="radio-inline" for="radios-0">
+                                <input type="radio" name="radios" id="radioArtista" value="artista" checked="checked">
+                                Artista
+                            </label>
+                            <label class="radio-inline" for="radios-1">
+                                <input type="radio" name="radios" id="radioTecnico" value="tecnico">
+                                Técnico
+                            </label>
+                            <label class="radio-inline" for="radios-2">
+                                <input type="radio" name="radios" id="radioSanitario" value="sanitarios">
+                                Sanitarios
+                            </label>
+                            <label class="radio-inline" for="radios-3">
+                                <input type="radio" name="radios" id="radioLimpieza" value="limpieza">
+                                Limpieza
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--Artista-->
+                    <!-- Select Multiple -->
+                    <div id="idArtista">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectInstrumentos">Instrumentos</label>
+                            <div class="col-md-5">
+                                <select id="selectInstrumentos" name="selectInstrumentos[]" class="form-control"
+                                        multiple="multiple">
+                                    <option value="Batería">Batería</option>
+                                    <option value="Guitarra">Guitarra</option>
+                                    <option value="Bajo">Bajo</option>
+                                    <option value="Piano">Piano</option>
+                                    <option value="Arpa">Arpa</option>
+                                    <option value="Lira">Lira</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Select Basic -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="selectGenero">Género</label>
+                            <div class="col-md-5">
+                                <select id="selectGenero" name="selectGenero" class="form-control">
+                                    <option value="Rock">Rock</option>
+                                    <option value="Rap">Rap</option>
+                                    <option value="Metal">Metal</option>
+                                    <option value="Electrónica">Electrónica</option>
+                                    <option value="Pop">Pop</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tecnicos-->
+                    <div id="idTecnico">
+                        <!-- Select Multiple -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="especialidadTec">Especialidad:</label>
+                            <div class="col-md-5">
+                                <select id="especialidadTec" name="especialidadTec" class="form-control">
+                                    <option value="Técnico de Sonido">Técnico de Sonido</option>
+                                    <option value="Mecánico">Mecánico</option>
+                                    <option value="Profesor de JS que le gusta saturar a sus alumnos con prácticas">
+                                        Profesor de JS que le gusta saturar a sus alumnos con prácticas
+                                    </option>
+                                    <option value="Pipas">Pipas</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Multiple Radios (inline) -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="radiosHerramientas">¿Herramientas
+                                Propias?</label>
+                            <div class="col-md-4">
+                                <label class="radio-inline" for="radiosHerramientas-0">
+                                    <input type="radio" name="radiosHerramientas" id="radiosHerramientas-0" value="Sí"
+                                           checked="checked">
+                                    Sí
+                                </label>
+                                <label class="radio-inline" for="radiosHerramientas-1">
+                                    <input type="radio" name="radiosHerramientas" id="radiosHerramientas-1" value="No">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sanitario -->
+                    <div id="idSanitario">
+                        <!-- Select Multiple -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="especialidadSanitaria">Especialidad:</label>
+                            <div class="col-md-5">
+                                <select id="especialidadSani" name="especialidadSani" class="form-control">
+                                    <option value="Auxiliar">Auxiliar</option>
+                                    <option value="Enfermero/a">Enfermero/a</option>
+                                    <option value="Médico/a">Médico/a</option>
+                                    <option value="Camillero/a">Camillero/a</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Limpieza -->
+                    <div id="idLimpieza">
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="limpieza">Limpieza:</label>
+                            <div class="col-md-5">
+                                <input id="limpieza" name="limpieza" type="text" placeholder="Compañía de Limpieza"
+                                       class="form-control input-md">
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="aceptarTrabajador"></label>
+                        <div class="col-md-4">
+                            <button type="button" id="aceptarTrabajador" name="aceptarTrabajador"
+                                    class="btn btn-primary">Aceptar
+                            </button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
     </div>
 </div>
-
-<!-- GESTION EVENTO-->
-<div class="row">
-    <div class="col-xs-12">
-        <form class="form-horizontal" id="formuEvento" name="formuEvento">
-            <fieldset>
-                <!-- Form Name -->
-                <legend>Gestión de Evento</legend>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Fecha: </label>
-                    <div class="col-md-5">
-                        <input name="fecha" type="text"
-                               class="form-control input-md fechas" id="fechaEvento" required="">
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="dni">Descripción:</label>
-                    <div class="col-md-5">
-                        <input name="descripcion" type="text" placeholder="Descripción del Evento"
-                               class="form-control input-md" required="">
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Trabajadores:</label>
-                    <div class="col-md-5">
-                        <select multiple="multiple" type="text" name="listaTrabajadores"
-                                class="form-control input-md">
-                            <option>No hay trabajadores disponibles</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Transportes:</label>
-                    <div class="col-md-5">
-                        <select  type="text" name="listaTransportes"
-                                 class="form-control input-md">
-                            <option>No hay transportes disponibles</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Button -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="aceptar"></label>
-                    <div class="col-md-4">
-                        <button type="button" name="aceptar" class="btn btn-primary">Aceptar
-                        </button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-</div>
-
-<!-- GESTION TRANSPORTE-->
-<div class="row">
-    <div class="col-xs-12">
-        <form class="form-horizontal" id="formuTransporte" name="formuTransporte">
-            <fieldset>
-                <!-- Form Name -->
-                <legend>Gestión de Transporte</legend>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="id">ID:</label>
-                    <div class="col-md-5">
-                        <input id="id" name="id" type="text" placeholder="Identificación del transporte"
-                               class="form-control input-md" required="">
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="tipo">Tipo: </label>
-                    <div class="col-md-5">
-                        <input id="tipo" name="tipo" type="text" placeholder="Tipo de transporte"
-                               class="form-control input-md" required="">
-
-                    </div>
-                </div>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="plazas">Plazas: </label>
-                    <div class="col-md-5">
-                        <input id="plazas" name="plazas" type="text" placeholder="Plazas del transporte"
-                               class="form-control input-md" required="" maxlength="2">
-
-                    </div>
-                </div>
-
-                <!-- Button -->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="aceptar"></label>
-                    <div class="col-md-4">
-                        <button type="button" name="aceptar" class="btn btn-primary">Aceptar
-                        </button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-</div>
-
 
 <!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
 <script type="text/JavaScript">
-        var f = new Date();
-        if((f.getMonth() + 1)<10)
-            var mes = "0"+(f.getMonth() + 1);
-        var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
-        document.getElementById("fechaEvento").value = actual;
+    var f = new Date();
+    if ((f.getMonth() + 1) < 10)
+        var mes = "0" + (f.getMonth() + 1);
+    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    document.getElementById("fechaEvento").value = actual;
 </script>
 
 <script type="text/JavaScript">
     var f = new Date();
-    if((f.getMonth() + 1)<10)
-        var mes = "0"+(f.getMonth() + 1);
+    if ((f.getMonth() + 1) < 10)
+        var mes = "0" + (f.getMonth() + 1);
     var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaInicio").value = actual;
 </script>
 <script src="js/objetos.js"></script>
 <script src="js/principal.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script type="application/javascript">
     ocultarFormulario();
 
     var formCli = document.getElementById("cli");
-    formCli.addEventListener("click",mostrarAltaCliente);
+    formCli.addEventListener("click", mostrarAltaCliente);
 
     var formIndex = document.getElementById("mostrarIndex");
-    formIndex.addEventListener("click",mostrarUML);
+    formIndex.addEventListener("click", mostrarUML);
 
     var formGestionTra = document.getElementById('mostrarGestionTrabajador');
-    formGestionTra.addEventListener("click",mostrarTrabajador);
+    formGestionTra.addEventListener("click", mostrarTrabajador);
 
-    var btnAceptar=document.getElementById("formuCliente");
-    btnAceptar.aceptar.addEventListener("click",altaCliente);
+    var btnAceptar = document.getElementById("formuCliente");
+    btnAceptar.aceptar.addEventListener("click", altaCliente);
 
     var radioArtista = document.getElementById('radioArtista');
-    radioArtista.addEventListener("click",mostrarRadioArtista);
+    radioArtista.addEventListener("click", mostrarRadioArtista);
 
     var radioArtista = document.getElementById('radioTecnico');
-    radioArtista.addEventListener("click",mostrarRadioTecnico);
+    radioArtista.addEventListener("click", mostrarRadioTecnico);
 
     var radioArtista = document.getElementById('radioLimpieza');
-    radioArtista.addEventListener("click",mostrarRadioLimpieza);
+    radioArtista.addEventListener("click", mostrarRadioLimpieza);
 
     var radioArtista = document.getElementById('radioSanitario');
-    radioArtista.addEventListener("click",mostrarRadioSanitario);
+    radioArtista.addEventListener("click", mostrarRadioSanitario);
 
     var btnAceptarTrabajador = document.getElementById('aceptarTrabajador');
-    btnAceptarTrabajador.addEventListener("click",altaTrabajador);
+    btnAceptarTrabajador.addEventListener("click", altaTrabajador);
 
     var formGestionCon = document.getElementById('mostrarAltaContrato');
-    formGestionCon.addEventListener("click",mostrarContrato);
+    formGestionCon.addEventListener("click", mostrarContrato);
 
     var btnAceptarContrato = document.getElementById('aceptarContrato');
     btnAceptarContrato.addEventListener("click", altaContrato);
@@ -719,7 +749,21 @@
         firstDay: 1,
         minDate: new Date(),
         maxDate: new Date(2020, 12, 31),
-        yearRange: [2000,2020]
+        yearRange: [2000, 2020]
+    });
+    var picker = new Pikaday({
+        field: document.getElementById('fechaInicio'),
+        firstDay: 1,
+        minDate: new Date(),
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2000, 2020]
+    });
+    var picker = new Pikaday({
+        field: document.getElementById('fechaFin'),
+        firstDay: 1,
+        minDate: new Date(),
+        maxDate: new Date(2020, 12, 31),
+        yearRange: [2000, 2020]
     });
 </script>
 </body>

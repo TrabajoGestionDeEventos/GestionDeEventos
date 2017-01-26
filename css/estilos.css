@@ -1,5 +1,9 @@
 .jumbotron{
     text-align: center;
+    width: 100%;
+    height: 250px;
+    background: url('../img/fondo.jpg') 50% 50% no-repeat;
+    background-size: cover;
 }
 
 html {
@@ -24,6 +28,20 @@ body {
             ),
                 /* image to overlay */
             url(http://images.cdn.fotopedia.com/_avPIZmqM3w-7z161LH_268-hd.jpg);
+
+    /*nuevo */
+    font: 13px/25px Arial, Helvetica, sans-serif;
+    color:#484848;
+    min-width:1080px;
+    font-style:italic;
+    background: #fff;
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: #000;
+    font-size: 19px;
+
 }
 
 
