@@ -107,6 +107,7 @@ function Gestion() {
     this.lugares = [];
     this.clientes = [];
     this.trabajadores = [];
+    this.eventos = [];
 }
 
 
@@ -147,6 +148,24 @@ Gestion.prototype.altaAsistente = function (oAsistente) {
         this.asistentes.push(oAsistente);
     }
 
+    return bEnc;
+}
+
+Gestion.prototype.altaEvento = function (oEvento) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+
+    // Busco por descripcion
+    while (i < this.eventos.length && bEnc == false) {
+        if (this.eventos[i].id == oEvento.descripcion) {
+            bEnc = true;
+        }
+        i++;
+    }
+    if (bEnc != true) {
+        this.eventos.push(oEvento);
+    }
     return bEnc;
 }
 

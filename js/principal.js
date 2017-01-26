@@ -54,7 +54,7 @@ for (var j = 0; j < oEventos.length; j++) {
     var descripcion= oEventos[j].getElementsByTagName("descripcion")[0].textContent;
 
     var oEvento = new Evento(fecha, descripcion);
-    var sMensaje = oGestion.altaEvento(oEvento);
+    oGestion.altaEvento(oEvento);
 }
 
 
@@ -79,6 +79,7 @@ function ocultarFormulario() {
     actualizarComboTrabajadores();
     actualizarComboTransportes();
     actualizarComboLugares();
+    actualizarComboEventos();
 
     //desmarcamos los errores de todos los formularios
     var errores = document.querySelectorAll(".error");
@@ -699,7 +700,7 @@ function altaEvento() {
     }
 
 }
-
+//************************************************************************************************************************************************************************************************************
 function ponerFechaActual() {
     var f = new Date();
     if ((f.getMonth() + 1) < 10)
@@ -719,25 +720,6 @@ function existeFecha(fecha) {
     }
     return true;
 }
-/*
- function actualizarCombo() {
- var oForm = document.formuEvento;
- var lista = oForm.listaTrabajadores;
-
- var seleccionados = [];
- for (var i = 0; i < lista.options.length; ++i) {
- seleccionados[i] = lista.options[i].selected;
- }
-
- i = lista.options.length;
- while (i--) {
- //actualizamos combo
- if (seleccionados[i]) {
- lista.remove(i);
- }
- }
- }
- */
 
 function validarFormatoFecha(campo) {
     var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
@@ -963,8 +945,15 @@ function actualizarComboLugares() {
     }
 }
 
-
-
+function actualizarComboEventos() {
+    var oForm = document.formuAsistente;
+    var lista = oForm.listaEventos;
+    // Busco por descripcion
+    if(oGestion.eventos.length|=0)
+        for (var i = 0; i < oGestion.eventos.length; i++) {
+            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha +")" );
+        }
+}
 
 
 
