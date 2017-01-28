@@ -44,8 +44,8 @@ for (var j = 0; j < oAsistentes.length; j++) {
     var email = oAsistentes[j].getElementsByTagName("email")[0].textContent;
     var eventoAsistente = oAsistentes[j].getElementsByTagName("eventoAsistente")[0].textContent;
 
-    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email);
-    var sMensaje = oGestion.altaAsistente(oAsistente);
+    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, eventoAsistente);
+    oGestion.altaAsistente(oAsistente);
 }
 
 var oTransportes = oXML.getElementsByTagName("transporte");
@@ -256,12 +256,11 @@ function altaCliente() {
     else {//Damos de alta el cliente
         var oCliente = new Cliente(dni, nombre, apellidos, telefono);
         sMensaje = oGestion.altaCliente(oCliente);
-
+        document.formuCliente.reset();
 
         if (sMensaje == true) {
             errores.push("Ese cliente ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
-            document.formuCliente.dni.focus();
         }
         else {
             mostrarMensajeCorrecto("Cliente dado de alta");
@@ -281,7 +280,7 @@ function bajaCliente() {
     rellenaComboBajaCliente();
 
     if (sMensaje == false) {
-        mostrarMensajeCorrecto("Cliente dado de baja");
+        mostrarMensajeCorrecto("Cliente dado de alta");
     }
 }
 
@@ -397,11 +396,12 @@ function altaTrabajador() {
 
         sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
 
+        console.log(sInstrumentos);
         if (bValido == false) {
             mostrarMensajeDeError(errores);
         }
         else {
-            var oArtista = new Artista(dni, nombre, apellidos, sInstrumentos, sGenero);
+            var oArtista = new Artista(dni, nombre, apellidos, sIns, sGenero);
             sMensaje = oGestion.altaTrabajador(oArtista);
             if (sMensaje == true) {
                 errores.push("Ese trabajador ya fue dado de alta previamente");
@@ -485,28 +485,24 @@ function altaTrabajador() {
 function altaContrato() {
     var oForm = document.frmGestionContrato;
     var sMensaje = "";
-    var bValido = true;
+    var bValido = false;
     var idContrato = oForm.idcontrato.value.trim();
     var fechaInicio = oForm.fechaInicio.value.trim();
     var fechaFin = oForm.fechaFin.value.trim();
     var importe = parseFloat(oForm.importe.value.trim());
     var objetoCliente = oForm.selectObjetoCliente.value;
     var objetoEvento = oForm.selectObjetoEvento.value;
-    var errores = [];
 
 
     //Validar campo ID
-    var oExpReg = /^\d{1,2}$/;
+    var oExpReg = /^\d{2}$/;
 
     if (oExpReg.test(idContrato) == false) {
         if (bValido == true) {
             bValido = false;
             document.frmGestionContrato.idcontrato.focus();
         }
-        sMensaje = "El ID debe contener solo 2 dígitos\n";
-        errores.push(sMensaje);
-        document.frmGestionContrato.idcontrato.className = "form-control input-md error";
-
+        sMensaje += "El ID debe contener solo 2 dígitos\n";
 
     }
     else {
@@ -524,8 +520,7 @@ function altaContrato() {
                 bValido = false;
                 document.frmGestionContrato.fechaInicio.focus();
             }
-            sMensaje = "La fecha introducida no existe\n";
-            errores.push(sMensaje);
+            sMensaje += "La fecha introducida no existe\n";
             //Marcamos el error
             document.frmGestionContrato.fechaInicio.className = "form-control input-md error";
         }
@@ -534,15 +529,14 @@ function altaContrato() {
             bValido = false;
             document.frmGestionContrato.fechaInicio.focus();
         }
-        sMensaje = "La fecha no tiene un formato correcto\n";
-        errores.push(sMensaje);
+        sMensaje += "La fecha no tiene un formato correcto\n";
         //Marcamos el error
         document.frmGestionContrato.fechaInicio.className = "form-control input-md error";
     }
 
     //Validamos Fecha Final
     if (validarFormatoFecha(fechaFin)) {
-        if (existeFecha(fechaFin) && fechaFin>=fechaInicio) {
+        if (existeFecha(fechaFin)) {
             //Aquí se desmarca el error
             document.frmGestionContrato.fechaFin.className = "form-control input-md";
         } else {
@@ -550,7 +544,7 @@ function altaContrato() {
                 bValido = false;
                 document.frmGestionContrato.fechaFin.focus();
             }
-            sMensaje = "La fecha introducida no existe o es mayor que la fecha de inicio\n";
+            sMensaje += "La fecha introducida no existe\n";
             //Marcamos el error
             document.frmGestionContrato.fechaFin.className = "form-control input-md error";
         }
@@ -559,46 +553,18 @@ function altaContrato() {
             bValido = false;
             document.frmGestionContrato.fechaFin.focus();
         }
-        sMensaje = "La fecha no tiene un formato correcto\n";
-        errores.push(sMensaje);
+        sMensaje += "La fecha no tiene un formato correcto\n";
         //Marcamos el error
         document.frmGestionContrato.fechaFin.className = "form-control input-md error";
     }
 
-    //Validamos Importe
-    var oExpReg = /^\d[0-9,]{1,10}/;
-    if (oExpReg.test(importe) == false) {
-        if (bValido == true) {
-            bValido = false;
-            document.frmGestionContrato.importe.focus();
-        }
-        sMensaje = "El importe es incorrecto debe estar comprendida entre 1-10 dígitos\n";
-        errores.push(sMensaje);
-        document.frmGestionContrato.importe.className = "form-control input-md error";
-    }
-    else {
-        document.frmGestionContrato.importe.className = "form-control input-md";
-    }
-
 
     if (bValido == false) {
-        mostrarMensajeDeError(errores);
+        toastr.error(sMensaje, "Error");
     }
     else {//Damos de alta el contrato
-
+        document.frmGestionContrato.reset();
         ponerFechaActualInicio();
-        oContrato = new Contrato(idContrato,fechaInicio,fechaFin,importe,objetoCliente,objetoEvento);
-        sMensaje = oGestion.altaContrato(oContrato);
-
-        if (sMensaje == true) {
-            errores.push("Ese contrato ya fue dado de alta previamente");
-            mostrarMensajeDeError(errores);
-        }
-        else {
-            mostrarMensajeCorrecto("Contrato dado de alta");
-            oForm.reset();
-        }
-
     }
 
 }
@@ -621,14 +587,6 @@ function rellenaComboClientes() {
 }
 
 
-function ponerFechaActualInicio() {
-    var f = new Date();
-    if ((f.getMonth() + 1) < 10)
-        var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
-    document.getElementById("fechaInicio").value = actual;
-}
-
 function rellenaComboEventos() {
     var mod = document.frmGestionContrato.selectObjetoCliente.children;
     for (var i = mod.length - 1; i >= 0; i--) {
@@ -646,6 +604,14 @@ function rellenaComboEventos() {
     }
 }
 
+function ponerFechaActualInicio() {
+    var f = new Date();
+    if ((f.getMonth() + 1) < 10)
+        var mes = "0" + (f.getMonth() + 1);
+    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    document.getElementById("fechaInicio").value = actual;
+}
+
 //FORMULARIO DE ASISTENTES**********************************************************************************************
 function mostrarAltaAsistente() {
     ocultarFormulario();
@@ -659,6 +625,7 @@ function altaAsistente() {
     var apellidos = oForm.apellidos.value.trim();
     var telefono = oForm.telefono.value.trim();
     var email = oForm.email.value.trim();
+    var listaEventos = oForm.listaEventos;
     var bValido = true;
     var sMensaje = "";
     var errores = [];
@@ -755,26 +722,20 @@ function altaAsistente() {
         document.formuAsistente.email.className = "form-control input-md";
     }
 
-    //Validar combo Trabajadores
-    var indiceTrabajadores = oForm.listaTrabajadores.selectedIndex;
-    if (indiceTrabajadores == null) {
-        document.formuEvento.listaTrabajadores.className = "form-control input-md error";
-        sMensaje = "Debes seleccionar un trabajador\n";
-        errores.push(sMensaje);
-    }
-    else {
-        document.formuEvento.listaTrabajadores.className = "form-control input-md";
-    }
 
-    //Validar combo Transportes
-    var indiceTransportes = oForm.listaTransportes.selectedIndex;
-    if (indiceTransportes == null) {
-        document.formuEvento.listaTransportes.className = "form-control input-md error";
-        sMensaje = "Debes seleccionar un transporte\n";
+
+    for (var i = 0; i < listaEventos.options.length; ++i) {
+        if(listaEventos.options[i].selected)
+        var evento = listaEventos.options[i].text;
+    }
+    if(evento == null){
+        sMensaje = "Debe seleccionar un evento \n";
         errores.push(sMensaje);
+        //Marcar error
+        document.formuAsistente.listaEventos.className = "form-control input-md error";
     }
     else {
-        document.formuEvento.listaTransportes.className = "form-control input-md";
+        document.formuAsistente.listaEventos.className = "form-control input-md";
     }
 
     //Mostramos mensaje de error o introducimos los datos
@@ -784,9 +745,8 @@ function altaAsistente() {
     else {
         //guardamos el asistente
         document.formuAsistente.reset();
-        var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email/*, evento*/);
+        var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, evento);
         var bExiste = oGestion.altaAsistente(oAsistente);
-
         if (bExiste == true) {
             errores.push("Este asistente ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
@@ -797,7 +757,7 @@ function altaAsistente() {
     }
 }
 
-//GESTION EVENTOS
+//FORMULARIO EVENTOS****************************************************************************************************
 function mostrarAltaEvento() {
     ocultarFormulario();
     document.formuEvento.style.display = "block";
@@ -807,8 +767,9 @@ function altaEvento() {
     var oForm = document.formuEvento;
     var fecha = oForm.fecha.value.trim();
     var descripcion = oForm.descripcion.value.trim();
-    var trabajadores = oForm.listaTrabajadores.value.trim();
-    var transportes = oForm.listaTransportes.value.trim();
+    var listaTrabajadores = oForm.listaTrabajadores;
+    var listaTransportes = oForm.listaTransportes;
+    var listaLugares = oForm.listaLugares;
     var bValido = true;
     var sMensaje = "";
     var errores = [];
@@ -860,6 +821,25 @@ function altaEvento() {
     }
 
 
+    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
+        if(listaTrabajadores.options[i].selected)
+            var trabajadores = listaTrabajadores.options[i].text;
+    }
+
+    if(trabajadores=="No hay trabajadores disponibles"){
+        errores.push("Lo sentimos no hay trabajadores disponibles \n");
+        document.formuEvento.listaTrabajadores.className = "form-control input-md error";
+    }
+    else {
+        if(trabajadores == null){
+            errores.push("Debe seleccionar los trabajadores del evento \n");
+            document.formuEvento.listaTrabajadores.className = "form-control input-md error";
+        }
+        else
+        document.formuEvento.listaTrabajadores.className = "form-control input-md";
+    }
+
+
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
         mostrarMensajeDeError(errores);
@@ -870,7 +850,6 @@ function altaEvento() {
         ponerFechaActual();
         var oEvento = new Evento(fecha, descripcion, trabajadores, transportes);
         var bExiste = oGestion.altaEvento(oEvento);
-
         if (bExiste == true) {
             errores.push("Ese evento ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
@@ -987,7 +966,6 @@ function altaTransporte() {
         document.formuTransporte.reset();
         var oTransporte = new Transporte(id, tipo, plazas);
         var bExiste = oGestion.altaTransporte(oTransporte);
-
         if (bExiste == true) {
             errores.push("Ese transporte ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
@@ -1070,17 +1048,13 @@ function altaLugar() {
         //guardamos los lugares
         document.formuLugar.reset();
         var oLugar = new Lugar(sDescripcion, sDireccion, iCapacidad);
-        var sMensaje = oGestion.altaLugar(oLugar);
-
-        if (sMensaje == true) {
+        var bExiste = oGestion.altaLugar(oLugar);
+        if (bExiste == true) {
             errores.push("Este lugar ya fue dado de alta previamente\n");
             mostrarMensajeDeError(errores);
         }
         else {
-            sMensaje = "Lugar dado de alta\n";
-            mostrarMensajeCorrecto(sMensaje);
-
-            añadirTrabajadorAlCombo(oLugar);
+            mostrarMensajeCorrecto("Lugar dado de alta\n");
         }
     }
 }
@@ -1240,7 +1214,6 @@ function mostrarListaAsistentes() {
     var lista = oGestion.cogerTodosLosAsistentes();
     var oTabla = document.createElement("table");
 
-
     oTabla.setAttribute("class", "table table-striped");
 
     var oThead = oTabla.createTHead();
@@ -1258,29 +1231,92 @@ function mostrarListaAsistentes() {
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Apellidos"));
 
-
     oCelda = document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Telefono"));
 
-    document.querySelector("#idListaCli").appendChild(oTabla);
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Email"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Evento"));
+
+    document.querySelector("#tablaAsistentes").appendChild(oTabla);
 
     var oTBody = oTabla.createTBody();
 
     for (i = 0; i < lista.length; i++) {
         oFila = oTBody.insertRow(-1);
         oCelda = oFila.insertCell(-1);
-        oCelda.appendChild(document.createTextNode(lista[i].dniCliente));
+        oCelda.appendChild(document.createTextNode(lista[i].dniAsistente));
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].nombre));
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].apellidos));
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].telefono));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].email));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].eventos));
 
     }
 }
 
+function mostrarListaEventos() {
+    ocultarFormulario();
+    vaciarTablas(document.querySelector("#tablaEventos"));
+    document.querySelector("#tablaEventos").style.display = "block";
+
+    var lista = oGestion.cogerTodosLosEventos();
+    var oTabla = document.createElement("table");
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Fecha"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Descripcion"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Trabajadores"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Transporte"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Lugar"));
+
+
+    document.querySelector("#tablaAsistentes").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].fecha));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].descripcion));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].trabajadores));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].transporte));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].lugar));
+    }
+}
 
 
 

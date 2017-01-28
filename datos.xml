@@ -68,7 +68,7 @@
         <apellidos>Ramirez Ramos</apellidos>
         <telefono>618245789</telefono>
         <email>email@hotmail.com</email>
-        <eventoAsistente>FestivalOfColors</eventoAsistente>
+        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>47415872M</dni>
@@ -76,7 +76,7 @@
         <apellidos>Jimenez Sousa</apellidos>
         <telefono>625478965</telefono>
         <email>email@gmail.com</email>
-        <eventoAsistente>FestivalOfColors</eventoAsistente>
+        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>48278542X</dni>
@@ -84,7 +84,7 @@
         <apellidos>Ruiz Perez</apellidos>
         <telefono>635416875</telefono>
         <email>email@hotmail.es</email>
-        <eventoAsistente>FestivalOfColors</eventoAsistente>
+        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
     </asistente>
 
     <evento>
@@ -99,6 +99,7 @@
         <trabajador>Juan Palomo</trabajador>
         <transporteEvento>Minibus</transporteEvento>
     </evento>
+
     <trabajador>
         <dni>4578125A</dni>
         <nombre>Don Osto</nombre>
@@ -134,9 +135,7 @@
         <nombre>Jimi</nombre>
         <apellidos>Hendrix</apellidos>
         <tipo>Artista</tipo>
-        <instrumentos>Guitarra</instrumentos>
-        <instrumentos>Bajo</instrumentos>
-        <instrumentos>Piano</instrumentos>
+        <instrumentos>Guitarra, Bajo, Piano</instrumentos>
         <genero>Rock</genero>
     </trabajador>
     <trabajador>
@@ -144,9 +143,7 @@
         <nombre>Michael</nombre>
         <apellidos>Jackson</apellidos>
         <tipo>Artista</tipo>
-        <instrumentos>Guitarra</instrumentos>
-        <instrumentos>Lira</instrumentos>
-        <instrumentos>Arpa</instrumentos>
+        <instrumentos>Guitarra, Lira, Arpa</instrumentos>
         <genero>Pop</genero>
     </trabajador>
     <trabajador>
