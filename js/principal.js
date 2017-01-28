@@ -100,6 +100,7 @@ function ocultarFormulario() {
 
     //Ocultamos los listados
     document.querySelector("#idListaCli").style.display = "none";
+    document.querySelector("#tablaAsistentes").style.display = "none";
 
 }
 
@@ -1145,6 +1146,57 @@ function mostrarListaClientes() {
     }
 }
 
+
+function mostrarListaAsistentes() {
+    ocultarFormulario();
+
+    vaciarTablas(document.querySelector("#tablaAsistentes"));
+    document.querySelector("#tablaAsistentes").style.display = "block";
+
+
+    var lista = oGestion.cogerTodosLosAsistentes();
+    var oTabla = document.createElement("table");
+
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("D.N.I"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Nombre"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Apellidos"));
+
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Telefono"));
+
+    document.querySelector("#idListaCli").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].dniCliente));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].nombre));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].telefono));
+
+    }
+}
 
 
 

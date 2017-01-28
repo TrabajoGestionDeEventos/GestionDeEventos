@@ -292,3 +292,12 @@ Gestion.prototype.cogerTodosLosClientes = function () {
     }
     return arrayClientes;
 }
+
+Gestion.prototype.cogerTodosLosAsistentes = function () {
+    var arrayAsistentes = [];
+
+    for(var i = 0;i<this.asistentes.length;i++){
+        arrayAsistentes.push(this.asistentes[i]);
+    }
+    return arrayAsistentes;
+}
