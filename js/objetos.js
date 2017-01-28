@@ -16,13 +16,13 @@ function Contrato(dFecha, iIdContrato, sImporte, articulos, dniCliente, descripc
 }
 
 // objeto Asistente*****************************************************************************************************
-function Asistente(sDniAsistente, sNombre, sApellidos, iTelefono, sEmail/*, eventos*/) {
+function Asistente(sDniAsistente, sNombre, sApellidos, iTelefono, sEmail, eventos) {
     this.dniAsistente = sDniAsistente;
     this.nombre = sNombre;
     this.apellidos = sApellidos;
     this.telefono = iTelefono;
     this.email = sEmail;
-    //this.eventos = eventos;
+    this.eventos = eventos;
 }
 
 // objeto Transporte****************************************************************************************************
@@ -114,7 +114,6 @@ function Gestion() {
 Gestion.prototype.altaCliente = function (oCliente) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por dni
     while (i < this.clientes.length && bEnc == false) {
@@ -134,7 +133,6 @@ Gestion.prototype.altaCliente = function (oCliente) {
 Gestion.prototype.darBajaCliente = function (dniCliente) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
     var posicion = 0;
     // Busco por descripcion
     while (i < this.clientes.length && bEnc == false) {
@@ -156,11 +154,10 @@ Gestion.prototype.darBajaCliente = function (dniCliente) {
 Gestion.prototype.altaAsistente = function (oAsistente) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por descripcion
     while (i < this.asistentes.length && bEnc == false) {
-        if (this.asistentes[i].id == oAsistente.id) {
+        if (this.asistentes[i].dniAsistente == oAsistente.dniAsistente) {
             bEnc = true;
         }
         i++;
@@ -169,7 +166,6 @@ Gestion.prototype.altaAsistente = function (oAsistente) {
     if (bEnc != true) {
         this.asistentes.push(oAsistente);
     }
-
     return bEnc;
 }
 
@@ -194,7 +190,6 @@ Gestion.prototype.altaEvento = function (oEvento) {
 Gestion.prototype.altaTransporte = function (oTransporte) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por descripcion
     while (i < this.transportes.length && bEnc == false) {
@@ -203,7 +198,6 @@ Gestion.prototype.altaTransporte = function (oTransporte) {
         }
         i++;
     }
-
 
     if (bEnc != true) {
         this.transportes.push(oTransporte);
@@ -215,7 +209,6 @@ Gestion.prototype.altaTransporte = function (oTransporte) {
 Gestion.prototype.altaLugar = function (oLugar) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por descripcion
     while (i < this.lugares.length && bEnc == false) {
@@ -236,7 +229,6 @@ Gestion.prototype.altaLugar = function (oLugar) {
 Gestion.prototype.altaTrabajador = function (oTrabajador) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por dni
     while (i < this.trabajadores.length && bEnc == false) {
