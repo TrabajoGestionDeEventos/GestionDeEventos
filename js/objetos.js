@@ -7,12 +7,13 @@ function Cliente(sDniCliente, sNombre, sApellidos, iTelefono) {
 }
 
 // objeto Contrato******************************************************************************************************
-function Contrato(dFecha, iIdContrato, sImporte, articulos, dniCliente, descripcion) {
-    this.fecha = dFecha;
-    this.idContrato = iIdContrato;
-    this.importe = sImporte;
-    Cliente.call(this, dniCliente);
-    Evento.call(this, descripcion);
+function Contrato(iIdContrato,dFechaInicio,dFechaFin, sImporte, objetoCliente,objetoEvento) {
+    this.iIdContrato = iIdContrato;
+    this.fechaInicio = dFechaInicio;
+    this.fechaFin = dFechaFin;
+    this.sImporte = sImporte;
+    this.objetoCliente = objetoCliente;
+    this.objetoEvento = objetoEvento;
 }
 
 // objeto Asistente*****************************************************************************************************
@@ -136,7 +137,7 @@ Gestion.prototype.darBajaCliente = function (dniCliente) {
     var posicion = 0;
     // Busco por descripcion
     while (i < this.clientes.length && bEnc == false) {
-        if (this.eventos[i].descripcion == oEvento.descripcion && this.eventos[i].fecha == oEvento.fecha) {
+        if (this.clientes[i].dniCliente == dniCliente) {
 
             posicion = i;
             bEnc = true;
@@ -146,6 +147,25 @@ Gestion.prototype.darBajaCliente = function (dniCliente) {
 
     if (bEnc) {
         this.clientes.splice(posicion, 1);
+    }
+
+    return bEnc;
+}
+
+Gestion.prototype.altaContrato = function (oContrato) {
+    var i = 0;
+    var bEnc = false;
+
+    while (i < this.contratos.length && bEnc == false)
+    {
+        if (this.contratos[i].id == oContrato.id && this.contratos[i].objetoCliente==oContrato.objetoCliente && this.contratos[i].objetoEvento==oContrato.objetoEvento) {
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if(bEnc!=true){
+        this.contratos.push(oContrato);
     }
 
     return bEnc;

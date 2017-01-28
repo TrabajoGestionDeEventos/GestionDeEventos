@@ -261,6 +261,7 @@ function altaCliente() {
         if (sMensaje == true) {
             errores.push("Ese cliente ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
+            document.formuCliente.dni.focus();
         }
         else {
             mostrarMensajeCorrecto("Cliente dado de alta");
@@ -401,7 +402,7 @@ function altaTrabajador() {
             mostrarMensajeDeError(errores);
         }
         else {
-            var oArtista = new Artista(dni, nombre, apellidos, sIns, sGenero);
+            var oArtista = new Artista(dni, nombre, apellidos, sInstrumentos, sGenero);
             sMensaje = oGestion.altaTrabajador(oArtista);
             if (sMensaje == true) {
                 errores.push("Ese trabajador ya fue dado de alta previamente");
@@ -485,24 +486,27 @@ function altaTrabajador() {
 function altaContrato() {
     var oForm = document.frmGestionContrato;
     var sMensaje = "";
-    var bValido = false;
+    var bValido = true;
     var idContrato = oForm.idcontrato.value.trim();
     var fechaInicio = oForm.fechaInicio.value.trim();
     var fechaFin = oForm.fechaFin.value.trim();
     var importe = parseFloat(oForm.importe.value.trim());
     var objetoCliente = oForm.selectObjetoCliente.value;
     var objetoEvento = oForm.selectObjetoEvento.value;
+    var errores = [];
 
 
     //Validar campo ID
-    var oExpReg = /^\d{2}$/;
+    var oExpReg = /^\d{1,2}$/;
 
     if (oExpReg.test(idContrato) == false) {
         if (bValido == true) {
             bValido = false;
             document.frmGestionContrato.idcontrato.focus();
         }
-        sMensaje += "El ID debe contener solo 2 dígitos\n";
+        sMensaje = "El ID debe contener solo 2 dígitos\n";
+        errores.push(sMensaje);
+        document.frmGestionContrato.idcontrato.className = "form-control input-md error";
 
     }
     else {
@@ -520,7 +524,8 @@ function altaContrato() {
                 bValido = false;
                 document.frmGestionContrato.fechaInicio.focus();
             }
-            sMensaje += "La fecha introducida no existe\n";
+            sMensaje = "La fecha introducida no existe\n";
+            errores.push(sMensaje);
             //Marcamos el error
             document.frmGestionContrato.fechaInicio.className = "form-control input-md error";
         }
@@ -529,14 +534,15 @@ function altaContrato() {
             bValido = false;
             document.frmGestionContrato.fechaInicio.focus();
         }
-        sMensaje += "La fecha no tiene un formato correcto\n";
+        sMensaje = "La fecha no tiene un formato correcto\n";
+        errores.push(sMensaje);
         //Marcamos el error
         document.frmGestionContrato.fechaInicio.className = "form-control input-md error";
     }
 
     //Validamos Fecha Final
     if (validarFormatoFecha(fechaFin)) {
-        if (existeFecha(fechaFin)) {
+        if (existeFecha(fechaFin) && fechaFin>=fechaInicio) {
             //Aquí se desmarca el error
             document.frmGestionContrato.fechaFin.className = "form-control input-md";
         } else {
@@ -544,7 +550,8 @@ function altaContrato() {
                 bValido = false;
                 document.frmGestionContrato.fechaFin.focus();
             }
-            sMensaje += "La fecha introducida no existe\n";
+            sMensaje = "La fecha introducida no existe o es mayor que la fecha de inicio\n";
+            errores.push(sMensaje);
             //Marcamos el error
             document.frmGestionContrato.fechaFin.className = "form-control input-md error";
         }
@@ -553,18 +560,44 @@ function altaContrato() {
             bValido = false;
             document.frmGestionContrato.fechaFin.focus();
         }
-        sMensaje += "La fecha no tiene un formato correcto\n";
+        sMensaje = "La fecha no tiene un formato correcto\n";
+        errores.push(sMensaje);
         //Marcamos el error
         document.frmGestionContrato.fechaFin.className = "form-control input-md error";
     }
 
+    //Validamos Importe
+    var oExpReg = /^\d[0-9,]{1,10}/;
+    if (oExpReg.test(importe) == false) {
+        if (bValido == true) {
+            bValido = false;
+            document.frmGestionContrato.importe.focus();
+        }
+        sMensaje = "El importe es incorrecto debe estar comprendida entre 1-10 dígitos\n";
+        errores.push(sMensaje);
+        document.frmGestionContrato.importe.className = "form-control input-md error";
+    }
+    else {
+        document.frmGestionContrato.importe.className = "form-control input-md";
+    }
+
 
     if (bValido == false) {
-        toastr.error(sMensaje, "Error");
+        mostrarMensajeDeError(errores);
     }
     else {//Damos de alta el contrato
-        document.frmGestionContrato.reset();
         ponerFechaActualInicio();
+        oContrato = new Contrato(idContrato,fechaInicio,fechaFin,importe,objetoCliente,objetoEvento);
+        sMensaje = oGestion.altaContrato(oContrato);
+
+        if (sMensaje == true) {
+            errores.push("Ese contrato ya fue dado de alta previamente");
+            mostrarMensajeDeError(errores);
+        }
+        else {
+            mostrarMensajeCorrecto("Contrato dado de alta");
+            oForm.reset();
+        }
     }
 
 }
