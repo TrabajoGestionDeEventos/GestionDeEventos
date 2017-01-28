@@ -32,14 +32,12 @@ function Transporte(iId, sTipo, iPlazas) {
     this.plazas = iPlazas;
 }
 
-
 // objeto Lugar*********************************************************************************************************
 function Lugar(sDescripcion, sDireccion, iCapacidad) {
     this.descripcion = sDescripcion;
     this.direccion = sDireccion;
     this.capacidad = iCapacidad;
 }
-
 
 //Objeto Trabajador*****************************************************************************************************
 function Trabajador(dni, nombre, apellidos) {
@@ -180,7 +178,7 @@ Gestion.prototype.altaEvento = function (oEvento) {
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
-        if (this.eventos[i].id == oEvento.descripcion) {
+        if (this.eventos[i].descripcion == oEvento.descripcion && this.eventos[i].fecha == oEvento.fecha) {
             bEnc = true;
         }
         i++;
@@ -292,6 +290,5 @@ Gestion.prototype.cogerTodosLosClientes = function () {
     for(var i = 0;i<this.clientes.length;i++){
         arrayClientes.push(this.clientes[i]);
     }
-
     return arrayClientes;
 }

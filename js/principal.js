@@ -14,13 +14,13 @@ var oGestion = new Gestion();
 var oXML = loadXMLDoc("datos.xml");
 
 var oClientes = oXML.getElementsByTagName("cliente");
-for(var j = 0; j<oClientes.length;j++){
+for (var j = 0; j < oClientes.length; j++) {
     var dni = oClientes[j].getElementsByTagName("dni")[0].textContent;
     var nombre = oClientes[j].getElementsByTagName("nombre")[0].textContent;
     var apellidos = oClientes[j].getElementsByTagName("apellidos")[0].textContent;
     var telefono = oClientes[j].getElementsByTagName("telefono")[0].textContent;
 
-    var oCliente = new Cliente(dni,nombre,apellidos,telefono);
+    var oCliente = new Cliente(dni, nombre, apellidos, telefono);
     oGestion.altaCliente(oCliente);
 }
 
@@ -44,7 +44,7 @@ for (var j = 0; j < oAsistentes.length; j++) {
     var email = oAsistentes[j].getElementsByTagName("email")[0].textContent;
     var eventoAsistente = oAsistentes[j].getElementsByTagName("eventoAsistente")[0].textContent;
 
-    var oAsistente= new Asistente(dni, nombre, apellidos, telefono, email);
+    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email);
     var sMensaje = oGestion.altaAsistente(oAsistente);
 }
 
@@ -61,7 +61,7 @@ for (var j = 0; j < oTransportes.length; j++) {
 var oEventos = oXML.getElementsByTagName("evento");
 for (var j = 0; j < oEventos.length; j++) {
     var fecha = oEventos[j].getElementsByTagName("fecha")[0].textContent;
-    var descripcion= oEventos[j].getElementsByTagName("descripcion")[0].textContent;
+    var descripcion = oEventos[j].getElementsByTagName("descripcion")[0].textContent;
 
     var oEvento = new Evento(fecha, descripcion);
     oGestion.altaEvento(oEvento);
@@ -99,7 +99,7 @@ function ocultarFormulario() {
         errores[i].className = "form-control input-md";
 
     //Ocultamos los listados
-    document.querySelector("#idListaCli").style.display="none";
+    document.querySelector("#idListaCli").style.display = "none";
 
 }
 
@@ -160,8 +160,7 @@ function mostrarContrato() {
     document.frmGestionContrato.style.display = "block";
 }
 
-function altaCliente()
-{
+function altaCliente() {
     var oForm = document.formuCliente;
     var bValido = true;
     var sMensaje = "";
@@ -267,17 +266,17 @@ function bajaCliente() {
     var bValido = true;
     var sMensaje = "";
     var clienteBaja = oForm.clienteBaja.value;
-    var clienteMod = clienteBaja.substr(0,9);
+    var clienteMod = clienteBaja.substr(0, 9);
 
     sMensaje = oGestion.darBajaCliente(clienteMod);
     rellenaComboBajaCliente();
 
-    if(sMensaje == false){
+    if (sMensaje == false) {
         toastr.success("Cliente dado de alta", "Conseguido");
     }
 }
 
-function rellenaComboBajaCliente(){
+function rellenaComboBajaCliente() {
     var mod = document.frmBajaCliente.clienteBaja.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -541,7 +540,7 @@ function ponerFechaActualInicio() {
     document.getElementById("fechaInicio").value = actual;
 }
 
-function rellenaComboCliente(){
+function rellenaComboCliente() {
     var mod = document.frmGestionContrato.selectObjetoCliente.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -558,7 +557,7 @@ function rellenaComboCliente(){
     }
 }
 
-function rellenaComboEventos(){
+function rellenaComboEventos() {
     var mod = document.frmGestionContrato.selectObjetoCliente.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -767,9 +766,33 @@ function altaEvento() {
     }
 
 
+    //Validar combo Trabajadores
+    var indiceTrabajadores = oForm.listaTrabajadores.selectedIndex;
+    if( indiceTrabajadores == null) {
+        document.formuEvento.listaTrabajadores.className = "form-control input-md error";
+        sMensaje = "Debes seleccionar un trabajador\n";
+        errores.push(sMensaje);
+    }
+    else{
+        document.formuEvento.listaTrabajadores.className = "form-control input-md";
+    }
+
+    //Validar combo Transportes
+    var indiceTransportes = oForm.listaTransportes.selectedIndex;
+    if( indiceTransportes == null) {
+        document.formuEvento.listaTransportes.className = "form-control input-md error";
+        sMensaje = "Debes seleccionar un transporte\n";
+        errores.push(sMensaje);
+    }
+    else{
+        document.formuEvento.listaTransportes.className = "form-control input-md";
+    }
+
+
+
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
-        toastr.error(sMensaje, "Error");
+        mostrarMensajeDeError(errores);
     }
     else {
         //guardamos el evento
@@ -1007,9 +1030,13 @@ function actualizarComboTrabajadores() {
     var oForm = document.formuEvento;
     var lista = oForm.listaTrabajadores;
     // Busco por descripcion
-    if(oGestion.trabajadores.length|=0)
-    for (var i = 0; i < oGestion.trabajadores.length; i++) {
-        lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " "+ oGestion.trabajadores[i].apellidos);
+    if (oGestion.trabajadores.length |= 0){
+        for (var i = 0; i < oGestion.trabajadores.length; i++) {
+            lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos);
+        }
+    }
+    else{
+        lista.options[i] = new Option("No hay trabajadores disponibles");
     }
 }
 
@@ -1017,19 +1044,28 @@ function actualizarComboTransportes() {
     var oForm = document.formuEvento;
     var lista = oForm.listaTransportes;
     // Busco por id
-    if(oGestion.transportes.length|=0)
-    for (var i = 0; i < oGestion.transportes.length; i++) {
-        lista.options[i] = new Option(oGestion.transportes[i].id + " "+ oGestion.transportes[i].tipo);
+    if (oGestion.transportes.length |= 0){
+        for (var i = 0; i < oGestion.transportes.length; i++) {
+            lista.options[i] = new Option(oGestion.transportes[i].id + " " + oGestion.transportes[i].tipo);
+        }
     }
+    else{
+            lista.options[i] = new Option("No hay transportes disponibles");
+    }
+
 }
 
 function actualizarComboLugares() {
     var oForm = document.formuEvento;
     var lista = oForm.listaLugares;
     // Busco por descripcion
-    if(oGestion.lugares.length|=0)
-    for (var i = 0; i < oGestion.lugares.length; i++) {
-        lista.options[i] = new Option(oGestion.lugares[i].descripcion);
+    if (oGestion.lugares.length |= 0){
+        for (var i = 0; i < oGestion.lugares.length; i++) {
+            lista.options[i] = new Option(oGestion.lugares[i].descripcion);
+        }
+    }
+    else{
+        lista.options[i] = new Option("No hay lugares disponibles");
     }
 }
 
@@ -1037,69 +1073,73 @@ function actualizarComboEventos() {
     var oForm = document.formuAsistente;
     var lista = oForm.listaEventos;
     // Busco por descripcion
-    if(oGestion.eventos.length|=0)
+    if (oGestion.eventos.length |= 0){
         for (var i = 0; i < oGestion.eventos.length; i++) {
-            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha +")" );
+            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
         }
+    }
+    else{
+        lista.options[i] = new Option("No hay eventos disponibles");
+    }
 }
 
 
 //LISTADOS
 
-function vaciarTablas(objetoPadre){
-    while (objetoPadre.children.length!=0){
+function vaciarTablas(objetoPadre) {
+    while (objetoPadre.children.length != 0) {
         objetoPadre.removeChild(objetoPadre.firstElementChild);
     }
 }
 
-function mostrarListaClientes(){
+function mostrarListaClientes() {
     ocultarFormulario();
 
     vaciarTablas(document.querySelector("#idListaCli"));
-    document.querySelector("#idListaCli").style.display="block";
+    document.querySelector("#idListaCli").style.display = "block";
 
     // vaciarTablas(document.querySelectorAll("ul.claseEjemploLista"));
     // document.querySelectorAll("ul.claseEjemploLista").style.display="block";
 
-    var lista=oGestion.cogerTodosLosClientes();
-    var oTabla=document.createElement("table");
+    var lista = oGestion.cogerTodosLosClientes();
+    var oTabla = document.createElement("table");
 
 
-    oTabla.setAttribute("class","table table-striped");
+    oTabla.setAttribute("class", "table table-striped");
 
-    var oThead=oTabla.createTHead();
-    var oFila=oThead.insertRow(-1);
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
 
-    oCelda=document.createElement("th");
+    oCelda = document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("D.N.I"));
 
-    oCelda=document.createElement("th");
+    oCelda = document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Nombre"));
 
-    oCelda=document.createElement("th");
+    oCelda = document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Apellidos"));
 
 
-    oCelda=document.createElement("th");
+    oCelda = document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Telefono"));
 
     document.querySelector("#idListaCli").appendChild(oTabla);
 
-    var oTBody=oTabla.createTBody();
+    var oTBody = oTabla.createTBody();
 
-    for(i=0;i<lista.length;i++){
-        oFila=oTBody.insertRow(-1);
-        oCelda=oFila.insertCell(-1);
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].dniCliente));
-        oCelda=oFila.insertCell(-1);
+        oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].nombre));
-        oCelda=oFila.insertCell(-1);
+        oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].apellidos));
-        oCelda=oFila.insertCell(-1);
+        oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].telefono));
 
     }
