@@ -32,12 +32,14 @@ function Transporte(iId, sTipo, iPlazas) {
     this.plazas = iPlazas;
 }
 
+
 // objeto Lugar*********************************************************************************************************
 function Lugar(sDescripcion, sDireccion, iCapacidad) {
     this.descripcion = sDescripcion;
     this.direccion = sDireccion;
     this.capacidad = iCapacidad;
 }
+
 
 //Objeto Trabajador*****************************************************************************************************
 function Trabajador(dni, nombre, apellidos) {
@@ -116,7 +118,7 @@ Gestion.prototype.altaCliente = function (oCliente) {
 
     // Busco por dni
     while (i < this.clientes.length && bEnc == false) {
-        if (this.clientes[i].dniCliente == oCliente.dni) {
+        if (this.clientes[i].dniCliente == oCliente.dniCliente) {
             bEnc = true;
         }
         i++;
@@ -178,7 +180,7 @@ Gestion.prototype.altaEvento = function (oEvento) {
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
-        if (this.eventos[i].descripcion == oEvento.descripcion && this.eventos[i].fecha == oEvento.fecha) {
+        if (this.eventos[i].id == oEvento.descripcion) {
             bEnc = true;
         }
         i++;
@@ -290,5 +292,6 @@ Gestion.prototype.cogerTodosLosClientes = function () {
     for(var i = 0;i<this.clientes.length;i++){
         arrayClientes.push(this.clientes[i]);
     }
+
     return arrayClientes;
 }

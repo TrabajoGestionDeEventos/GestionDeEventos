@@ -99,4 +99,64 @@
         <trabajador>Juan Palomo</trabajador>
         <transporteEvento>Minibus</transporteEvento>
     </evento>
+    <trabajador>
+        <dni>4578125A</dni>
+        <nombre>Don Osto</nombre>
+        <apellidos>Mendez</apellidos>
+        <tipo>Limpieza</tipo>
+        <compañia>Trabaja en Negro</compañia>
+    </trabajador>
+    <trabajador>
+        <dni>4578155D</dni>
+        <nombre>Don Otro</nombre>
+        <apellidos>Mendecito</apellidos>
+        <tipo>Limpieza</tipo>
+        <compañia>Papas Mandan</compañia>
+    </trabajador>
+    <trabajador>
+        <dni>45718201B</dni>
+        <nombre>Miguel</nombre>
+        <apellidos>Ramirez Ramos</apellidos>
+        <tipo>Tecnico</tipo>
+        <especialidad>Toca pelotas</especialidad>
+        <herramientas>No</herramientas>
+    </trabajador>
+    <trabajador>
+        <dni>45718231J</dni>
+        <nombre>Miguelito</nombre>
+        <apellidos>Ramirencito Ramoncito</apellidos>
+        <tipo>Tecnico</tipo>
+        <especialidad>Toca Glandes</especialidad>
+        <herramientas>Si</herramientas>
+    </trabajador>
+    <trabajador>
+        <dni>5197534G</dni>
+        <nombre>Jimi</nombre>
+        <apellidos>Hendrix</apellidos>
+        <tipo>Artista</tipo>
+        <instrumentos>Guitarra, Bajo, Piano</instrumentos>
+        <genero>Rock</genero>
+    </trabajador>
+    <trabajador>
+        <dni>5297534T</dni>
+        <nombre>Michael</nombre>
+        <apellidos>Jackson</apellidos>
+        <tipo>Artista</tipo>
+        <instrumentos>Guitarra, Lira, Arpa</instrumentos>
+        <genero>Pop</genero>
+    </trabajador>
+    <trabajador>
+        <dni>55544466Z</dni>
+        <nombre>Gregory</nombre>
+        <apellidos>House</apellidos>
+        <tipo>Sanitario</tipo>
+        <especialidad>Medico</especialidad>
+    </trabajador>
+    <trabajador>
+        <dni>11144477Y</dni>
+        <nombre>Hipocrates</nombre>
+        <apellidos>el filosofo</apellidos>
+        <tipo>Sanitario</tipo>
+        <especialidad>Camillero</especialidad>
+    </trabajador>
 </gestion>
