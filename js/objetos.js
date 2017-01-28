@@ -91,7 +91,7 @@ Limpieza.prototype.constructor = Limpieza;
 
 
 // objeto Evento********************************************************************************************************
-function Evento(dFecha, sDescripcion) {
+function Evento(dFecha, sDescripcion, asistente, transporte, lugar) {
     this.fecha = dFecha;
     this.descripcion = sDescripcion;
     this.asistente = [];
@@ -281,21 +281,6 @@ Gestion.prototype.obtenerClientes = function () {
 
 }
 
-/*Gestion.prototype.obtenerEventos = function () {
- var arrayEventos = [];
-
- if(this.clientes.length!=0) {
-
- for (var i = 0; i < this.clientes.length; i++) {
- arrayEventos.push(this.eventos[i].descripcion);
- }
- }
- else{
- arrayEventos.push("No hay eventos registrados");
- }
- return arrayEventos;
-
- }*/
 
 //LISTADOS
 Gestion.prototype.cogerTodosLosClientes = function () {
@@ -304,7 +289,6 @@ Gestion.prototype.cogerTodosLosClientes = function () {
     for (var i = 0; i < this.clientes.length; i++) {
         arrayClientes.push(this.clientes[i]);
     }
-
     return arrayClientes;
 }
 
@@ -315,4 +299,13 @@ Gestion.prototype.cogerTodosLosAsistentes = function () {
         arrayAsistentes.push(this.asistentes[i]);
     }
     return arrayAsistentes;
+}
+
+Gestion.prototype.cogerTodosLosEventos = function () {
+    var arrayEventos = [];
+
+    for (var i = 0; i < this.eventos.length; i++) {
+        arrayEventos.push(this.eventos[i]);
+    }
+    return arrayEventos;
 }

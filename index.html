@@ -83,7 +83,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="altaEvento">Alta Evento</a></li>
-                                <li><a href="#">Listar Evento</a></li>
+                                <li><a href="#" id="listarEventos">Listar Evento</a></li>
                             </ul>
                         </li>
                         <li><a href="#" id="altaTransporte">Gestión Tranporte</a></li>
@@ -429,6 +429,9 @@
         </div>
     </div>
 
+    <!-- MOSTRAR LISTA ASISTENTES -->
+    <div id="tablaEventos"></div>
+
     <!-- GESTION TRANSPORTE-->
     <div class="row">
         <div class="col-xs-12">
@@ -587,16 +590,21 @@
                             </label>
                         </div>
                     </div>
-
                     <!--Artista-->
                     <!-- Select Multiple -->
-                    <div id="idArtista" name="nameArtista">
+                    <div id="idArtista">
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectInstrumentos">Instrumentos</label>
                             <div class="col-md-5">
-                                <select id="selectInstrumentos" name="selectInstrumentos" class="form-control"
+                                <select id="selectInstrumentos" name="selectInstrumentos[]" class="form-control"
                                         multiple="multiple">
-
+                                    <option value="Batería">Batería</option>
+                                    <option value="Guitarra">Guitarra</option>
+                                    <option value="Bajo">Bajo</option>
+                                    <option value="Piano">Piano</option>
+                                    <option value="Arpa">Arpa</option>
+                                    <option value="Lira">Lira</option>
+                                    <option value="Otros">Otros</option>
                                 </select>
                             </div>
                         </div>
@@ -738,14 +746,14 @@
     var radioArtista = document.getElementById('radioArtista');
     radioArtista.addEventListener("click", mostrarRadioArtista);
 
-    var radioTecnico = document.getElementById('radioTecnico');
-    radioTecnico.addEventListener("click", mostrarRadioTecnico);
+    var radioArtista = document.getElementById('radioTecnico');
+    radioArtista.addEventListener("click", mostrarRadioTecnico);
 
-    var radioLimpieza = document.getElementById('radioLimpieza');
-    radioLimpieza.addEventListener("click", mostrarRadioLimpieza);
+    var radioArtista = document.getElementById('radioLimpieza');
+    radioArtista.addEventListener("click", mostrarRadioLimpieza);
 
-    var radioSanitario = document.getElementById('radioSanitario');
-    radioSanitario.addEventListener("click", mostrarRadioSanitario);
+    var radioArtista = document.getElementById('radioSanitario');
+    radioArtista.addEventListener("click", mostrarRadioSanitario);
 
     var btnAceptarTrabajador = document.getElementById('aceptarTrabajador');
     btnAceptarTrabajador.addEventListener("click", altaTrabajador);
@@ -786,6 +794,9 @@
 
     var oListaAsistente = document.getElementById('listarAsistente');
     oListaAsistente.addEventListener("click", mostrarListaAsistentes);
+
+    var oListaEventos= document.getElementById('listarEventos');
+    oListaEventos.addEventListener("click", mostrarListaEventos);
 
 </script>
 <script src="js/pikaday.js"></script>

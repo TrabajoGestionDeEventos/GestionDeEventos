@@ -62,8 +62,11 @@ var oEventos = oXML.getElementsByTagName("evento");
 for (var j = 0; j < oEventos.length; j++) {
     var fecha = oEventos[j].getElementsByTagName("fecha")[0].textContent;
     var descripcion = oEventos[j].getElementsByTagName("descripcion")[0].textContent;
+    var trabajadorEvento = oEventos[j].getElementsByTagName("trabajadorEvento")[0].textContent;
+    var transporteEvento = oEventos[j].getElementsByTagName("transporteEvento")[0].textContent;
+    var lugarEvento = oEventos[j].getElementsByTagName("lugarEvento")[0].textContent;
 
-    var oEvento = new Evento(fecha, descripcion);
+    var oEvento = new Evento(fecha, descripcion, trabajadorEvento, transporteEvento, lugarEvento);
     oGestion.altaEvento(oEvento);
 }
 
@@ -94,15 +97,22 @@ function ocultarFormulario() {
     actualizarComboEventos();
     actualizarComboEventos2();
 
-    //desmarcamos los errores de todos los formularios
-    var errores = document.querySelectorAll(".error");
-    for (var i = 0; i < errores.length; i++)
-        errores[i].className = "form-control input-md";
+    desmarcarErrroresFormularios();
+
+    ocultarFormulariosRadio();
+    document.getElementById('idArtista').style.display = "block";
 
     //Ocultamos los listados
     document.querySelector("#idListaCli").style.display = "none";
     document.querySelector("#tablaAsistentes").style.display = "none";
+    document.querySelector("#tablaEventos").style.display = "none";
+}
 
+function desmarcarErrroresFormularios(){
+    //desmarcamos los errores de todos los formularios
+    var errores = document.querySelectorAll(".error");
+    for (var i = 0; i < errores.length; i++)
+        errores[i].className = "form-control input-md";
 }
 
 function ocultarFormulariosRadio() {
@@ -130,67 +140,37 @@ function mostrarUML() {
 
 function mostrarTrabajador() {
     ocultarFormulario();
-    document.frmTrabajador.reset();
-    rellenaComboInstrumentos();
     document.frmTrabajador.style.display = "block";
 }
 
-function vaciaCamposTrabajador(){
-    document.frmTrabajador.nombre.value ="";
-    document.frmTrabajador.dni.value ="";
-    document.frmTrabajador.apellidos.value ="";
-}
-
-function rellenaComboInstrumentos(){
-
-    var mod = document.frmTrabajador.selectInstrumentos.children;
-    for (var i = mod.length - 1; i >= 0; i--) {
-        mod[i].parentNode.removeChild(mod[i]);
-    }
-
-    var arrayInstrumentos=[];
-    arrayInstrumentos[0]="Arpa";
-    arrayInstrumentos[1]="Bajo";
-    arrayInstrumentos[2]="Bateria";
-    arrayInstrumentos[3]="Lira";
-    arrayInstrumentos[4]="Guitarra";
-    arrayInstrumentos[5]="Piano";
-    arrayInstrumentos[6]="Otros";
-
-    mod = document.frmTrabajador.selectInstrumentos;
-    for (i = 0; i < arrayInstrumentos.length; i++) {
-        var item = document.createElement("option");
-        item.setAttribute("value", arrayInstrumentos[i]);
-        var texto = document.createTextNode(arrayInstrumentos[i]);
-        item.appendChild(texto);
-        mod.appendChild(item);
-    }
-}
-
 function mostrarRadioArtista() {
+    document.frmTrabajador.reset();
     ocultarFormulariosRadio();
-    rellenaComboInstrumentos();
-    vaciaCamposTrabajador();
     document.getElementById('idArtista').style.display = "block";
+    document.getElementById('radioArtista').checked = true;
 }
 
 function mostrarRadioTecnico() {
+    document.frmTrabajador.reset();
     ocultarFormulariosRadio();
-    vaciaCamposTrabajador();
     document.getElementById('idTecnico').style.display = "block";
-}
-
-function mostrarRadioLimpieza() {
-    ocultarFormulariosRadio();
-    vaciaCamposTrabajador();
-    document.getElementById('idLimpieza').style.display = "block";
+    document.getElementById('radioTecnico').checked = true;
 }
 
 function mostrarRadioSanitario() {
+    document.frmTrabajador.reset();
     ocultarFormulariosRadio();
-    vaciaCamposTrabajador();
     document.getElementById('idSanitario').style.display = "block";
+    document.getElementById('radioSanitario').checked = true;
 }
+
+function mostrarRadioLimpieza() {
+    document.frmTrabajador.reset();
+    ocultarFormulariosRadio();
+    document.getElementById('idLimpieza').style.display = "block";
+    document.getElementById('radioLimpieza').checked = true;
+}
+
 
 function mostrarContrato() {
     ocultarFormulario();
@@ -340,8 +320,6 @@ function rellenaComboBajaCliente() {
     }
 }
 
-
-
 function altaTrabajador() {
     var oForm = document.frmTrabajador;
     var bValido = true;
@@ -358,7 +336,6 @@ function altaTrabajador() {
             bValido = false;
             document.frmTrabajador.dni.focus();
         }
-
         sMensaje = "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra";
         errores.push(sMensaje);
 
@@ -426,7 +403,6 @@ function altaTrabajador() {
                 aInstrumentos = 0;
             }
             sMensaje = "Debe seleccionar algún instrumento";
-            document.frmTrabajador.selectInstrumentos.className = "form-control error";
             errores.push(sMensaje);
         }
         var sGenero = oForm.selectGenero.value;
@@ -439,6 +415,7 @@ function altaTrabajador() {
 
         sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
 
+        console.log(sInstrumentos);
         if (bValido == false) {
             mostrarMensajeDeError(errores);
         }
@@ -457,6 +434,7 @@ function altaTrabajador() {
     }
     else {
         if (valorTipoRadio == 'tecnico') {
+            document.getElementById("idArtista").reset();
             var especialidadTecnica = oForm.especialidadTec.value;
             var herramientasPropias = oForm.radiosHerramientas.value;
             if (bValido == false) {
@@ -467,7 +445,7 @@ function altaTrabajador() {
                 sMensaje = oGestion.altaTrabajador(oTecnico);
 
                 if (sMensaje == true) {
-                    errores.push("Ese trabajador ya fue dado de alta previamente");
+                    errores.push("Ese trabajador ya fue dado de alta previamente")
                     mostrarMensajeDeError(errores);
                 }
                 else {
@@ -900,11 +878,19 @@ function altaEvento() {
     }
 
     if(trabajadores=="No hay trabajadores disponibles"){
+        if (bValido == true) {
+            bValido = false;
+            document.formuEvento.descripcion.focus();
+        }
         errores.push("Lo sentimos no hay trabajadores disponibles \n");
         document.formuEvento.listaTrabajadores.className = "form-control input-md error";
     }
     else {
         if(trabajadores == null){
+            if (bValido == true) {
+                bValido = false;
+                document.formuEvento.descripcion.focus();
+            }
             errores.push("Debe seleccionar los trabajadores del evento \n");
             document.formuEvento.listaTrabajadores.className = "form-control input-md error";
         }
@@ -912,6 +898,26 @@ function altaEvento() {
         document.formuEvento.listaTrabajadores.className = "form-control input-md";
     }
 
+
+    var trabajadores = [];
+    var j = 0;
+    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
+        if(listaTrabajadores.options[i].selected){
+            trabajadores[j] = listaTrabajadores.options[i].text;
+            j++;
+        }
+    }
+
+
+    for (var i = 0; i < listaTransportes.options.length; ++i) {
+        if(listaTransportes.options[i].selected)
+            var transporte = listaTransportes.options[i].text;
+    }
+
+    for (var i = 0; i < listaLugares.options.length; ++i) {
+        if(listaLugares.options[i].selected)
+            var lugar = listaLugares.options[i].text;
+    }
 
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
@@ -921,7 +927,7 @@ function altaEvento() {
         //guardamos el evento
         document.formuEvento.reset();
         ponerFechaActual();
-        var oEvento = new Evento(fecha, descripcion, trabajadores, transportes);
+        var oEvento = new Evento(fecha, descripcion, trabajadores, transporte, lugar);
         var bExiste = oGestion.altaEvento(oEvento);
         if (bExiste == true) {
             errores.push("Ese evento ya fue dado de alta previamente");
@@ -931,7 +937,6 @@ function altaEvento() {
             mostrarMensajeCorrecto("Evento dado de alta");
         }
     }
-
 }
 //************************************************************************************************************************************************************************************************************
 function ponerFechaActual() {
@@ -1372,7 +1377,7 @@ function mostrarListaEventos() {
     oCelda.appendChild(document.createTextNode("Lugar"));
 
 
-    document.querySelector("#tablaAsistentes").appendChild(oTabla);
+    document.querySelector("#tablaEventos").appendChild(oTabla);
 
     var oTBody = oTabla.createTBody();
 

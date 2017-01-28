@@ -90,14 +90,16 @@
     <evento>
         <fecha>15/05/2017</fecha>
         <descripcion>FestivalOfColors</descripcion>
-        <trabajador>Juan Palomo</trabajador>
+        <trabajadorEvento>Juan Palomo</trabajadorEvento>
         <transporteEvento>Minibus</transporteEvento>
+        <lugarEvento>Sala La Riviera</lugarEvento>
     </evento>
     <evento>
         <fecha>21/07/2018</fecha>
         <descripcion>ColorRun</descripcion>
-        <trabajador>Juan Palomo</trabajador>
+        <trabajadorEvento>Juan Palomo</trabajadorEvento>
         <transporteEvento>Minibus</transporteEvento>
+        <lugarEvento>Teatro Barceló</lugarEvento>
     </evento>
 
     <trabajador>
