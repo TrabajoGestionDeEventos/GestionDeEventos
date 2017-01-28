@@ -138,16 +138,16 @@ Gestion.prototype.darBajaCliente = function (dniCliente) {
     var posicion = 0;
     // Busco por descripcion
     while (i < this.clientes.length && bEnc == false) {
-        if (this.clientes[i].dniCliente == dniCliente)
-        {
-            posicion=i;
+        if (this.eventos[i].descripcion == oEvento.descripcion && this.eventos[i].fecha == oEvento.fecha) {
+
+            posicion = i;
             bEnc = true;
         }
         i++;
     }
 
     if (bEnc) {
-        this.clientes.splice(posicion,1);
+        this.clientes.splice(posicion, 1);
     }
 
     return bEnc;
@@ -256,13 +256,13 @@ Gestion.prototype.altaTrabajador = function (oTrabajador) {
 Gestion.prototype.obtenerClientes = function () {
     var arrayClientes = [];
 
-    if(this.clientes.length!=0) {
+    if (this.clientes.length != 0) {
 
         for (var i = 0; i < this.clientes.length; i++) {
             arrayClientes.push(this.clientes[i].dniCliente + " " + this.clientes[i].nombre);
         }
     }
-    else{
+    else {
         arrayClientes.push("No hay clientes registrados");
     }
     return arrayClientes;
@@ -270,26 +270,26 @@ Gestion.prototype.obtenerClientes = function () {
 }
 
 /*Gestion.prototype.obtenerEventos = function () {
-    var arrayEventos = [];
+ var arrayEventos = [];
 
-    if(this.clientes.length!=0) {
+ if(this.clientes.length!=0) {
 
-        for (var i = 0; i < this.clientes.length; i++) {
-            arrayEventos.push(this.eventos[i].descripcion);
-        }
-    }
-    else{
-        arrayEventos.push("No hay eventos registrados");
-    }
-    return arrayEventos;
+ for (var i = 0; i < this.clientes.length; i++) {
+ arrayEventos.push(this.eventos[i].descripcion);
+ }
+ }
+ else{
+ arrayEventos.push("No hay eventos registrados");
+ }
+ return arrayEventos;
 
-}*/
+ }*/
 
 //LISTADOS
 Gestion.prototype.cogerTodosLosClientes = function () {
     var arrayClientes = [];
 
-    for(var i = 0;i<this.clientes.length;i++){
+    for (var i = 0; i < this.clientes.length; i++) {
         arrayClientes.push(this.clientes[i]);
     }
 
@@ -299,7 +299,7 @@ Gestion.prototype.cogerTodosLosClientes = function () {
 Gestion.prototype.cogerTodosLosAsistentes = function () {
     var arrayAsistentes = [];
 
-    for(var i = 0;i<this.asistentes.length;i++){
+    for (var i = 0; i < this.asistentes.length; i++) {
         arrayAsistentes.push(this.asistentes[i]);
     }
     return arrayAsistentes;

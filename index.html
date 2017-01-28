@@ -158,7 +158,7 @@
         </div>
     </div>
 
- <!-- GESTION BAJA CLIENTE -->
+    <!-- GESTION BAJA CLIENTE -->
     <form class="form-horizontal" name="frmBajaCliente" id="frmBajaCliente">
         <fieldset>
             <!-- Form Name -->
@@ -177,7 +177,8 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="aceptarBajaCli"></label>
                 <div class="col-md-4">
-                    <button type="button" id="aceptarBajaCli" name="aceptarBajaCli" class="btn btn-primary">Aceptar</button>
+                    <button type="button" id="aceptarBajaCli" name="aceptarBajaCli" class="btn btn-primary">Aceptar
+                    </button>
                 </div>
             </div>
         </fieldset>
@@ -187,15 +188,14 @@
     <div id="idListaCli"></div>
 
     <!--<ul class="claseEjemploLista">-->
-        <!--<li></li>-->
+    <!--<li></li>-->
     <!--</ul>-->
     <!--<ul class="claseEjemploLista">-->
-        <!--<li></li>-->
+    <!--<li></li>-->
     <!--</ul>-->
     <!--<ul class="claseEjemploLista">-->
-        <!--<li></li>-->
+    <!--<li></li>-->
     <!--</ul>-->
-
 
 
     <!-- GESTION DE CONTRATOS -->
@@ -370,7 +370,8 @@
                         <label class="col-md-4 control-label">Fecha: </label>
                         <div class="col-md-5">
                             <input name="fecha" type="text"
-                                   class="form-control input-md fechas" id="fechaEvento" required="">
+                                   class="form-control input-md fechas" id="fechaEvento" required=""
+                                   placeholder="DD/MM/AAAA">
                         </div>
                     </div>
 
@@ -738,7 +739,7 @@
     btnAceptarCliente.aceptar.addEventListener("click", altaCliente);
 
     var btnBajaCliente = document.getElementById('aceptarBajaCli');
-    btnBajaCliente.addEventListener("click",bajaCliente);
+    btnBajaCliente.addEventListener("click", bajaCliente);
 
     var radioArtista = document.getElementById('radioArtista');
     radioArtista.addEventListener("click", mostrarRadioArtista);
