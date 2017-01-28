@@ -14,13 +14,13 @@ var oGestion = new Gestion();
 var oXML = loadXMLDoc("datos.xml");
 
 var oClientes = oXML.getElementsByTagName("cliente");
-for (var j = 0; j < oClientes.length; j++) {
+for(var j = 0; j<oClientes.length;j++){
     var dni = oClientes[j].getElementsByTagName("dni")[0].textContent;
     var nombre = oClientes[j].getElementsByTagName("nombre")[0].textContent;
     var apellidos = oClientes[j].getElementsByTagName("apellidos")[0].textContent;
     var telefono = oClientes[j].getElementsByTagName("telefono")[0].textContent;
 
-    var oCliente = new Cliente(dni, nombre, apellidos, telefono);
+    var oCliente = new Cliente(dni,nombre,apellidos,telefono);
     oGestion.altaCliente(oCliente);
 }
 
@@ -44,7 +44,7 @@ for (var j = 0; j < oAsistentes.length; j++) {
     var email = oAsistentes[j].getElementsByTagName("email")[0].textContent;
     var eventoAsistente = oAsistentes[j].getElementsByTagName("eventoAsistente")[0].textContent;
 
-    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email);
+    var oAsistente= new Asistente(dni, nombre, apellidos, telefono, email);
     var sMensaje = oGestion.altaAsistente(oAsistente);
 }
 
@@ -61,7 +61,7 @@ for (var j = 0; j < oTransportes.length; j++) {
 var oEventos = oXML.getElementsByTagName("evento");
 for (var j = 0; j < oEventos.length; j++) {
     var fecha = oEventos[j].getElementsByTagName("fecha")[0].textContent;
-    var descripcion = oEventos[j].getElementsByTagName("descripcion")[0].textContent;
+    var descripcion= oEventos[j].getElementsByTagName("descripcion")[0].textContent;
 
     var oEvento = new Evento(fecha, descripcion);
     oGestion.altaEvento(oEvento);
@@ -99,8 +99,12 @@ function ocultarFormulario() {
         errores[i].className = "form-control input-md";
 
     //Ocultamos los listados
+<<<<<<< HEAD
     document.querySelector("#idListaCli").style.display = "none";
     document.querySelector("#tablaAsistentes").style.display = "none";
+=======
+    document.querySelector("#idListaCli").style.display="none";
+>>>>>>> origin/master
 
 }
 
@@ -151,17 +155,15 @@ function mostrarRadioSanitario() {
     ocultarFormulariosRadio();
     document.getElementById('idSanitario').style.display = "block";
 }
-function mostrarEvento() {
-    ocultarFormulario();
-    document.frmGestionEventos.style.display = "block";
-}
 
 function mostrarContrato() {
     ocultarFormulario();
+    rellenaComboClientes();
     document.frmGestionContrato.style.display = "block";
 }
 
-function altaCliente() {
+function altaCliente()
+{
     var oForm = document.formuCliente;
     var bValido = true;
     var sMensaje = "";
@@ -169,6 +171,7 @@ function altaCliente() {
     var nombre = oForm.nombre.value.trim();
     var apellidos = oForm.apellidos.value.trim();
     var telefono = document.formuCliente.telefono.value.trim();
+    var errores = [];
 
     //Validar dni
     var oExpReg = /^\d{8}[a-zA-Z]$/;
@@ -178,7 +181,8 @@ function altaCliente() {
             bValido = false;
             document.formuCliente.dni.focus();
         }
-        sMensaje += "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra\n";
+        sMensaje = "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra\n";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.formuCliente.dni.className = "form-control input-md error";
@@ -189,14 +193,15 @@ function altaCliente() {
     }
 
     //Validar nombre
-    var oExpReg = /^[a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
 
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
             document.formuCliente.nombre.focus();
         }
-        sMensaje += "El nombre debe contener solo carácteres alfabéticos\n";
+        sMensaje = "El nombre debe contener solo carácteres alfabéticos\n";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.formuCliente.nombre.className = "form-control input-md error";
@@ -209,14 +214,15 @@ function altaCliente() {
 
     //Validar apellido
 
-    var oExpReg = /^[a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
 
     if (oExpReg.test(apellidos) == false) {
         if (bValido == true) {
             bValido = false;
             document.formuCliente.apellidos.focus();
         }
-        sMensaje += "El apellido debe contener solo carácteres alfabéticos\n";
+        sMensaje = "El apellido debe contener solo carácteres alfabéticos\n";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.formuCliente.apellidos.className = "form-control input-md error";
@@ -235,7 +241,8 @@ function altaCliente() {
             bValido = false;
             document.formuCliente.telefono.focus();
         }
-        sMensaje += "El telefono debe empezar por 6,7 o 9 y tener un total de 9 dígitos\n";
+        sMensaje = "El telefono debe empezar por 6,7 o 9 y tener un total de 9 dígitos\n";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.formuCliente.telefono.className = "form-control input-md error";
@@ -247,17 +254,20 @@ function altaCliente() {
     }
 
     if (bValido == false) {
-        toastr.error(sMensaje, "Error");
+        mostrarMensajeDeError(errores);
     }
     else {//Damos de alta el cliente
         var oCliente = new Cliente(dni, nombre, apellidos, telefono);
         sMensaje = oGestion.altaCliente(oCliente);
         document.formuCliente.reset();
+
         if (sMensaje == true) {
-            toastr.error("Ese cliente ya fue dado de alta previamente", "Cliente ya existente");
+            errores.push("Ese cliente ya fue dado de alta previamente");
+            mostrarMensajeDeError(errores);
         }
         else {
-            toastr.success("Cliente dado de alta", "Conseguido");
+            mostrarMensajeCorrecto("Cliente dado de alta");
+            oForm.reset();
         }
     }
 }
@@ -267,17 +277,17 @@ function bajaCliente() {
     var bValido = true;
     var sMensaje = "";
     var clienteBaja = oForm.clienteBaja.value;
-    var clienteMod = clienteBaja.substr(0, 9);
+    var clienteMod = clienteBaja.substr(0,9);
 
     sMensaje = oGestion.darBajaCliente(clienteMod);
     rellenaComboBajaCliente();
 
-    if (sMensaje == false) {
-        toastr.success("Cliente dado de alta", "Conseguido");
+    if(sMensaje == false){
+        mostrarMensajeCorrecto("Cliente dado de alta");
     }
 }
 
-function rellenaComboBajaCliente() {
+function rellenaComboBajaCliente(){
     var mod = document.frmBajaCliente.clienteBaja.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -301,6 +311,7 @@ function altaTrabajador() {
     var dni = oForm.dni.value.trim();
     var nombre = oForm.nombre.value.trim();
     var apellidos = oForm.apellidos.value.trim();
+    var errores = [];
 
     var oExpReg = /^\d{8}[a-zA-Z]$/;
 
@@ -309,7 +320,8 @@ function altaTrabajador() {
             bValido = false;
             document.frmTrabajador.dni.focus();
         }
-        sMensaje += "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra\n";
+        sMensaje = "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.frmTrabajador.dni.className = "form-control input-md error";
@@ -320,14 +332,15 @@ function altaTrabajador() {
     }
 
     //Validar nombre
-    var oExpReg = /^[a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
 
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
             document.frmTrabajador.nombre.focus();
         }
-        sMensaje += "El nombre debe contener solo carácteres alfabéticos\n";
+        sMensaje = "El nombre debe contener solo carácteres alfabéticos";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.frmTrabajador.nombre.className = "form-control input-md error";
@@ -340,14 +353,15 @@ function altaTrabajador() {
 
     //Validar apellido
 
-    var oExpReg = /^[a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
 
     if (oExpReg.test(apellidos) == false) {
         if (bValido == true) {
             bValido = false;
             document.frmTrabajador.apellidos.focus();
         }
-        sMensaje += "El apellido debe contener solo carácteres alfabéticos\n";
+        sMensaje = "El apellido debe contener solo carácteres alfabéticos";
+        errores.push(sMensaje);
 
         //Marcamos el error
         document.frmTrabajador.apellidos.className = "form-control input-md error";
@@ -372,7 +386,8 @@ function altaTrabajador() {
                 bValido = false;
                 aInstrumentos = 0;
             }
-            sMensaje += "Debe seleccionar algún instrumento";
+            sMensaje = "Debe seleccionar algún instrumento";
+            errores.push(sMensaje);
         }
         var sGenero = oForm.selectGenero.value;
 
@@ -381,64 +396,88 @@ function altaTrabajador() {
         for (var i = 0; i < aInstrumentos.length; i++) {
             sInstrumentos += aInstrumentos[i] + ", ";
         }
-        console.log(sInstrumentos);
 
-        var oArtista = new Artista(dni, nombre, apellidos, sInstrumentos, sGenero);
-        sMensaje = oGestion.altaTrabajador(oArtista);
-        if (sMensaje == true) {
-            toastr.error("Ese trabajador ya fue dado de alta previamente", "Trabajador ya existente");
+        sInstrumentos = sInstrumentos.substr(0,sInstrumentos.length-2)+".";
+
+        console.log(sInstrumentos);
+        if (bValido == false) {
+            mostrarMensajeDeError(errores);
         }
         else {
-            toastr.success("Artista dado de alta", "Conseguido");
+            var oArtista = new Artista(dni, nombre, apellidos, sIns, sGenero);
+            sMensaje = oGestion.altaTrabajador(oArtista);
+            if (sMensaje == true) {
+                errores.push("Ese trabajador ya fue dado de alta previamente");
+                mostrarMensajeDeError(errores);
+            }
+            else {
+                mostrarMensajeCorrecto("Artista dado de alta");
+                oForm.reset();
+            }
         }
     }
-
     else {
         if (valorTipoRadio == 'tecnico') {
 
             var especialidadTecnica = oForm.especialidadTec.value;
             var herramientasPropias = oForm.radiosHerramientas.value;
-
-            var oTecnico = new Tecnicos(dni, nombre, apellidos, especialidadTecnica, herramientasPropias);
-            sMensaje = oGestion.altaTrabajador(oTecnico);
-
-            if (sMensaje == true) {
-                toastr.error("Ese trabajador ya fue dado de alta previamente", "Trabajador ya existente");
+            if (bValido == false) {
+                mostrarMensajeDeError(errores);
             }
             else {
-                toastr.success("Técnico dado de alta", "Conseguido");
+                var oTecnico = new Tecnicos(dni, nombre, apellidos, especialidadTecnica, herramientasPropias);
+                sMensaje = oGestion.altaTrabajador(oTecnico);
+
+                if (sMensaje == true) {
+                    errores.push("Ese trabajador ya fue dado de alta previamente")
+                    mostrarMensajeDeError(errores);
+                }
+                else {
+                    mostrarMensajeCorrecto("Técnico dado de alta");
+                    oForm.reset();
+                }
             }
         }
-
         else {
             if (valorTipoRadio == 'sanitarios') {
                 var especialidadSanitario = oForm.especialidadSani.value;
-
-                var oSanitario = new Sanitarios(dni, nombre, apellidos, especialidadSanitario);
-                sMensaje = oGestion.altaTrabajador(oSanitario);
-                if (sMensaje == true) {
-                    toastr.error("Ese trabajador ya fue dado de alta previamente", "Trabajador ya existente");
+                if (bValido == false) {
+                    mostrarMensajeDeError(errores);
                 }
                 else {
-                    toastr.success("Sanitario dado de alta", "Conseguido");
+                    var oSanitario = new Sanitarios(dni, nombre, apellidos, especialidadSanitario);
+                    sMensaje = oGestion.altaTrabajador(oSanitario);
+                    if (sMensaje == true) {
+                        errores.push("Ese trabajador ya fue dado de alta previamente")
+                        mostrarMensajeDeError(errores);
+                    }
+                    else {
+                        mostrarMensajeCorrecto("Sanitario dado de alta");
+                        oForm.reset();
+                    }
                 }
             }
-
             else {
                 if (valorTipoRadio == 'limpieza') {
                     var compañiaLimpieza = oForm.limpieza.value;
                     if (compañiaLimpieza == "") {
                         compañiaLimpieza = "Trabaja en Negro";
                     }
-
-                    var oLimpieza = new Limpieza(dni, nombre, apellidos, compañiaLimpieza);
-                    sMensaje = oGestion.altaTrabajador(oLimpieza);
-
-                    if (sMensaje == true) {
-                        toastr.error("Ese trabajador ya fue dado de alta previamente", "Trabajador ya existente");
+                    if (bValido == false) {
+                        mostrarMensajeDeError(errores);
                     }
                     else {
-                        toastr.success("Limpiador dado de alta", "Conseguido");
+                        var oLimpieza = new Limpieza(dni, nombre, apellidos, compañiaLimpieza);
+                        sMensaje = oGestion.altaTrabajador(oLimpieza);
+
+                        if (sMensaje == true) {
+                            errores.push("Ese trabajador ya fue dado de alta previamente")
+                            mostrarMensajeDeError(errores);
+                        }
+                        else {
+                           mostrarMensajeCorrecto("Limpiador dado de alta");
+                           oForm.reset();
+                        }
                     }
                 }
             }
@@ -533,15 +572,7 @@ function altaContrato() {
 
 }
 
-function ponerFechaActualInicio() {
-    var f = new Date();
-    if ((f.getMonth() + 1) < 10)
-        var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
-    document.getElementById("fechaInicio").value = actual;
-}
-
-function rellenaComboCliente() {
+function rellenaComboClientes(){
     var mod = document.frmGestionContrato.selectObjetoCliente.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -558,7 +589,33 @@ function rellenaComboCliente() {
     }
 }
 
-function rellenaComboEventos() {
+
+function ponerFechaActualInicio() {
+    var f = new Date();
+    if ((f.getMonth() + 1) < 10)
+        var mes = "0" + (f.getMonth() + 1);
+    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    document.getElementById("fechaInicio").value = actual;
+}
+
+function rellenaComboCliente(){
+    var mod = document.frmGestionContrato.selectObjetoCliente.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var comboClientes = oGestion.obtenerClientes();
+    mod = document.frmGestionContrato.selectObjetoCliente;
+    for (i = 0; i < comboClientes.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", comboClientes[i]);
+        var texto = document.createTextNode(comboClientes[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
+    }
+}
+
+function rellenaComboEventos(){
     var mod = document.frmGestionContrato.selectObjetoCliente.children;
     for (var i = mod.length - 1; i >= 0; i--) {
         mod[i].parentNode.removeChild(mod[i]);
@@ -611,7 +668,7 @@ function altaAsistente() {
     }
 
     //Validar nombre
-    var oExpReg = /^[a-z][a-z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
     if (oExpReg.test(nombre) == false) {
         if (bValido == true) {
             bValido = false;
@@ -629,7 +686,7 @@ function altaAsistente() {
     }
 
     //Validar apellido
-    var oExpReg = /^[a-z][a-z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
     if (oExpReg.test(apellidos) == false) {
         if (bValido == true) {
             bValido = false;
@@ -749,7 +806,7 @@ function altaEvento() {
 
 
     //Validar descripcion
-    var oExpReg = /^[a-zA-Z][a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{6,80}/;
     if (oExpReg.test(descripcion) == false) {
         if (bValido == true) {
             bValido = false;
@@ -767,33 +824,9 @@ function altaEvento() {
     }
 
 
-    //Validar combo Trabajadores
-    var indiceTrabajadores = oForm.listaTrabajadores.selectedIndex;
-    if( indiceTrabajadores == null) {
-        document.formuEvento.listaTrabajadores.className = "form-control input-md error";
-        sMensaje = "Debes seleccionar un trabajador\n";
-        errores.push(sMensaje);
-    }
-    else{
-        document.formuEvento.listaTrabajadores.className = "form-control input-md";
-    }
-
-    //Validar combo Transportes
-    var indiceTransportes = oForm.listaTransportes.selectedIndex;
-    if( indiceTransportes == null) {
-        document.formuEvento.listaTransportes.className = "form-control input-md error";
-        sMensaje = "Debes seleccionar un transporte\n";
-        errores.push(sMensaje);
-    }
-    else{
-        document.formuEvento.listaTransportes.className = "form-control input-md";
-    }
-
-
-
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
-        mostrarMensajeDeError(errores);
+        toastr.error(sMensaje, "Error");
     }
     else {
         //guardamos el evento
@@ -874,7 +907,7 @@ function altaTransporte() {
     }
 
     //Validar tipo
-    var oExpReg = /^[a-zA-Z][a-zA-Z]*/;
+    var oExpReg = /^[a-zA-Z]{3,40}/;
     if (oExpReg.test(tipo) == false) {
         if (bValido == true) {
             bValido = false;
@@ -892,7 +925,7 @@ function altaTransporte() {
     }
 
     //Validar plazas
-    var oExpReg = /^\d[1-2]*/;
+    var oExpReg = /^\d[1-2]/;
     if (oExpReg.test(plazas) == false) {
         if (bValido == true) {
             bValido = false;
@@ -978,7 +1011,7 @@ function altaLugar() {
     }
 
     //Validar capacidad
-    var oExpReg = /^\d[1-6]*/;
+    var oExpReg = /^\d[1-6]/;
     if (oExpReg.test(iCapacidad) == false) {
         if (bValido == true) {
             bValido = false;
@@ -1011,7 +1044,7 @@ function altaLugar() {
             sMensaje = "Lugar dado de alta\n";
             mostrarMensajeCorrecto(sMensaje);
 
-            añadirTrabajadorAlCombo(oLugar)
+            añadirTrabajadorAlCombo(oLugar);
         }
     }
 }
@@ -1031,13 +1064,9 @@ function actualizarComboTrabajadores() {
     var oForm = document.formuEvento;
     var lista = oForm.listaTrabajadores;
     // Busco por descripcion
-    if (oGestion.trabajadores.length |= 0){
-        for (var i = 0; i < oGestion.trabajadores.length; i++) {
-            lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos);
-        }
-    }
-    else{
-        lista.options[i] = new Option("No hay trabajadores disponibles");
+    if(oGestion.trabajadores.length|=0)
+    for (var i = 0; i < oGestion.trabajadores.length; i++) {
+        lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " "+ oGestion.trabajadores[i].apellidos);
     }
 }
 
@@ -1045,28 +1074,19 @@ function actualizarComboTransportes() {
     var oForm = document.formuEvento;
     var lista = oForm.listaTransportes;
     // Busco por id
-    if (oGestion.transportes.length |= 0){
-        for (var i = 0; i < oGestion.transportes.length; i++) {
-            lista.options[i] = new Option(oGestion.transportes[i].id + " " + oGestion.transportes[i].tipo);
-        }
+    if(oGestion.transportes.length|=0)
+    for (var i = 0; i < oGestion.transportes.length; i++) {
+        lista.options[i] = new Option(oGestion.transportes[i].id + " "+ oGestion.transportes[i].tipo);
     }
-    else{
-            lista.options[i] = new Option("No hay transportes disponibles");
-    }
-
 }
 
 function actualizarComboLugares() {
     var oForm = document.formuEvento;
     var lista = oForm.listaLugares;
     // Busco por descripcion
-    if (oGestion.lugares.length |= 0){
-        for (var i = 0; i < oGestion.lugares.length; i++) {
-            lista.options[i] = new Option(oGestion.lugares[i].descripcion);
-        }
-    }
-    else{
-        lista.options[i] = new Option("No hay lugares disponibles");
+    if(oGestion.lugares.length|=0)
+    for (var i = 0; i < oGestion.lugares.length; i++) {
+        lista.options[i] = new Option(oGestion.lugares[i].descripcion);
     }
 }
 
@@ -1074,73 +1094,69 @@ function actualizarComboEventos() {
     var oForm = document.formuAsistente;
     var lista = oForm.listaEventos;
     // Busco por descripcion
-    if (oGestion.eventos.length |= 0){
+    if(oGestion.eventos.length|=0)
         for (var i = 0; i < oGestion.eventos.length; i++) {
-            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
+            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha +")" );
         }
-    }
-    else{
-        lista.options[i] = new Option("No hay eventos disponibles");
-    }
 }
 
 
 //LISTADOS
 
-function vaciarTablas(objetoPadre) {
-    while (objetoPadre.children.length != 0) {
+function vaciarTablas(objetoPadre){
+    while (objetoPadre.children.length!=0){
         objetoPadre.removeChild(objetoPadre.firstElementChild);
     }
 }
 
-function mostrarListaClientes() {
+function mostrarListaClientes(){
     ocultarFormulario();
 
     vaciarTablas(document.querySelector("#idListaCli"));
-    document.querySelector("#idListaCli").style.display = "block";
+    document.querySelector("#idListaCli").style.display="block";
 
     // vaciarTablas(document.querySelectorAll("ul.claseEjemploLista"));
     // document.querySelectorAll("ul.claseEjemploLista").style.display="block";
 
-    var lista = oGestion.cogerTodosLosClientes();
-    var oTabla = document.createElement("table");
+    var lista=oGestion.cogerTodosLosClientes();
+    var oTabla=document.createElement("table");
 
 
-    oTabla.setAttribute("class", "table table-striped");
+    oTabla.setAttribute("class","table table-striped");
 
-    var oThead = oTabla.createTHead();
-    var oFila = oThead.insertRow(-1);
+    var oThead=oTabla.createTHead();
+    var oFila=oThead.insertRow(-1);
 
-    oCelda = document.createElement("th");
+    oCelda=document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("D.N.I"));
 
-    oCelda = document.createElement("th");
+    oCelda=document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Nombre"));
 
-    oCelda = document.createElement("th");
+    oCelda=document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Apellidos"));
 
 
-    oCelda = document.createElement("th");
+    oCelda=document.createElement("th");
     oFila.appendChild(oCelda);
     oCelda.appendChild(document.createTextNode("Telefono"));
 
     document.querySelector("#idListaCli").appendChild(oTabla);
 
-    var oTBody = oTabla.createTBody();
+    var oTBody=oTabla.createTBody();
 
-    for (i = 0; i < lista.length; i++) {
-        oFila = oTBody.insertRow(-1);
-        oCelda = oFila.insertCell(-1);
+    for(i=0;i<lista.length;i++){
+        oFila=oTBody.insertRow(-1);
+        oCelda=oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].dniCliente));
-        oCelda = oFila.insertCell(-1);
+        oCelda=oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].nombre));
-        oCelda = oFila.insertCell(-1);
+        oCelda=oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].apellidos));
-        oCelda = oFila.insertCell(-1);
+        oCelda=oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].telefono));
 
     }
