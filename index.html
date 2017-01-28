@@ -590,19 +590,13 @@
 
                     <!--Artista-->
                     <!-- Select Multiple -->
-                    <div id="idArtista">
+                    <div id="idArtista" name="nameArtista">
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectInstrumentos">Instrumentos</label>
                             <div class="col-md-5">
-                                <select id="selectInstrumentos" name="selectInstrumentos[]" class="form-control"
+                                <select id="selectInstrumentos" name="selectInstrumentos" class="form-control"
                                         multiple="multiple">
-                                    <option value="Batería">Batería</option>
-                                    <option value="Guitarra">Guitarra</option>
-                                    <option value="Bajo">Bajo</option>
-                                    <option value="Piano">Piano</option>
-                                    <option value="Arpa">Arpa</option>
-                                    <option value="Lira">Lira</option>
-                                    <option value="Otros">Otros</option>
+
                                 </select>
                             </div>
                         </div>
@@ -744,14 +738,14 @@
     var radioArtista = document.getElementById('radioArtista');
     radioArtista.addEventListener("click", mostrarRadioArtista);
 
-    var radioArtista = document.getElementById('radioTecnico');
-    radioArtista.addEventListener("click", mostrarRadioTecnico);
+    var radioTecnico = document.getElementById('radioTecnico');
+    radioTecnico.addEventListener("click", mostrarRadioTecnico);
 
-    var radioArtista = document.getElementById('radioLimpieza');
-    radioArtista.addEventListener("click", mostrarRadioLimpieza);
+    var radioLimpieza = document.getElementById('radioLimpieza');
+    radioLimpieza.addEventListener("click", mostrarRadioLimpieza);
 
-    var radioArtista = document.getElementById('radioSanitario');
-    radioArtista.addEventListener("click", mostrarRadioSanitario);
+    var radioSanitario = document.getElementById('radioSanitario');
+    radioSanitario.addEventListener("click", mostrarRadioSanitario);
 
     var btnAceptarTrabajador = document.getElementById('aceptarTrabajador');
     btnAceptarTrabajador.addEventListener("click", altaTrabajador);

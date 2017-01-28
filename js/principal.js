@@ -102,7 +102,6 @@ function ocultarFormulario() {
     //Ocultamos los listados
     document.querySelector("#idListaCli").style.display = "none";
     document.querySelector("#tablaAsistentes").style.display = "none";
-    document.querySelector("#idListaCli").style.display = "none";
 
 }
 
@@ -131,26 +130,65 @@ function mostrarUML() {
 
 function mostrarTrabajador() {
     ocultarFormulario();
+    document.frmTrabajador.reset();
+    rellenaComboInstrumentos();
     document.frmTrabajador.style.display = "block";
+}
+
+function vaciaCamposTrabajador(){
+    document.frmTrabajador.nombre.value ="";
+    document.frmTrabajador.dni.value ="";
+    document.frmTrabajador.apellidos.value ="";
+}
+
+function rellenaComboInstrumentos(){
+
+    var mod = document.frmTrabajador.selectInstrumentos.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var arrayInstrumentos=[];
+    arrayInstrumentos[0]="Arpa";
+    arrayInstrumentos[1]="Bajo";
+    arrayInstrumentos[2]="Bateria";
+    arrayInstrumentos[3]="Lira";
+    arrayInstrumentos[4]="Guitarra";
+    arrayInstrumentos[5]="Piano";
+    arrayInstrumentos[6]="Otros";
+
+    mod = document.frmTrabajador.selectInstrumentos;
+    for (i = 0; i < arrayInstrumentos.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", arrayInstrumentos[i]);
+        var texto = document.createTextNode(arrayInstrumentos[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
+    }
 }
 
 function mostrarRadioArtista() {
     ocultarFormulariosRadio();
+    rellenaComboInstrumentos();
+    vaciaCamposTrabajador();
     document.getElementById('idArtista').style.display = "block";
 }
 
 function mostrarRadioTecnico() {
     ocultarFormulariosRadio();
+    vaciaCamposTrabajador();
     document.getElementById('idTecnico').style.display = "block";
 }
 
 function mostrarRadioLimpieza() {
     ocultarFormulariosRadio();
+    vaciaCamposTrabajador();
     document.getElementById('idLimpieza').style.display = "block";
 }
 
 function mostrarRadioSanitario() {
     ocultarFormulariosRadio();
+    vaciaCamposTrabajador();
     document.getElementById('idSanitario').style.display = "block";
 }
 
@@ -302,6 +340,8 @@ function rellenaComboBajaCliente() {
     }
 }
 
+
+
 function altaTrabajador() {
     var oForm = document.frmTrabajador;
     var bValido = true;
@@ -318,6 +358,7 @@ function altaTrabajador() {
             bValido = false;
             document.frmTrabajador.dni.focus();
         }
+
         sMensaje = "Formato D.N.I incorrecto, debe contener 8 dígitos seguidos de una letra";
         errores.push(sMensaje);
 
@@ -385,6 +426,7 @@ function altaTrabajador() {
                 aInstrumentos = 0;
             }
             sMensaje = "Debe seleccionar algún instrumento";
+            document.frmTrabajador.selectInstrumentos.className = "form-control error";
             errores.push(sMensaje);
         }
         var sGenero = oForm.selectGenero.value;
@@ -397,7 +439,6 @@ function altaTrabajador() {
 
         sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
 
-        console.log(sInstrumentos);
         if (bValido == false) {
             mostrarMensajeDeError(errores);
         }
@@ -416,7 +457,6 @@ function altaTrabajador() {
     }
     else {
         if (valorTipoRadio == 'tecnico') {
-
             var especialidadTecnica = oForm.especialidadTec.value;
             var herramientasPropias = oForm.radiosHerramientas.value;
             if (bValido == false) {
@@ -427,7 +467,7 @@ function altaTrabajador() {
                 sMensaje = oGestion.altaTrabajador(oTecnico);
 
                 if (sMensaje == true) {
-                    errores.push("Ese trabajador ya fue dado de alta previamente")
+                    errores.push("Ese trabajador ya fue dado de alta previamente");
                     mostrarMensajeDeError(errores);
                 }
                 else {
