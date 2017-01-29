@@ -91,12 +91,12 @@ Limpieza.prototype.constructor = Limpieza;
 
 
 // objeto Evento********************************************************************************************************
-function Evento(dFecha, sDescripcion, asistente, transporte, lugar) {
+function Evento(dFecha, sDescripcion, trabajadores, sTransporte, sLugar) {
     this.fecha = dFecha;
     this.descripcion = sDescripcion;
-    this.asistente = [];
-    this.transporte = [];
-    this.lugar = [];
+    this.trabajadores = trabajadores;
+    this.transporte = sTransporte;
+    this.lugar = sLugar;
 }
 
 //**********************************************************************************************************************
@@ -207,6 +207,38 @@ Gestion.prototype.altaEvento = function (oEvento) {
     return bEnc;
 }
 
+Gestion.prototype.darCancelacionEvento = function (oEvento) {
+    var i = 0;
+    var bEnc = false;
+    var posicion = 0;
+    // Busco por descripcion
+    while (i < this.eventos.length && bEnc == false) {
+        if ((this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")") == oEvento) {
+            posicion = i;
+            bEnc = true;
+        }
+        i++;
+    }
+
+    if (bEnc) {
+        this.eventos.splice(posicion, 1);
+    }
+    return bEnc;
+}
+
+Gestion.prototype.obtenerEventos = function () {
+    var arrayEventos = [];
+    if (this.eventos.length != 0) {
+        for (var i = 0; i < this.eventos.length; i++) {
+            arrayEventos.push(this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")");
+        }
+    }
+    else {
+        arrayEventos.push("No hay eventos disponibles");
+    }
+    return arrayEventos;
+}
+
 Gestion.prototype.altaTransporte = function (oTransporte) {
     var i = 0;
     var bEnc = false;
@@ -280,7 +312,6 @@ Gestion.prototype.obtenerClientes = function () {
     return arrayClientes;
 
 }
-
 
 //LISTADOS
 Gestion.prototype.cogerTodosLosClientes = function () {

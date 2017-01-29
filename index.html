@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <style>
         .error {
-            background-color: yellow;
+            background-color: #E6E6E6;
         }
 
         #idTecnico, #idSanitario, #idLimpieza {
@@ -26,13 +26,13 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="jumbotron">
-                <div id="cabecera"><h1>Gestiones de Eventos</h1></div>
+                <div id="cabecera"><h1><strong>Gestiones de Eventos</strong></h1></div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <nav class="navbar navbar-default" role="navigation">
+            <nav class="navbar navbar-inverse" role="navigation">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse"
                             data-target=".navbar-ex1-collapse">
@@ -83,6 +83,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="altaEvento">Alta Evento</a></li>
+                                <li><a href="#" id="cancelarEvento">Cancelar Evento</a></li>
                                 <li><a href="#" id="listarEventos">Listar Evento</a></li>
                             </ul>
                         </li>
@@ -97,7 +98,7 @@
 
     <!-- UML -->
     <div class="col-xs-12" id="uml">
-        <img src="img/uml.png" style="margin-left:33%;">
+        <center><img src="img/uml.png" ></center>
     </div>
 
     <!-- GESTION CLIENTE -->
@@ -335,7 +336,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Eventos:</label>
                         <div class="col-md-5">
-                            <select multiple="multiple" type="text" name="listaEventos" class="form-control input-md">
+                            <select  type="text" name="listaEventos" class="form-control input-md">
                                 <option style="color:grey">No hay eventos actuales</option>
                             </select>
                         </div>
@@ -429,7 +430,32 @@
         </div>
     </div>
 
-    <!-- MOSTRAR LISTA ASISTENTES -->
+    <!-- CANCELAR EVENTO -->
+    <form class="form-horizontal" name="formuCancelarEvento" id="formuCancelarEvento">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Cancelación de Eventos</legend>
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="clienteBaja">Evento para cancelar:</label>
+                <div class="col-md-5">
+                    <select id="eventoACancelar" name="listaEventosACancelar" class="form-control">
+                        <option style="color:grey">No hay eventos actualmente</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="aceptarBajaCli"></label>
+                <div class="col-md-4">
+                    <button type="button" id="aceptarCancelarEvento" name="aceptar" class="btn btn-primary">Aceptar
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- MOSTRAR LISTA EVENTOS -->
     <div id="tablaEventos"></div>
 
     <!-- GESTION TRANSPORTE-->
@@ -775,6 +801,12 @@
 
     var btnAceptarEvento = document.getElementById("formuEvento");
     btnAceptarEvento.aceptar.addEventListener("click", altaEvento);
+
+    var formEventoCancelar = document.getElementById("cancelarEvento");
+    formEventoCancelar.addEventListener("click", mostrarCancelarEvento);
+
+    var btnCancelarEvento = document.getElementById("formuCancelarEvento");
+    btnCancelarEvento.aceptar.addEventListener("click", cancelarEvento);
 
     var formTransporte = document.getElementById("altaTransporte");
     formTransporte.addEventListener("click", mostrarAltaTransporte);

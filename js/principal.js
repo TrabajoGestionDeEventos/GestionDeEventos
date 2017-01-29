@@ -24,16 +24,6 @@ for (var j = 0; j < oClientes.length; j++) {
     oGestion.altaCliente(oCliente);
 }
 
-var oLugares = oXML.getElementsByTagName("lugar");
-for (var j = 0; j < oLugares.length; j++) {
-    var descripcion = oLugares[j].getElementsByTagName("descripcion")[0].textContent;
-    var direccion = oLugares[j].getElementsByTagName("direccion")[0].textContent;
-    var capacidad = oLugares[j].getElementsByTagName("capacidad")[0].textContent;
-
-    var oLugar = new Lugar(descripcion, direccion, capacidad);
-    oGestion.altaLugar(oLugar);
-}
-
 
 var oAsistentes = oXML.getElementsByTagName("asistente");
 for (var j = 0; j < oAsistentes.length; j++) {
@@ -48,6 +38,26 @@ for (var j = 0; j < oAsistentes.length; j++) {
     oGestion.altaAsistente(oAsistente);
 }
 
+
+var oEventos = oXML.getElementsByTagName("evento");
+for (var j = 0; j < oEventos.length; j++) {
+    var fecha = oEventos[j].getElementsByTagName("fecha")[0].textContent;
+    var descripcion = oEventos[j].getElementsByTagName("descripcion")[0].textContent;
+
+    var trabajadorEvento = [];
+    var numTrabajadores = oEventos[j].getElementsByTagName("trabajadorEvento").length;
+    for (var h = 0; h < numTrabajadores; h++) {
+        //oCelda.textContent+=oLibros[j].getElementsByTagName("author")[h].textContent;
+        trabajadorEvento.push(oEventos[j].getElementsByTagName("trabajadorEvento")[h].textContent);
+    }
+
+    var transporteEvento = oEventos[j].getElementsByTagName("transporteEvento")[0].textContent;
+    var lugarEvento = oEventos[j].getElementsByTagName("lugarEvento")[0].textContent;
+
+    var oEvento = new Evento(fecha, descripcion, trabajadorEvento, transporteEvento, lugarEvento);
+    oGestion.altaEvento(oEvento);
+}
+
 var oTransportes = oXML.getElementsByTagName("transporte");
 for (var j = 0; j < oTransportes.length; j++) {
     var id = oTransportes[j].getElementsByTagName("id")[0].textContent;
@@ -58,16 +68,15 @@ for (var j = 0; j < oTransportes.length; j++) {
     oGestion.altaTransporte(oTransporte);
 }
 
-var oEventos = oXML.getElementsByTagName("evento");
-for (var j = 0; j < oEventos.length; j++) {
-    var fecha = oEventos[j].getElementsByTagName("fecha")[0].textContent;
-    var descripcion = oEventos[j].getElementsByTagName("descripcion")[0].textContent;
-    var trabajadorEvento = oEventos[j].getElementsByTagName("trabajadorEvento")[0].textContent;
-    var transporteEvento = oEventos[j].getElementsByTagName("transporteEvento")[0].textContent;
-    var lugarEvento = oEventos[j].getElementsByTagName("lugarEvento")[0].textContent;
 
-    var oEvento = new Evento(fecha, descripcion, trabajadorEvento, transporteEvento, lugarEvento);
-    oGestion.altaEvento(oEvento);
+var oLugares = oXML.getElementsByTagName("lugar");
+for (var j = 0; j < oLugares.length; j++) {
+    var descripcion = oLugares[j].getElementsByTagName("descripcion")[0].textContent;
+    var direccion = oLugares[j].getElementsByTagName("direccion")[0].textContent;
+    var capacidad = oLugares[j].getElementsByTagName("capacidad")[0].textContent;
+
+    var oLugar = new Lugar(descripcion, direccion, capacidad);
+    oGestion.altaLugar(oLugar);
 }
 
 
@@ -85,6 +94,8 @@ function ocultarFormulario() {
     document.formuAsistente.style.display = "none";
     document.formuEvento.reset();
     document.formuEvento.style.display = "none";
+    document.formuCancelarEvento.reset();
+    document.formuCancelarEvento.style.display = "none";
     document.formuTransporte.reset();
     document.formuTransporte.style.display = "none";
     document.formuLugar.reset();
@@ -97,6 +108,7 @@ function ocultarFormulario() {
     actualizarComboEventos();
     actualizarComboEventos2();
 
+
     desmarcarErrroresFormularios();
 
     ocultarFormulariosRadio();
@@ -108,7 +120,7 @@ function ocultarFormulario() {
     document.querySelector("#tablaEventos").style.display = "none";
 }
 
-function desmarcarErrroresFormularios(){
+function desmarcarErrroresFormularios() {
     //desmarcamos los errores de todos los formularios
     var errores = document.querySelectorAll(".error");
     for (var i = 0; i < errores.length; i++)
@@ -415,7 +427,7 @@ function altaTrabajador() {
 
         sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
 
-        console.log(sInstrumentos);
+       // console.log(sInstrumentos);
         if (bValido == false) {
             mostrarMensajeDeError(errores);
         }
@@ -428,13 +440,12 @@ function altaTrabajador() {
             }
             else {
                 mostrarMensajeCorrecto("Artista dado de alta");
-                oForm.reset();
+                mostrarRadioArtista()
             }
         }
     }
     else {
         if (valorTipoRadio == 'tecnico') {
-            document.getElementById("idArtista").reset();
             var especialidadTecnica = oForm.especialidadTec.value;
             var herramientasPropias = oForm.radiosHerramientas.value;
             if (bValido == false) {
@@ -450,7 +461,7 @@ function altaTrabajador() {
                 }
                 else {
                     mostrarMensajeCorrecto("Técnico dado de alta");
-                    oForm.reset();
+                    mostrarRadioTecnico();
                 }
             }
         }
@@ -469,7 +480,7 @@ function altaTrabajador() {
                     }
                     else {
                         mostrarMensajeCorrecto("Sanitario dado de alta");
-                        oForm.reset();
+                        mostrarRadioSanitario();
                     }
                 }
             }
@@ -492,7 +503,7 @@ function altaTrabajador() {
                         }
                         else {
                             mostrarMensajeCorrecto("Limpiador dado de alta");
-                            oForm.reset();
+                            mostrarRadioLimpieza();
                         }
                     }
                 }
@@ -560,7 +571,7 @@ function altaContrato() {
 
     //Validamos Fecha Final
     if (validarFormatoFecha(fechaFin)) {
-        if (existeFecha(fechaFin) && fechaFin>=fechaInicio) {
+        if (existeFecha(fechaFin) && fechaFin >= fechaInicio) {
             //Aquí se desmarca el error
             document.frmGestionContrato.fechaFin.className = "form-control input-md";
         } else {
@@ -605,7 +616,7 @@ function altaContrato() {
     }
     else {//Damos de alta el contrato
         ponerFechaActualInicio();
-        oContrato = new Contrato(idContrato,fechaInicio,fechaFin,importe,objetoCliente,objetoEvento);
+        oContrato = new Contrato(idContrato, fechaInicio, fechaFin, importe, objetoCliente, objetoEvento);
         sMensaje = oGestion.altaContrato(oContrato);
 
         if (sMensaje == true) {
@@ -627,24 +638,6 @@ function rellenaComboClientes() {
     }
 
     var comboClientes = oGestion.obtenerClientes();
-    mod = document.frmGestionContrato.selectObjetoCliente;
-    for (i = 0; i < comboClientes.length; i++) {
-        var item = document.createElement("option");
-        item.setAttribute("value", comboClientes[i]);
-        var texto = document.createTextNode(comboClientes[i]);
-        item.appendChild(texto);
-        mod.appendChild(item);
-    }
-}
-
-
-function rellenaComboEventos() {
-    var mod = document.frmGestionContrato.selectObjetoCliente.children;
-    for (var i = mod.length - 1; i >= 0; i--) {
-        mod[i].parentNode.removeChild(mod[i]);
-    }
-
-    var comboClientes = oGestion.obtenerEventos();
     mod = document.frmGestionContrato.selectObjetoCliente;
     for (i = 0; i < comboClientes.length; i++) {
         var item = document.createElement("option");
@@ -756,7 +749,7 @@ function altaAsistente() {
 
 
     //Validar email
-    var oExpReg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
+    var oExpReg = /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,3})$/;
     if (oExpReg.test(email) == false) {
         if (bValido == true) {
             bValido = false;
@@ -774,15 +767,27 @@ function altaAsistente() {
     }
 
 
-
     for (var i = 0; i < listaEventos.options.length; ++i) {
-        if(listaEventos.options[i].selected)
-        var evento = listaEventos.options[i].text;
+        if (listaEventos.options[i].selected)
+            var evento = listaEventos.options[i].text;
     }
-    if(evento == null){
+    if (evento == null) {
         sMensaje = "Debe seleccionar un evento \n";
         errores.push(sMensaje);
         //Marcar error
+        document.formuAsistente.listaEventos.className = "form-control input-md error";
+    }
+    else {
+        document.formuAsistente.listaEventos.className = "form-control input-md";
+    }
+
+    //Mostramos mensaje de error o introducimos los datos
+    if (evento == "No hay eventos disponibles") {
+        if (bValido == false) {
+            bValido = false;
+            document.formuAsistente.listaEventos.focus();
+        }
+        errores.push("Lo sentimos no hay eventos disponibles \n");
         document.formuAsistente.listaEventos.className = "form-control input-md error";
     }
     else {
@@ -799,6 +804,7 @@ function altaAsistente() {
         var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, evento);
         var bExiste = oGestion.altaAsistente(oAsistente);
         if (bExiste == true) {
+            bValido = false;
             errores.push("Este asistente ya fue dado de alta previamente");
             mostrarMensajeDeError(errores);
         }
@@ -807,6 +813,7 @@ function altaAsistente() {
         }
     }
 }
+
 
 //FORMULARIO EVENTOS****************************************************************************************************
 function mostrarAltaEvento() {
@@ -873,36 +880,36 @@ function altaEvento() {
 
 
     for (var i = 0; i < listaTrabajadores.options.length; ++i) {
-        if(listaTrabajadores.options[i].selected)
+        if (listaTrabajadores.options[i].selected)
             var trabajadores = listaTrabajadores.options[i].text;
     }
 
-    if(trabajadores=="No hay trabajadores disponibles"){
+    if (trabajadores == "No hay trabajadores disponibles") {
         if (bValido == true) {
             bValido = false;
-            document.formuEvento.descripcion.focus();
+            document.formuEvento.listaTrabajadores.focus();
         }
         errores.push("Lo sentimos no hay trabajadores disponibles \n");
         document.formuEvento.listaTrabajadores.className = "form-control input-md error";
     }
     else {
-        if(trabajadores == null){
+        if (trabajadores == null) {
             if (bValido == true) {
                 bValido = false;
-                document.formuEvento.descripcion.focus();
+                document.formuEvento.listaTrabajadores.focus();
             }
             errores.push("Debe seleccionar los trabajadores del evento \n");
             document.formuEvento.listaTrabajadores.className = "form-control input-md error";
         }
         else
-        document.formuEvento.listaTrabajadores.className = "form-control input-md";
+            document.formuEvento.listaTrabajadores.className = "form-control input-md";
     }
 
 
     var trabajadores = [];
     var j = 0;
     for (var i = 0; i < listaTrabajadores.options.length; ++i) {
-        if(listaTrabajadores.options[i].selected){
+        if (listaTrabajadores.options[i].selected) {
             trabajadores[j] = listaTrabajadores.options[i].text;
             j++;
         }
@@ -910,12 +917,12 @@ function altaEvento() {
 
 
     for (var i = 0; i < listaTransportes.options.length; ++i) {
-        if(listaTransportes.options[i].selected)
+        if (listaTransportes.options[i].selected)
             var transporte = listaTransportes.options[i].text;
     }
 
     for (var i = 0; i < listaLugares.options.length; ++i) {
-        if(listaLugares.options[i].selected)
+        if (listaLugares.options[i].selected)
             var lugar = listaLugares.options[i].text;
     }
 
@@ -938,6 +945,51 @@ function altaEvento() {
         }
     }
 }
+
+function mostrarCancelarEvento() {
+    ocultarFormulario();
+    rellenaComboCancelarEvento();
+    document.formuCancelarEvento.style.display = "block";
+}
+
+function cancelarEvento() {
+    var oForm = document.formuCancelarEvento;
+    var bValido = true;
+    var sMensaje = "";
+    var errores = [];
+    var eventoACancelar = oForm.listaEventosACancelar.value;
+
+    sMensaje = oGestion.darCancelacionEvento(eventoACancelar);
+    rellenaComboCancelarEvento();
+
+    if (sMensaje == false) {
+        errores.push("Lo sentimos no hay eventos");
+        mostrarMensajeDeError(errores);
+    }
+    else {
+        mostrarMensajeCorrecto("Evento cancelado");
+        avisarCancelacion();
+    }
+}
+
+
+function rellenaComboCancelarEvento() {
+    var mod = document.formuCancelarEvento.listaEventosACancelar.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
+    var comboEventos = oGestion.obtenerEventos();
+    mod = document.formuCancelarEvento.listaEventosACancelar;
+    for (i = 0; i < comboEventos.length; i++) {
+        var item = document.createElement("option");
+        item.setAttribute("value", comboEventos[i]);
+        var texto = document.createTextNode(comboEventos[i]);
+        item.appendChild(texto);
+        mod.appendChild(item);
+    }
+}
+
 //************************************************************************************************************************************************************************************************************
 function ponerFechaActual() {
     var f = new Date();
@@ -1088,7 +1140,8 @@ function altaLugar() {
     }
 
     //Validar direccion
-    if (sDireccion == "") {
+    var oExpReg = /^[a-z/A-Z][a-zA-Z][0-9]*/;
+    if (oExpReg.test(sDireccion) == false) {
         if (bValido == true) {
             bValido = false;
         }
@@ -1149,76 +1202,102 @@ function mostrarMensajeCorrecto(sMensaje) {
 
 
 function actualizarComboTrabajadores() {
+    var mod = document.formuEvento.listaTrabajadores.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
     var oForm = document.formuEvento;
     var lista = oForm.listaTrabajadores;
     // Busco por descripcion
-    if (oGestion.trabajadores.length |= 0) {
+    if (oGestion.trabajadores.length != 0) {
         for (var i = 0; i < oGestion.trabajadores.length; i++) {
             lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos);
         }
     }
     else {
-        lista.options[i] = new Option("No hay trabajadores disponibles");
+        lista.options[0] = new Option("No hay trabajadores disponibles");
     }
 }
 
 function actualizarComboTransportes() {
+    var mod = document.formuEvento.listaTransportes.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
     var oForm = document.formuEvento;
     var lista = oForm.listaTransportes;
     // Busco por id
-    if (oGestion.transportes.length |= 0) {
+    if (oGestion.transportes.length != 0) {
         for (var i = 0; i < oGestion.transportes.length; i++) {
             lista.options[i] = new Option(oGestion.transportes[i].id + " " + oGestion.transportes[i].tipo);
         }
     }
     else {
-        lista.options[i] = new Option("No hay transportes disponibles");
+        lista.options[0] = new Option("No hay transportes disponibles");
     }
 
 }
 
 function actualizarComboLugares() {
+    var mod = document.formuEvento.listaLugares.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
     var oForm = document.formuEvento;
     var lista = oForm.listaLugares;
     // Busco por descripcion
-    if (oGestion.lugares.length |= 0) {
+    if (oGestion.lugares.length != 0) {
         for (var i = 0; i < oGestion.lugares.length; i++) {
             lista.options[i] = new Option(oGestion.lugares[i].descripcion);
         }
     }
     else {
-        lista.options[i] = new Option("No hay lugares disponibles");
+        lista.options[0] = new Option("No hay lugares disponibles");
     }
 }
 
 function actualizarComboEventos() {
+    var mod = document.formuAsistente.listaEventos.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
     var oForm = document.formuAsistente;
     var lista = oForm.listaEventos;
     // Busco por descripcion
-    if (oGestion.eventos.length |= 0) {
+    if (oGestion.eventos.length != 0) {
         for (var i = 0; i < oGestion.eventos.length; i++) {
             lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
         }
     }
     else {
-        lista.options[i] = new Option("No hay eventos disponibles");
+        lista.options[0] = new Option("No hay eventos disponibles");
     }
 }
 
 
 function actualizarComboEventos2() {
+    var mod = document.frmGestionContrato.selectObjetoEvento.children;
+    for (var i = mod.length - 1; i >= 0; i--) {
+        mod[i].parentNode.removeChild(mod[i]);
+    }
+
     var oForm = document.frmGestionContrato;
     var lista = oForm.selectObjetoEvento;
     // Busco por descripcion
-    if (oGestion.eventos.length |= 0) {
+    if (oGestion.eventos.length != 0) {
         for (var i = 0; i < oGestion.eventos.length; i++) {
             lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
         }
     }
     else {
-        lista.options[i] = new Option("No hay eventos disponibles");
+        lista.options[0] = new Option("No hay eventos disponibles");
     }
 }
+
 
 //LISTADOS
 
@@ -1388,7 +1467,16 @@ function mostrarListaEventos() {
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].descripcion));
         oCelda = oFila.insertCell(-1);
-        oCelda.appendChild(document.createTextNode(lista[i].trabajadores));
+        var listaTrabajadores = "";
+        for (var j = 0; j < lista[i].trabajadores.length; j++) {
+            if (j == 0)
+                listaTrabajadores = lista[i].trabajadores[j] + " ";
+            else if (j < lista[i].trabajadores.length)
+                listaTrabajadores += "/" + lista[i].trabajadores[j];
+        }
+        oCelda.appendChild(document.createTextNode(listaTrabajadores));
+        //oCelda.appendChild(document.createTextNode(lista[i].trabajadores));
+
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].transporte));
         oCelda = oFila.insertCell(-1);
