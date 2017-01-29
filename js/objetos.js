@@ -177,7 +177,7 @@ Gestion.prototype.altaAsistente = function (oAsistente) {
 
     // Busco por descripcion
     while (i < this.asistentes.length && bEnc == false) {
-        if (this.asistentes[i].dniAsistente == oAsistente.dniAsistente) {
+        if (this.asistentes[i].dniAsistente == oAsistente.dniAsistente && this.asistentes[i].eventos == oAsistente.eventos) {
             bEnc = true;
         }
         i++;
@@ -196,7 +196,7 @@ Gestion.prototype.altaEvento = function (oEvento) {
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
-        if (this.eventos[i].id == oEvento.descripcion) {
+        if (this.eventos[i].descripcion == oEvento.descripcion) {
             bEnc = true;
         }
         i++;
@@ -213,7 +213,7 @@ Gestion.prototype.darCancelacionEvento = function (oEvento) {
     var posicion = 0;
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
-        if ((this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")") == oEvento) {
+        if ((this.eventos[i].descripcion.trim() + " (" + this.eventos[i].fecha.trim() + ")") == oEvento) {
             posicion = i;
             bEnc = true;
         }
@@ -230,13 +230,24 @@ Gestion.prototype.obtenerEventos = function () {
     var arrayEventos = [];
     if (this.eventos.length != 0) {
         for (var i = 0; i < this.eventos.length; i++) {
-            arrayEventos.push(this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")");
+            arrayEventos.push(this.eventos[i].descripcion.trim() + " (" + this.eventos[i].fecha.trim() + ")");
         }
     }
     else {
         arrayEventos.push("No hay eventos disponibles");
     }
     return arrayEventos;
+}
+
+Gestion.prototype.ponerCanceladoAEventos = function(oEvento) {
+    var i = 0;
+    // Busco por descripcion
+    while (i < this.asistentes.length) {
+        if (this.asistentes[i].eventos== oEvento) {
+            this.asistentes[i].eventos =this.asistentes[i].eventos+ " CANCELADO";
+        }
+        i++;
+    }
 }
 
 Gestion.prototype.altaTransporte = function (oTransporte) {

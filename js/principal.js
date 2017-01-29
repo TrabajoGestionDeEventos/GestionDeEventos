@@ -772,27 +772,30 @@ function altaAsistente() {
             var evento = listaEventos.options[i].text;
     }
     if (evento == null) {
+        if (bValido == true) {
+            bValido = false;
+            document.formuAsistente.listaEventos.focus();
+        }
         sMensaje = "Debe seleccionar un evento \n";
         errores.push(sMensaje);
         //Marcar error
         document.formuAsistente.listaEventos.className = "form-control input-md error";
     }
     else {
-        document.formuAsistente.listaEventos.className = "form-control input-md";
+        if (evento == "No hay eventos disponibles") {
+            if (bValido == true) {
+                bValido = false;
+                document.formuAsistente.listaEventos.focus();
+            }
+            errores.push("Lo sentimos no hay eventos disponibles \n");
+            document.formuAsistente.listaEventos.className = "form-control input-md error";
+        }
+        else {
+            document.formuAsistente.listaEventos.className = "form-control input-md";
+        }
     }
 
-    //Mostramos mensaje de error o introducimos los datos
-    if (evento == "No hay eventos disponibles") {
-        if (bValido == false) {
-            bValido = false;
-            document.formuAsistente.listaEventos.focus();
-        }
-        errores.push("Lo sentimos no hay eventos disponibles \n");
-        document.formuAsistente.listaEventos.className = "form-control input-md error";
-    }
-    else {
-        document.formuAsistente.listaEventos.className = "form-control input-md";
-    }
+
 
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
@@ -805,7 +808,7 @@ function altaAsistente() {
         var bExiste = oGestion.altaAsistente(oAsistente);
         if (bExiste == true) {
             bValido = false;
-            errores.push("Este asistente ya fue dado de alta previamente");
+            errores.push("Este asistente ya fue dado de alta para este evento");
             mostrarMensajeDeError(errores);
         }
         else {
@@ -952,6 +955,7 @@ function mostrarCancelarEvento() {
     document.formuCancelarEvento.style.display = "block";
 }
 
+
 function cancelarEvento() {
     var oForm = document.formuCancelarEvento;
     var bValido = true;
@@ -968,7 +972,7 @@ function cancelarEvento() {
     }
     else {
         mostrarMensajeCorrecto("Evento cancelado");
-        avisarCancelacion();
+        oGestion.ponerCanceladoAEventos(eventoACancelar);//*************************************************************************************************************************************************************************************************
     }
 }
 
@@ -1270,7 +1274,7 @@ function actualizarComboEventos() {
     // Busco por descripcion
     if (oGestion.eventos.length != 0) {
         for (var i = 0; i < oGestion.eventos.length; i++) {
-            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
+            lista.options[i] = new Option(oGestion.eventos[i].descripcion.trim() + " (" + oGestion.eventos[i].fecha.trim() + ")");
         }
     }
     else {
@@ -1290,7 +1294,7 @@ function actualizarComboEventos2() {
     // Busco por descripcion
     if (oGestion.eventos.length != 0) {
         for (var i = 0; i < oGestion.eventos.length; i++) {
-            lista.options[i] = new Option(oGestion.eventos[i].descripcion + " (" + oGestion.eventos[i].fecha + ")");
+            lista.options[i] = new Option(oGestion.eventos[i].descripcion.trim() + " (" + oGestion.eventos[i].fecha.trim() + ")");
         }
     }
     else {

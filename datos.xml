@@ -68,7 +68,7 @@
         <apellidos>Ramirez Ramos</apellidos>
         <telefono>618245789</telefono>
         <email>email@hotmail.com</email>
-        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
+        <eventoAsistente>FestivalOfColors (15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>47415872M</dni>
@@ -76,7 +76,7 @@
         <apellidos>Jimenez Sousa</apellidos>
         <telefono>625478965</telefono>
         <email>email@gmail.com</email>
-        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
+        <eventoAsistente>FestivalOfColors (15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>48278542X</dni>
@@ -84,7 +84,7 @@
         <apellidos>Ruiz Perez</apellidos>
         <telefono>635416875</telefono>
         <email>email@hotmail.es</email>
-        <eventoAsistente>FestivalOfColors(15/05/2017)</eventoAsistente>
+        <eventoAsistente>Concierto en acustico (21/07/2018)</eventoAsistente>
     </asistente>
 
     <evento>
@@ -98,7 +98,7 @@
     </evento>
     <evento>
         <fecha>21/07/2018</fecha>
-        <descripcion>ColorRun</descripcion>
+        <descripcion>Concierto en acustico</descripcion>
         <trabajadorEvento>Juan Palomo</trabajadorEvento>
         <transporteEvento>Minibus</transporteEvento>
         <lugarEvento>Teatro Barceló</lugarEvento>
