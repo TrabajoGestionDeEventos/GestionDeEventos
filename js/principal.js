@@ -79,6 +79,55 @@ for (var j = 0; j < oLugares.length; j++) {
     oGestion.altaLugar(oLugar);
 }
 
+var oTrabajadores = oXML.getElementsByTagName("trabajador");
+for(var n=0; n<oTrabajadores.length;n++){
+    var dni = oTrabajadores[n].getElementsByTagName("dni")[0].textContent;
+    var nombre = oTrabajadores[n].getElementsByTagName("nombre")[0].textContent;
+    var apellidos = oTrabajadores[n].getElementsByTagName("apellidos")[0].textContent;
+    var tipo = oTrabajadores[n].getElementsByTagName("tipo")[0].textContent;
+
+
+    if(tipo == 'Artista'){
+        var nInstrumentos = oTrabajadores[n].getElementsByTagName("instrumentos").length;
+        var ins = [];
+        for(var s = 0; s<nInstrumentos;s++){
+            ins.push(oTrabajadores[n].getElementsByTagName("instrumentos")[s].textContent);
+        }
+        var genero = oTrabajadores[n].getElementsByTagName("genero")[0].textContent;
+
+        var sInstrumentos = "";
+        for(var i = 0; i<ins.length;i++){
+            sInstrumentos+=ins[i]+", ";
+        }
+
+        sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
+
+        var oCurrante = new Artista(dni,nombre,apellidos,sInstrumentos,genero);
+        oGestion.altaTrabajador(oCurrante);
+    }
+    else{
+        if(tipo=='Tecnico'){
+            var especialidad = oTrabajadores[n].getElementsByTagName("especialidad")[0].textContent;
+            var herramientas = oTrabajadores[n].getElementsByTagName("herramientas")[0].textContent;
+
+            var oCurrante = new Tecnicos(dni,nombre,apellidos,especialidad,herramientas);
+            oGestion.altaTrabajador(oCurrante);
+        }
+        else{
+            if (tipo == 'Sanitario'){
+                var especialidad = oTrabajadores[n].getElementsByTagName("especialidad")[0].textContent;
+                var oCurrante = new Sanitarios(dni,nombre,apellidos,especialidad);
+                oGestion.altaTrabajador(oCurrante);
+            }
+            else{
+                var compañia = oTrabajadores[n].getElementsByTagName("compañia")[0].textContent;
+                var oCurrante = new Sanitarios(dni,nombre,apellidos,compañia);
+                oGestion.altaTrabajador(oCurrante);
+            }
+        }
+    }
+}
+
 
 function ocultarFormulario() {
     document.getElementById("uml").style.display = "none";
@@ -100,6 +149,9 @@ function ocultarFormulario() {
     document.formuTransporte.style.display = "none";
     document.formuLugar.reset();
     document.formuLugar.style.display = "none";
+    document.querySelector("#idContratos").style.display = "none";
+    document.frmListaTrabajador.style.display = "none";
+    document.querySelector("#tablaTrabajador").style.display = "none";
     ponerFechaActualInicio();
     ponerFechaActual();
     actualizarComboTrabajadores();
@@ -190,6 +242,12 @@ function mostrarContrato() {
     ocultarFormulario();
     rellenaComboClientes();
     document.frmGestionContrato.style.display = "block";
+}
+
+function mostrarListadoTrabajador(){
+    ocultarFormulario();
+    document.frmListaTrabajador.reset();
+    document.frmListaTrabajador.style.display = "block";
 }
 
 function altaCliente() {
@@ -1363,6 +1421,68 @@ function vaciarTablas(objetoPadre) {
     }
 }
 
+function mostrarListaContratos(){
+    ocultarFormulario();
+    vaciarTablas(document.querySelector("#idContratos"));
+    document.querySelector("#idContratos").style.display = "block";
+
+    var lista = oGestion.cogerTodosLosContratos();
+    var oTabla = document.createElement("table");
+
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("ID Contrato"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Fecha Inicio"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Fecha Fin"));
+
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Importe"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Cliente"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Eventos"));
+
+    document.querySelector("#idContratos").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].iIdContrato));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].fechaInicio));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].fechaFin));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].sImporte));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].objetoCliente));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].objetoEvento));
+    }
+    
+    
+}
+
 function mostrarListaClientes() {
     ocultarFormulario();
 
@@ -1531,7 +1651,6 @@ function mostrarListaEventos() {
                 listaTrabajadores += "/" + lista[i].trabajadores[j];
         }
         oCelda.appendChild(document.createTextNode(listaTrabajadores));
-        //oCelda.appendChild(document.createTextNode(lista[i].trabajadores));
 
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].transporte));
@@ -1621,6 +1740,128 @@ function mostrarListaLugares() {
     }
 }
 
+function mostrarListaTrabajadores() {
+
+    document.frmListaTrabajador.style.display = "block";
+    var tipo = document.frmListaTrabajador.radioTipoTrabajador.value;
+
+    vaciarTablas(document.querySelector("#tablaTrabajador"));
+    document.querySelector("#tablaTrabajador").style.display = "block";
+
+    var lista = oGestion.cogerTodosLosTrabajadores();
+    var oTabla = document.createElement("table");
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("D.N.I."));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Nombre"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Apellidos"));
+
+    if (tipo == 'Artista') {
+        oCelda = document.createElement("th");
+        oFila.appendChild(oCelda);
+        oCelda.appendChild(document.createTextNode("Instrumentos"));
+
+        oCelda = document.createElement("th");
+        oFila.appendChild(oCelda);
+        oCelda.appendChild(document.createTextNode("Género"));
+    }
+    else {
+        if (tipo == 'Tecnico') {
+            oCelda = document.createElement("th");
+            oFila.appendChild(oCelda);
+            oCelda.appendChild(document.createTextNode("Especialidad"));
+        }
+        else {
+            if (tipo == 'Sanitario') {
+                oCelda = document.createElement("th");
+                oFila.appendChild(oCelda);
+                oCelda.appendChild(document.createTextNode("Especialidad"));
+            }
+            else {
+                oCelda = document.createElement("th");
+                oFila.appendChild(oCelda);
+                oCelda.appendChild(document.createTextNode("Compañía"));
+            }
+        }
+    }
+
+    document.querySelector("#tablaTrabajador").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    if (tipo == 'Artista') {
+        for (i = 0; i < lista.length instanceof Artista; i++) {
+            oFila = oTBody.insertRow(-1);
+            oCelda = oFila.insertCell(-1);
+            oCelda.appendChild(document.createTextNode(lista[i].dni));
+            oCelda = oFila.insertCell(-1);
+            oCelda.appendChild(document.createTextNode(lista[i].nombre));
+            oCelda = oFila.insertCell(-1);
+            oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+            oCelda = oFila.insertCell(-1);
+            oCelda.appendChild(document.createTextNode(lista[i].especialidad));
+            oCelda = oFila.insertCell(-1);
+            oCelda.appendChild(document.createTextNode(lista[i].genero));
+        }
+    }
+    else {
+        if(tipo=='Tecnico'){
+            for (i = 0; i < lista.length instanceof Tecnicos; i++) {
+                oFila = oTBody.insertRow(-1);
+                oCelda = oFila.insertCell(-1);
+                oCelda.appendChild(document.createTextNode(lista[i].dni));
+                oCelda = oFila.insertCell(-1);
+                oCelda.appendChild(document.createTextNode(lista[i].nombre));
+                oCelda = oFila.insertCell(-1);
+                oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+                oCelda = oFila.insertCell(-1);
+                oCelda.appendChild(document.createTextNode(lista[i].especialidad));
+                oCelda = oFila.insertCell(-1);
+                oCelda.appendChild(document.createTextNode(lista[i].herramientas));
+            }
+        }
+        else{
+            if(tipo=='Sanitario'){
+                for (i = 0; i < lista.length instanceof Sanitarios; i++) {
+                    oFila = oTBody.insertRow(-1);
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].dni));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].nombre));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].especialidad));
+                }
+            }
+            else{
+                for (i = 0; i < lista.length instanceof Limpieza; i++) {
+                    oFila = oTBody.insertRow(-1);
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].dni));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].nombre));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].apellidos));
+                    oCelda = oFila.insertCell(-1);
+                    oCelda.appendChild(document.createTextNode(lista[i].compañia));
+                }
+            }
+        }
+    }
+}
 
 
 

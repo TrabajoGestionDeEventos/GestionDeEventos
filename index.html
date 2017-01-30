@@ -63,7 +63,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="mostrarAltaContrato">Alta Contrato</a></li>
-                                <li><a href="#">Listar Contratos</a></li>
+                                <li><a href="#" id="listaContratos">Listar Contratos</a></li>
                             </ul>
                         </li>
 
@@ -105,7 +105,15 @@
                                 <li><a href="#" id="listarLugares">Listar Lugares</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" id="mostrarGestionTrabajador">Trabajadores</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Trabajadores <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="mostrarGestionTrabajador">Alta Trabajadores</a></li>
+                                <li><a href="#" id="listarTrabajadores">Listar Trabajadores</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -204,16 +212,6 @@
     <!-- MOSTRAR LISTA CLIENTES -->
     <div id="idListaCli"></div>
 
-    <!--<ul class="claseEjemploLista">-->
-    <!--<li></li>-->
-    <!--</ul>-->
-    <!--<ul class="claseEjemploLista">-->
-    <!--<li></li>-->
-    <!--</ul>-->
-    <!--<ul class="claseEjemploLista">-->
-    <!--<li></li>-->
-    <!--</ul>-->
-
 
     <!-- GESTION DE CONTRATOS -->
     <div class="row">
@@ -292,6 +290,8 @@
         </div>
     </div>
 
+    <!-- LISTA CONTRATOS -->
+    <div id="idContratos"></div>
 
     <!-- GESTION ASISTENTE -->
     <div class="row">
@@ -750,6 +750,39 @@
     </div>
 </div>
 
+<!-- LISTA TRABAJADORES -->
+<form class="form-horizontal" name="frmListaTrabajador" id="idListaTrabajador">
+    <fieldset>
+        <!-- Form Name -->
+        <legend>Listado por Tipo</legend>
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="radioTipoTrabajador"></label>
+            <div class="col-md-4">
+                <label class="radio-inline" for="radioTipoTrabajador-0">
+                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-0" value="Artista">
+                    Artista
+                </label>
+                <label class="radio-inline" for="radioTipoTrabajador-1">
+                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-1" value="Tecnico">
+                    Tecnico
+                </label>
+                <label class="radio-inline" for="radioTipoTrabajador-2">
+                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-2" value="Sanitario">
+                    Sanitario
+                </label>
+                <label class="radio-inline" for="radioTipoTrabajador-3">
+                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-3" value="Limpieza">
+                    Limpieza
+                </label>
+                        <button id="aceptarListadoTrabajador" name="aceptarListadoTrabajador" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </fieldset>
+        <div id="tablaTrabajador"></div>
+</form>
+
+
 <!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
 <script type="text/JavaScript">
     var f = new Date();
@@ -795,14 +828,14 @@
     var radioArtista = document.getElementById('radioArtista');
     radioArtista.addEventListener("click", mostrarRadioArtista);
 
-    var radioArtista = document.getElementById('radioTecnico');
-    radioArtista.addEventListener("click", mostrarRadioTecnico);
+    var radioTecnico = document.getElementById('radioTecnico');
+    radioTecnico.addEventListener("click", mostrarRadioTecnico);
 
-    var radioArtista = document.getElementById('radioLimpieza');
-    radioArtista.addEventListener("click", mostrarRadioLimpieza);
+    var radioLimpieza = document.getElementById('radioLimpieza');
+    radioLimpieza.addEventListener("click", mostrarRadioLimpieza);
 
-    var radioArtista = document.getElementById('radioSanitario');
-    radioArtista.addEventListener("click", mostrarRadioSanitario);
+    var radioSanitario = document.getElementById('radioSanitario');
+    radioSanitario.addEventListener("click", mostrarRadioSanitario);
 
     var btnAceptarTrabajador = document.getElementById('aceptarTrabajador');
     btnAceptarTrabajador.addEventListener("click", altaTrabajador);
@@ -843,6 +876,9 @@
     var btnAceptarLugar = document.getElementById("formuLugar");
     btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
 
+    var btnAceptarListadoTrabajador = document.getElementById('idListaTrabajador');
+    btnAceptarListadoTrabajador.aceptarListadoTrabajador.addEventListener("click", mostrarListaTrabajadores);
+
     //Listados
     var oListaCliente = document.getElementById('listarCli');
     oListaCliente.addEventListener("click", mostrarListaClientes);
@@ -858,6 +894,12 @@
 
     var oListaLugares= document.getElementById('listarLugares');
     oListaLugares.addEventListener("click", mostrarListaLugares);
+
+    var oListadoContratos = document.getElementById('listaContratos');
+    oListadoContratos.addEventListener("click", mostrarListaContratos);
+
+    var oListadoTrabajadores = document.getElementById('listarTrabajadores');
+    oListadoTrabajadores.addEventListener("click", mostrarListadoTrabajador);
 
 </script>
 <script src="js/pikaday.js"></script>

@@ -109,6 +109,7 @@ function Gestion() {
     this.clientes = [];
     this.trabajadores = [];
     this.eventos = [];
+    this.contratos = [];
 }
 
 
@@ -379,4 +380,20 @@ Gestion.prototype.cogerTodosLosLugares = function () {
         arrayLugares.push(this.lugares[i]);
     }
     return arrayLugares;
+}
+
+Gestion.prototype.cogerTodosLosContratos = function () {
+    var arrayContratos = [];
+    for (var i = 0; i < this.contratos.length; i++) {
+        arrayContratos.push(this.contratos[i]);
+    }
+    return arrayContratos;
+}
+
+Gestion.prototype.cogerTodosLosTrabajadores = function () {
+    var arrayTrabajadores = [];
+    for (var i = 0; i < this.trabajadores.length; i++) {
+        arrayTrabajadores.push(this.trabajadores[i]);
+    }
+    return arrayTrabajadores;
 }
