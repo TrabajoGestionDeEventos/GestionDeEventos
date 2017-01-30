@@ -48,7 +48,7 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Gestion Clientes <b class="caret"></b>
+                                Clientes <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="cli">Alta Cliente</a></li>
@@ -59,7 +59,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Gestion Contrato<b class="caret"></b>
+                                Contratos<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="mostrarAltaContrato">Alta Contrato</a></li>
@@ -69,7 +69,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Gestion Asistente<b class="caret"></b>
+                                Asistentes<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="altaAsistente">Alta Asistente</a></li>
@@ -79,7 +79,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Gestión de Evento <b class="caret"></b>
+                                Eventos <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" id="altaEvento">Alta Evento</a></li>
@@ -87,9 +87,25 @@
                                 <li><a href="#" id="listarEventos">Listar Evento</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" id="altaTransporte">Gestión Tranporte</a></li>
-                        <li><a href="#" id="altaLugar">Gestión Lugar</a></li>
-                        <li><a href="#" id="mostrarGestionTrabajador">Gestión Trabajadores</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Tranportes <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="altaTransporte">Alta Transporte</a></li>
+                                <li><a href="#" id="listarTransportes">Listar Transportes</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Lugares <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="altaLugar">Alta Lugar</a></li>
+                                <li><a href="#" id="listarLugares">Listar Lugares</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" id="mostrarGestionTrabajador">Trabajadores</a></li>
                     </ul>
                 </div>
             </nav>
@@ -507,6 +523,10 @@
             </form>
         </div>
     </div>
+
+    <!-- MOSTRAR LISTA TRANSPORTES -->
+    <div id="tablaTransportes"></div>
+
     <!-- GESTION LUGAR-->
     <div class="row">
         <div class="col-xs-12">
@@ -555,6 +575,9 @@
         </div>
     </div>
 
+    <!-- MOSTRAR LISTA LUGARES -->
+    <div id="tablaLugares"></div>
+
     <!-- GESTION TRABAJADOR -->
     <div class="row">
         <div class="col-xs-12">
@@ -568,7 +591,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="dni">DNI:</label>
                         <div class="col-md-5">
-                            <input id="dni" name="dni" type="text" placeholder="D.N.I" class="form-control input-md"
+                            <input  name="dni" type="text" placeholder="D.N.I" class="form-control input-md"
                                    required="">
 
                         </div>
@@ -578,7 +601,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nombre">Nombre: </label>
                         <div class="col-md-5">
-                            <input id="nombre" name="nombre" type="text" placeholder="Nombre"
+                            <input  name="nombre" type="text" placeholder="Nombre"
                                    class="form-control input-md" required="">
 
                         </div>
@@ -588,7 +611,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="apellidos">Apellidos</label>
                         <div class="col-md-5">
-                            <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos"
+                            <input  name="apellidos" type="text" placeholder="Apellidos"
                                    class="form-control input-md" required="">
 
                         </div>
@@ -596,21 +619,21 @@
 
                     <!-- Multiple Radios (inline) -->
                     <div class="form-group" id="radiosTipo">
-                        <label class="col-md-4 control-label" for="radios">Tipos</label>
+                        <label class="col-md-4 control-label">Tipos</label>
                         <div class="col-md-4">
-                            <label class="radio-inline" for="radios-0">
+                            <label class="radio-inline" for="radioArtista">
                                 <input type="radio" name="radios" id="radioArtista" value="artista" checked="checked">
                                 Artista
                             </label>
-                            <label class="radio-inline" for="radios-1">
+                            <label class="radio-inline" for="radioTecnico">
                                 <input type="radio" name="radios" id="radioTecnico" value="tecnico">
                                 Técnico
                             </label>
-                            <label class="radio-inline" for="radios-2">
+                            <label class="radio-inline" for="radioSanitario">
                                 <input type="radio" name="radios" id="radioSanitario" value="sanitarios">
                                 Sanitarios
                             </label>
-                            <label class="radio-inline" for="radios-3">
+                            <label class="radio-inline" for="radioLimpieza">
                                 <input type="radio" name="radios" id="radioLimpieza" value="limpieza">
                                 Limpieza
                             </label>
@@ -669,7 +692,7 @@
 
                         <!-- Multiple Radios (inline) -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="radiosHerramientas">¿Herramientas
+                            <label class="col-md-4 control-label">¿Herramientas
                                 Propias?</label>
                             <div class="col-md-4">
                                 <label class="radio-inline" for="radiosHerramientas-0">
@@ -688,7 +711,7 @@
                     <div id="idSanitario">
                         <!-- Select Multiple -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="especialidadSanitaria">Especialidad:</label>
+                            <label class="col-md-4 control-label">Especialidad:</label>
                             <div class="col-md-5">
                                 <select id="especialidadSani" name="especialidadSani" class="form-control">
                                     <option value="Auxiliar">Auxiliar</option>
@@ -829,6 +852,12 @@
 
     var oListaEventos= document.getElementById('listarEventos');
     oListaEventos.addEventListener("click", mostrarListaEventos);
+
+    var oListaTransportes= document.getElementById('listarTransportes');
+    oListaTransportes.addEventListener("click", mostrarListaTransportes);
+
+    var oListaLugares= document.getElementById('listarLugares');
+    oListaLugares.addEventListener("click", mostrarListaLugares);
 
 </script>
 <script src="js/pikaday.js"></script>

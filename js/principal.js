@@ -118,6 +118,8 @@ function ocultarFormulario() {
     document.querySelector("#idListaCli").style.display = "none";
     document.querySelector("#tablaAsistentes").style.display = "none";
     document.querySelector("#tablaEventos").style.display = "none";
+    document.querySelector("#tablaTransportes").style.display = "none";
+    document.querySelector("#tablaLugares").style.display = "none";
 }
 
 function desmarcarErrroresFormularios() {
@@ -427,7 +429,7 @@ function altaTrabajador() {
 
         sInstrumentos = sInstrumentos.substr(0, sInstrumentos.length - 2) + ".";
 
-       // console.log(sInstrumentos);
+        // console.log(sInstrumentos);
         if (bValido == false) {
             mostrarMensajeDeError(errores);
         }
@@ -766,7 +768,7 @@ function altaAsistente() {
         document.formuAsistente.email.className = "form-control input-md";
     }
 
-
+    //Validar combo eventos
     for (var i = 0; i < listaEventos.options.length; ++i) {
         if (listaEventos.options[i].selected)
             var evento = listaEventos.options[i].text;
@@ -794,8 +796,6 @@ function altaAsistente() {
             document.formuAsistente.listaEventos.className = "form-control input-md";
         }
     }
-
-
 
     //Mostramos mensaje de error o introducimos los datos
     if (bValido == false) {
@@ -881,12 +881,15 @@ function altaEvento() {
         document.formuEvento.descripcion.className = "form-control input-md";
     }
 
-
+    //Validar combo Trabajadores
+    var j=0;
+    var trabajadores=[];
     for (var i = 0; i < listaTrabajadores.options.length; ++i) {
-        if (listaTrabajadores.options[i].selected)
-            var trabajadores = listaTrabajadores.options[i].text;
+        if (listaTrabajadores.options[i].selected){
+            trabajadores[j] = listaTrabajadores.options[i].text;
+            j++;
+        }
     }
-
     if (trabajadores == "No hay trabajadores disponibles") {
         if (bValido == true) {
             bValido = false;
@@ -909,24 +912,62 @@ function altaEvento() {
     }
 
 
-    var trabajadores = [];
-    var j = 0;
-    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
-        if (listaTrabajadores.options[i].selected) {
-            trabajadores[j] = listaTrabajadores.options[i].text;
-            j++;
-        }
-    }
-
-
+    //Validar combo transportes
     for (var i = 0; i < listaTransportes.options.length; ++i) {
         if (listaTransportes.options[i].selected)
             var transporte = listaTransportes.options[i].text;
     }
+    if (transporte == null) {
+        if (bValido == true) {
+            bValido = false;
+            document.formuEvento.listaTransportes.focus();
+        }
+        sMensaje = "Debe seleccionar un transporte \n";
+        errores.push(sMensaje);
+        //Marcar error
+        document.formuEvento.listaTransportes.className = "form-control input-md error";
+    }
+    else {
+        if (transporte == "No hay transportes disponibles") {
+            if (bValido == true) {
+                bValido = false;
+                document.formuEvento.listaTransportes.focus();
+            }
+            errores.push("Lo sentimos no hay transportes disponibles \n");
+            document.formuEvento.listaTransportes.className = "form-control input-md error";
+        }
+        else {
+            document.formuEvento.listaTransportes.className = "form-control input-md";
+        }
+    }
 
+    //Validar combo lugares
     for (var i = 0; i < listaLugares.options.length; ++i) {
         if (listaLugares.options[i].selected)
-            var lugar = listaLugares.options[i].text;
+            var lugares = listaLugares.options[i].text;
+    }
+    if (lugares == null) {
+        if (bValido == true) {
+            bValido = false;
+            document.formuEvento.listaLugares.focus();
+        }
+        sMensaje = "Debe seleccionar un lugar \n";
+        errores.push(sMensaje);
+        //Marcar error
+        document.formuEvento.listaLugares.className = "form-control input-md error";
+    }
+    else {
+        if (lugares == "No hay lugares disponibles") {
+            if (bValido == true) {
+                bValido = false;
+                document.formuEvento.listaLugares.focus();
+            }
+            errores.push("Lo sentimos no hay lugares disponibles \n");
+            document.formuEvento.listaLugares.className = "form-control input-md error";
+        }
+        else {
+            document.formuEvento.listaLugares.className = "form-control input-md";
+        }
     }
 
     //Mostramos mensaje de error o introducimos los datos
@@ -937,16 +978,24 @@ function altaEvento() {
         //guardamos el evento
         document.formuEvento.reset();
         ponerFechaActual();
-        var oEvento = new Evento(fecha, descripcion, trabajadores, transporte, lugar);
+        var oEvento = new Evento(fecha, descripcion, trabajadores, transporte, lugares);
+        var bExisteDescripcion = oGestion.comprobarEvento(oEvento);
         var bExiste = oGestion.altaEvento(oEvento);
-        if (bExiste == true) {
-            errores.push("Ese evento ya fue dado de alta previamente");
-            mostrarMensajeDeError(errores);
+
+        if(bExisteDescripcion== true){
+            mostrarMensajeInformativo("Lo sentimos ya existe este evento para el dia(" +fecha+")");
         }
-        else {
-            mostrarMensajeCorrecto("Evento dado de alta");
+        else{
+            if (bExiste == true) {
+                errores.push("Lo sentimos ya hay un evento en "+lugares+ " para el dia (" +fecha+")");
+                mostrarMensajeDeError(errores);
+            }
+            else {
+                mostrarMensajeCorrecto("Evento dado de alta");
+            }
         }
     }
+
 }
 
 function mostrarCancelarEvento() {
@@ -1204,6 +1253,9 @@ function mostrarMensajeCorrecto(sMensaje) {
     toastr.success(sMensaje);
 }
 
+function mostrarMensajeInformativo(sMensaje) {
+    toastr.info(sMensaje);
+}
 
 function actualizarComboTrabajadores() {
     var mod = document.formuEvento.listaTrabajadores.children;
@@ -1488,6 +1540,86 @@ function mostrarListaEventos() {
     }
 }
 
+
+function mostrarListaTransportes() {
+    ocultarFormulario();
+    vaciarTablas(document.querySelector("#tablaTransportes"));
+    document.querySelector("#tablaTransportes").style.display = "block";
+
+    var lista = oGestion.cogerTodosLosTransportes();
+    var oTabla = document.createElement("table");
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("ID"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Tipo"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Plazas"));
+
+    document.querySelector("#tablaTransportes").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].id));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].tipo));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].plazas));
+    }
+}
+
+function mostrarListaLugares() {
+    ocultarFormulario();
+    vaciarTablas(document.querySelector("#tablaLugares"));
+    document.querySelector("#tablaLugares").style.display = "block";
+
+    var lista = oGestion.cogerTodosLosLugares();
+    var oTabla = document.createElement("table");
+
+    oTabla.setAttribute("class", "table table-striped");
+
+    var oThead = oTabla.createTHead();
+    var oFila = oThead.insertRow(-1);
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Descripción"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Dirección"));
+
+    oCelda = document.createElement("th");
+    oFila.appendChild(oCelda);
+    oCelda.appendChild(document.createTextNode("Capacidad"));
+
+    document.querySelector("#tablaLugares").appendChild(oTabla);
+
+    var oTBody = oTabla.createTBody();
+
+    for (i = 0; i < lista.length; i++) {
+        oFila = oTBody.insertRow(-1);
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].descripcion));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].direccion));
+        oCelda = oFila.insertCell(-1);
+        oCelda.appendChild(document.createTextNode(lista[i].capacidad+" prs"));
+    }
+}
 
 
 

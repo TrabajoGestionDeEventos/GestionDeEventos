@@ -25,6 +25,7 @@
         <apellidos>El Adalí</apellidos>
         <telefono>784159248</telefono>
     </cliente>
+
     <transporte>
         <id>1</id>
         <tipo>Minibus</tipo>

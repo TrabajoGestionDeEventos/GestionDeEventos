@@ -196,13 +196,28 @@ Gestion.prototype.altaEvento = function (oEvento) {
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
-        if (this.eventos[i].descripcion == oEvento.descripcion) {
+        if (this.eventos[i].fecha == oEvento.fecha && this.eventos[i].lugar == oEvento.lugar) {
             bEnc = true;
         }
         i++;
     }
     if (bEnc != true) {
         this.eventos.push(oEvento);
+    }
+    return bEnc;
+}
+
+Gestion.prototype.comprobarEvento = function (oEvento) {
+    var i = 0;
+    var bEnc = false;
+    var sMensaje = "";
+
+    // Busco por descripcion
+    while (i < this.eventos.length && bEnc == false) {
+        if (this.eventos[i].descripcion == oEvento.descripcion && this.eventos[i].fecha == oEvento.fecha) {
+            bEnc = true;
+        }
+        i++;
     }
     return bEnc;
 }
@@ -310,7 +325,6 @@ Gestion.prototype.altaTrabajador = function (oTrabajador) {
 
 Gestion.prototype.obtenerClientes = function () {
     var arrayClientes = [];
-
     if (this.clientes.length != 0) {
 
         for (var i = 0; i < this.clientes.length; i++) {
@@ -327,7 +341,6 @@ Gestion.prototype.obtenerClientes = function () {
 //LISTADOS
 Gestion.prototype.cogerTodosLosClientes = function () {
     var arrayClientes = [];
-
     for (var i = 0; i < this.clientes.length; i++) {
         arrayClientes.push(this.clientes[i]);
     }
@@ -336,7 +349,6 @@ Gestion.prototype.cogerTodosLosClientes = function () {
 
 Gestion.prototype.cogerTodosLosAsistentes = function () {
     var arrayAsistentes = [];
-
     for (var i = 0; i < this.asistentes.length; i++) {
         arrayAsistentes.push(this.asistentes[i]);
     }
@@ -345,9 +357,26 @@ Gestion.prototype.cogerTodosLosAsistentes = function () {
 
 Gestion.prototype.cogerTodosLosEventos = function () {
     var arrayEventos = [];
-
     for (var i = 0; i < this.eventos.length; i++) {
         arrayEventos.push(this.eventos[i]);
     }
     return arrayEventos;
+}
+
+Gestion.prototype.cogerTodosLosTransportes = function () {
+    var arrayTransportes = [];
+
+    for (var i = 0; i < this.transportes.length; i++) {
+        arrayTransportes.push(this.transportes[i]);
+    }
+    return arrayTransportes;
+}
+
+Gestion.prototype.cogerTodosLosLugares = function () {
+    var arrayLugares = [];
+
+    for (var i = 0; i < this.lugares.length; i++) {
+        arrayLugares.push(this.lugares[i]);
+    }
+    return arrayLugares;
 }
