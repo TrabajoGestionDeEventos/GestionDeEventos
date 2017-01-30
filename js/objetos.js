@@ -91,12 +91,13 @@ Limpieza.prototype.constructor = Limpieza;
 
 
 // objeto Evento********************************************************************************************************
-function Evento(dFecha, sDescripcion, trabajadores, sTransporte, sLugar) {
+function Evento(dFecha, sDescripcion, trabajadores, sTransporte, sLugar, iAforo) {
     this.fecha = dFecha;
     this.descripcion = sDescripcion;
     this.trabajadores = trabajadores;
     this.transporte = sTransporte;
     this.lugar = sLugar;
+    this.aforo = iAforo;
 }
 
 //**********************************************************************************************************************
@@ -174,6 +175,7 @@ Gestion.prototype.altaContrato = function (oContrato) {
 Gestion.prototype.altaAsistente = function (oAsistente) {
     var i = 0;
     var bEnc = false;
+    var bEnc2 = false;
 
     // Busco por descripcion
     while (i < this.asistentes.length && bEnc == false) {
@@ -182,17 +184,39 @@ Gestion.prototype.altaAsistente = function (oAsistente) {
         }
         i++;
     }
-
     if (bEnc != true) {
+        var i = 0;
+        while (i < this.eventos.length && bEnc2 == false) {
+            if ((this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")")== oAsistente.eventos) {
+                this.eventos[i].aforo--;
+                bEnc2 = true;
+            }
+            i++;
+        }
         this.asistentes.push(oAsistente);
     }
     return bEnc;
 }
 
+Gestion.prototype.comprobarAforo = function (evento) {
+    var i = 0;
+    var bEnc = false;
+    var aforo =false;
+    while (i < this.eventos.length && bEnc == false) {
+        if ((this.eventos[i].descripcion + " (" + this.eventos[i].fecha + ")")== evento) {
+            if(this.eventos[i].aforo>0){
+                aforo=true;
+            }
+            bEnc = true;
+        }
+        i++;
+    }
+    return aforo;
+}
+
 Gestion.prototype.altaEvento = function (oEvento) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {
@@ -207,10 +231,24 @@ Gestion.prototype.altaEvento = function (oEvento) {
     return bEnc;
 }
 
+Gestion.prototype.obtenerAforoDelLugar = function (lugar) {
+    var i = 0;
+    var bEnc = false;
+
+    // Busco por descripcion
+    while (i < this.lugares.length && bEnc == false) {
+        if (this.lugares[i].descripcion == lugar) {
+            bEnc = true;
+            var aforo= this.lugares[i].capacidad;
+        }
+        i++;
+    }
+    return aforo;
+}
+
 Gestion.prototype.comprobarEvento = function (oEvento) {
     var i = 0;
     var bEnc = false;
-    var sMensaje = "";
 
     // Busco por descripcion
     while (i < this.eventos.length && bEnc == false) {

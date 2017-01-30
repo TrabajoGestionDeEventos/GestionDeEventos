@@ -3,26 +3,26 @@
 <gestion>
     <cliente>
         <dni>49092533E</dni>
-        <nombre>Manuel</nombre>
-        <apellidos>Acosta Salguero</apellidos>
+        <nombre>Amanda</nombre>
+        <apellidos>Paesos Tamos</apellidos>
         <telefono>650520403</telefono>
     </cliente>
     <cliente>
         <dni>12345678A</dni>
-        <nombre>Adrian</nombre>
-        <apellidos>Cumplio Sanché</apellidos>
+        <nombre>Alberto</nombre>
+        <apellidos>Esto Mecaí</apellidos>
         <telefono>654789123</telefono>
     </cliente>
     <cliente>
         <dni>45678912J</dni>
-        <nombre>Javié</nombre>
-        <apellidos>Don Vargas</apellidos>
+        <nombre>Esther</nombre>
+        <apellidos>Tampax Tausao</apellidos>
         <telefono>690412715</telefono>
     </cliente>
     <cliente>
         <dni>69328514L</dni>
-        <nombre>Isaac</nombre>
-        <apellidos>El Adalí</apellidos>
+        <nombre>Susana</nombre>
+        <apellidos>Cabao Losdonu</apellidos>
         <telefono>784159248</telefono>
     </cliente>
 
@@ -62,75 +62,93 @@
         <direccion>Paseo Bajo de la Virgen del Puerto, 28005 Madrid, España</direccion>
         <capacidad>600</capacidad>
     </lugar>
+    <lugar>
+        <descripcion>Teatro Lope de Vega</descripcion>
+        <direccion>Av. de María Luisa, s/n, 41013 Sevilla, España</direccion>
+        <capacidad>2</capacidad>
+    </lugar>
 
     <asistente>
         <dni>47214872N</dni>
-        <nombre>Miguel</nombre>
-        <apellidos>Ramirez Ramos</apellidos>
+        <nombre>Tomas</nombre>
+        <apellidos>Muncho Café</apellidos>
         <telefono>618245789</telefono>
         <email>email@hotmail.com</email>
         <eventoAsistente>FestivalOfColors (15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>47415872M</dni>
-        <nombre>Mario</nombre>
-        <apellidos>Jimenez Sousa</apellidos>
+        <nombre>Tolomeo</nombre>
+        <apellidos>Fueral Water</apellidos>
         <telefono>625478965</telefono>
         <email>email@gmail.com</email>
         <eventoAsistente>FestivalOfColors (15/05/2017)</eventoAsistente>
     </asistente>
     <asistente>
         <dni>48278542X</dni>
-        <nombre>Marta</nombre>
-        <apellidos>Ruiz Perez</apellidos>
+        <nombre>Mireia</nombre>
+        <apellidos>Tienda Leches</apellidos>
         <telefono>635416875</telefono>
         <email>email@hotmail.es</email>
         <eventoAsistente>Concierto en acustico (21/07/2018)</eventoAsistente>
     </asistente>
 
+
     <evento>
         <fecha>15/05/2017</fecha>
         <descripcion>FestivalOfColors</descripcion>
-        <trabajadorEvento>Juan Palomo</trabajadorEvento>
-        <trabajadorEvento>Aitor Menta</trabajadorEvento>
-        <trabajadorEvento>Elena Nito</trabajadorEvento>
-        <transporteEvento>Minibus</transporteEvento>
+        <trabajadorEvento>Mercedes Elsitio Plis (Artista)</trabajadorEvento>
+        <trabajadorEvento>Aitor Menta Ahora (Limpieza)</trabajadorEvento>
+        <trabajadorEvento>Elena Nito del Bosque (Sanitario)</trabajadorEvento>
+        <transporteEvento>2 Autobus</transporteEvento>
         <lugarEvento>Sala La Riviera</lugarEvento>
+        <aforo>600</aforo>
     </evento>
     <evento>
         <fecha>21/07/2018</fecha>
         <descripcion>Concierto en acustico</descripcion>
-        <trabajadorEvento>Juan Palomo</trabajadorEvento>
-        <transporteEvento>Minibus</transporteEvento>
+        <trabajadorEvento>Esteban Costa Cupado (Artista)</trabajadorEvento>
+        <trabajadorEvento>Luz Cuesta Mogollon (Tecnico)</trabajadorEvento>
+        <transporteEvento>1 Minibus</transporteEvento>
         <lugarEvento>Teatro Barceló</lugarEvento>
+        <aforo>1200</aforo>
+    </evento>
+    <evento>
+        <fecha>20/09/2018</fecha>
+        <descripcion>Musical Rey Leon</descripcion>
+        <trabajadorEvento>Armando Bronca Segura (Artista)</trabajadorEvento>
+        <trabajadorEvento>Alberto Esto Mecaí (Tecnico)</trabajadorEvento>
+        <transporteEvento>1 Minibus</transporteEvento>
+        <lugarEvento>Teatro Lope de Vega</lugarEvento>
+        <aforo>2</aforo>
     </evento>
 
     <trabajador>
         <dni>4578125A</dni>
-        <nombre>Don Osto</nombre>
-        <apellidos>Mendez</apellidos>
+        <nombre>Tobías</nombre>
+        <apellidos>Tas Aquí</apellidos>
         <tipo>Limpieza</tipo>
         <compañia>Trabaja en Negro</compañia>
     </trabajador>
     <trabajador>
         <dni>4578155D</dni>
-        <nombre>Don Otro</nombre>
-        <apellidos>Mendecito</apellidos>
+        <nombre>Santi</nombre>
+        <apellidos>Rao del Puente</apellidos>
         <tipo>Limpieza</tipo>
         <compañia>Papas Mandan</compañia>
     </trabajador>
     <trabajador>
         <dni>45718201B</dni>
-        <nombre>Miguel</nombre>
-        <apellidos>Ramirez Ramos</apellidos>
+        <nombre>Dolores</nombre>
+        <apellidos>Fuertes de Barriga</apellidos>
         <tipo>Tecnico</tipo>
         <especialidad>Toca pelotas</especialidad>
         <herramientas>No</herramientas>
     </trabajador>
     <trabajador>
         <dni>45718231J</dni>
-        <nombre>Miguelito</nombre>
-        <apellidos>Ramirencito Ramoncito</apellidos>
+        <nombre>Genoveva</nombre>
+        <apellidos>Sicon Duce</apellidos>
         <tipo>Tecnico</tipo>
         <especialidad>Toca Glandes</especialidad>
         <herramientas>Si</herramientas>
@@ -164,8 +182,8 @@
     </trabajador>
     <trabajador>
         <dni>11144477Y</dni>
-        <nombre>Hipocrates</nombre>
-        <apellidos>el filosofo</apellidos>
+        <nombre>Edmundo</nombre>
+        <apellidos>Esun Pañuelo</apellidos>
         <tipo>Sanitario</tipo>
         <especialidad>Camillero</especialidad>
     </trabajador>
