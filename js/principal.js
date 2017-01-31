@@ -24,18 +24,24 @@ for (var j = 0; j < oClientes.length; j++) {
     oGestion.altaCliente(oCliente);
 }
 
+var oLugares = oXML.getElementsByTagName("lugar");
+for (var j = 0; j < oLugares.length; j++) {
+    var descripcion = oLugares[j].getElementsByTagName("descripcion")[0].textContent;
+    var direccion = oLugares[j].getElementsByTagName("direccion")[0].textContent;
+    var capacidad = oLugares[j].getElementsByTagName("capacidad")[0].textContent;
 
-var oAsistentes = oXML.getElementsByTagName("asistente");
-for (var j = 0; j < oAsistentes.length; j++) {
-    var dni = oAsistentes[j].getElementsByTagName("dni")[0].textContent;
-    var nombre = oAsistentes[j].getElementsByTagName("nombre")[0].textContent;
-    var apellidos = oAsistentes[j].getElementsByTagName("apellidos")[0].textContent;
-    var telefono = oAsistentes[j].getElementsByTagName("telefono")[0].textContent;
-    var email = oAsistentes[j].getElementsByTagName("email")[0].textContent;
-    var eventoAsistente = oAsistentes[j].getElementsByTagName("eventoAsistente")[0].textContent;
+    var oLugar = new Lugar(descripcion, direccion, capacidad);
+    oGestion.altaLugar(oLugar);
+}
 
-    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, eventoAsistente);
-    oGestion.altaAsistente(oAsistente);
+var oTransportes = oXML.getElementsByTagName("transporte");
+for (var j = 0; j < oTransportes.length; j++) {
+    var id = oTransportes[j].getElementsByTagName("id")[0].textContent;
+    var tipo = oTransportes[j].getElementsByTagName("tipo")[0].textContent;
+    var plazas = oTransportes[j].getElementsByTagName("plazas")[0].textContent;
+
+    var oTransporte = new Transporte(id, tipo, plazas);
+    oGestion.altaTransporte(oTransporte);
 }
 
 
@@ -53,30 +59,24 @@ for (var j = 0; j < oEventos.length; j++) {
 
     var transporteEvento = oEventos[j].getElementsByTagName("transporteEvento")[0].textContent;
     var lugarEvento = oEventos[j].getElementsByTagName("lugarEvento")[0].textContent;
+    var aforo = oEventos[j].getElementsByTagName("aforo")[0].textContent;
 
-    var oEvento = new Evento(fecha, descripcion, trabajadorEvento, transporteEvento, lugarEvento);
+    var oEvento = new Evento(fecha, descripcion, trabajadorEvento, transporteEvento, lugarEvento, aforo);
     oGestion.altaEvento(oEvento);
 }
 
-var oTransportes = oXML.getElementsByTagName("transporte");
-for (var j = 0; j < oTransportes.length; j++) {
-    var id = oTransportes[j].getElementsByTagName("id")[0].textContent;
-    var tipo = oTransportes[j].getElementsByTagName("tipo")[0].textContent;
-    var plazas = oTransportes[j].getElementsByTagName("plazas")[0].textContent;
 
-    var oTransporte = new Transporte(id, tipo, plazas);
-    oGestion.altaTransporte(oTransporte);
-}
+var oAsistentes = oXML.getElementsByTagName("asistente");
+for (var j = 0; j < oAsistentes.length; j++) {
+    var dni = oAsistentes[j].getElementsByTagName("dni")[0].textContent;
+    var nombre = oAsistentes[j].getElementsByTagName("nombre")[0].textContent;
+    var apellidos = oAsistentes[j].getElementsByTagName("apellidos")[0].textContent;
+    var telefono = oAsistentes[j].getElementsByTagName("telefono")[0].textContent;
+    var email = oAsistentes[j].getElementsByTagName("email")[0].textContent;
+    var eventoAsistente = oAsistentes[j].getElementsByTagName("eventoAsistente")[0].textContent;
 
-
-var oLugares = oXML.getElementsByTagName("lugar");
-for (var j = 0; j < oLugares.length; j++) {
-    var descripcion = oLugares[j].getElementsByTagName("descripcion")[0].textContent;
-    var direccion = oLugares[j].getElementsByTagName("direccion")[0].textContent;
-    var capacidad = oLugares[j].getElementsByTagName("capacidad")[0].textContent;
-
-    var oLugar = new Lugar(descripcion, direccion, capacidad);
-    oGestion.altaLugar(oLugar);
+    var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, eventoAsistente);
+    oGestion.altaAsistente(oAsistente);
 }
 
 var oTrabajadores = oXML.getElementsByTagName("trabajador");
@@ -127,6 +127,7 @@ for(var n=0; n<oTrabajadores.length;n++){
         }
     }
 }
+
 
 
 function ocultarFormulario() {
@@ -851,7 +852,19 @@ function altaAsistente() {
             document.formuAsistente.listaEventos.className = "form-control input-md error";
         }
         else {
-            document.formuAsistente.listaEventos.className = "form-control input-md";
+
+            var bHayAforo = oGestion.comprobarAforo(evento);
+            if(bHayAforo==true){
+                document.formuAsistente.listaEventos.className = "form-control input-md";
+            }
+            else{
+                if (bValido == true) {
+                    bValido = false;
+                    document.formuAsistente.listaEventos.focus();
+                }
+                errores.push("Lo sentimos el aforo esta completado para este evento \n");
+                document.formuAsistente.listaEventos.className = "form-control input-md error";
+            }
         }
     }
 
@@ -865,7 +878,6 @@ function altaAsistente() {
         var oAsistente = new Asistente(dni, nombre, apellidos, telefono, email, evento);
         var bExiste = oGestion.altaAsistente(oAsistente);
         if (bExiste == true) {
-            bValido = false;
             errores.push("Este asistente ya fue dado de alta para este evento");
             mostrarMensajeDeError(errores);
         }
@@ -892,7 +904,6 @@ function altaEvento() {
     var bValido = true;
     var sMensaje = "";
     var errores = [];
-
 
     //Validar fecha
     if (validarFormatoFecha(fecha)) {
@@ -940,20 +951,12 @@ function altaEvento() {
     }
 
     //Validar combo Trabajadores
-    var j=0;
-    var trabajadores=[];
-    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
-        if (listaTrabajadores.options[i].selected){
-            trabajadores[j] = listaTrabajadores.options[i].text;
-            j++;
-        }
-    }
     if (trabajadores == "No hay trabajadores disponibles") {
         if (bValido == true) {
             bValido = false;
             document.formuEvento.listaTrabajadores.focus();
         }
-        errores.push("Lo sentimos no hay trabajadores disponibles \n");
+        errores.push("Lo sentimos no hay trabajadores disponibles");
         document.formuEvento.listaTrabajadores.className = "form-control input-md error";
     }
     else {
@@ -967,6 +970,15 @@ function altaEvento() {
         }
         else
             document.formuEvento.listaTrabajadores.className = "form-control input-md";
+    }
+
+    var j=0;
+    var trabajadores=[];
+    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
+        if (listaTrabajadores.options[i].selected){
+            trabajadores[j] = listaTrabajadores.options[i].text;
+            j++;
+        }
     }
 
 
@@ -1036,7 +1048,8 @@ function altaEvento() {
         //guardamos el evento
         document.formuEvento.reset();
         ponerFechaActual();
-        var oEvento = new Evento(fecha, descripcion, trabajadores, transporte, lugares);
+        var aforo = oGestion.obtenerAforoDelLugar(lugares);
+        var oEvento = new Evento(fecha, descripcion, trabajadores, transporte, lugares, aforo);
         var bExisteDescripcion = oGestion.comprobarEvento(oEvento);
         var bExiste = oGestion.altaEvento(oEvento);
 
@@ -1326,7 +1339,24 @@ function actualizarComboTrabajadores() {
     // Busco por descripcion
     if (oGestion.trabajadores.length != 0) {
         for (var i = 0; i < oGestion.trabajadores.length; i++) {
-            lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos);
+            if (oGestion.trabajadores[i] instanceof Artista) {
+                lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos+" (Artista)");
+            }
+            else{
+                if (oGestion.trabajadores[i] instanceof Tecnicos) {
+                    lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos+" (Tecnico)");
+                }
+                else{
+                    if (oGestion.trabajadores[i] instanceof Sanitarios) {
+                        lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos+" (Sanitario)");
+                    }
+                    else{
+                        if (oGestion.trabajadores[i] instanceof Limpieza) {
+                            lista.options[i] = new Option(oGestion.trabajadores[i].nombre + " " + oGestion.trabajadores[i].apellidos+" (Limpieza)");
+                        }
+                    }
+                }
+            }
         }
     }
     else {
@@ -1643,15 +1673,42 @@ function mostrarListaEventos() {
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].descripcion));
         oCelda = oFila.insertCell(-1);
-        var listaTrabajadores = "";
-        for (var j = 0; j < lista[i].trabajadores.length; j++) {
-            if (j == 0)
-                listaTrabajadores = lista[i].trabajadores[j] + " ";
-            else if (j < lista[i].trabajadores.length)
-                listaTrabajadores += "/" + lista[i].trabajadores[j];
-        }
-        oCelda.appendChild(document.createTextNode(listaTrabajadores));
 
+        for (var j = 0; j < lista[i].trabajadores.length; j++) {
+            oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]));
+            oCelda.appendChild(document.createElement("br"));
+        }
+<<<<<<< HEAD
+        oCelda.appendChild(document.createTextNode(listaTrabajadores));
+=======
+>>>>>>> 2ff327733e00503d2eeae60ab92d87da5ef76e1f
+
+    /*
+        for (var j = 0; j < lista[i].trabajadores.length; j++) {
+            if (lista[i].trabajadores[j] instanceof Artista) {
+                oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]+" (Artista)"));
+                oCelda.appendChild(document.createElement("br"));
+            }
+            else{
+                if (lista[i].trabajadores[j] instanceof Tecnicos) {
+                    oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]+" (Tecnico)"));
+                    oCelda.appendChild(document.createElement("br"));
+                }
+                else{
+                    if (lista[i].trabajadores[j] instanceof Sanitarios) {
+                        oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]+" (Sanitario)"));
+                        oCelda.appendChild(document.createElement("br"));
+                    }
+                    else{
+                        if (lista[i].trabajadores[j] instanceof Limpieza) {
+                            oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]+" (Limpieza)"));
+                            oCelda.appendChild(document.createElement("br"));
+                        }
+                    }
+                }
+            }
+        }
+*/
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].transporte));
         oCelda = oFila.insertCell(-1);
