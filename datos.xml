@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Edited by XMLSpy -->
 <gestion>
     <cliente>
         <dni>47815412A</dni>
@@ -20,12 +19,11 @@
         <telefono>690412715</telefono>
     </cliente>
     <cliente>
-        <dni>69328514L</dni>
+        <dni>45678919I</dni>
         <nombre>Susana</nombre>
         <apellidos>Cabao Losdonu</apellidos>
-        <telefono>784159248</telefono>
+        <telefono>641157423</telefono>
     </cliente>
-
     <transporte>
         <id>1</id>
         <tipo>Minibus</tipo>
@@ -46,7 +44,6 @@
         <tipo>Autobus</tipo>
         <plazas>35</plazas>
     </transporte>
-
     <lugar>
         <descripcion>Auditorio Rocio Jurado</descripcion>
         <direccion>Camino de los Descubrimientos, s/n, 41092 Sevilla</direccion>
@@ -92,8 +89,6 @@
         <email>email@hotmail.es</email>
         <eventoAsistente>Concierto en acustico (21/07/2018)</eventoAsistente>
     </asistente>
-
-
     <evento>
         <fecha>15/05/2017</fecha>
         <descripcion>FestivalOfColors</descripcion>
@@ -122,7 +117,6 @@
         <lugarEvento>Teatro Lope de Vega</lugarEvento>
         <aforo>2</aforo>
     </evento>
-
     <trabajador>
         <dni>4578125A</dni>
         <nombre>Tobías</nombre>
@@ -192,23 +186,23 @@
         <fechaInicio>01/02/2017</fechaInicio>
         <fechaFin>15/05/2017</fechaFin>
         <importe>10000</importe>
-        <cliente>47815412A Amanda</cliente>
-        <evento>FestivalOfColors(15/05/2017)</evento>
+        <objcliente>47815412A Amanda</objcliente>
+        <objevento>FestivalOfColors(15/05/2017)</objevento>
     </contrato>
     <contrato>
         <id>2</id>
         <fechaInicio>31/01/2017</fechaInicio>
         <fechaFin>21/07/2018</fechaFin>
         <importe>32154</importe>
-        <cliente>12345678A Alberto</cliente>
-        <evento>Concierto en acustico(21/07/2018)</evento>
+        <objcliente>12345678A Alberto</objcliente>
+        <objevento>Concierto en acustico(21/07/2018)</objevento>
     </contrato>
     <contrato>
         <id>3</id>
         <fechaInicio>25/01/2017</fechaInicio>
         <fechaFin>20/09/2017</fechaFin>
         <importe>15478</importe>
-        <cliente>45678912J Esther</cliente>
-        <evento>Musical Rey Leon(20/09/2017)</evento>
+        <objcliente>45678912J Esther</objcliente>
+        <objevento>Musical Rey Leon(20/09/2017)</objevento>
     </contrato>
 </gestion>

@@ -128,17 +128,17 @@ for(var n=0; n<oTrabajadores.length;n++){
     }
 }
 
-var oTrabajadores = oXML.getElementsByTagName("contrato");
-for(var c=0; c<oTrabajadores.length;c++){
-    var idContrato = oTrabajadores.getElementsByTagName("id")[0].textContent;
-    var fechaInicio = oTrabajadores.getElementsByTagName("fechaInicio")[0].textContent;
-    var fechaFin = oTrabajadores.getElementsByTagName("fechaFin")[0].textContent;
-    var importe = oTrabajadores.getElementsByTagName("importe")[0].textContent;
-    var cliente = oTrabajadores.getElementsByTagName("cliente")[0].textContent;
-    var evento = oTrabajadores.getElementsByTagName("evento")[0].textContent;
+var oContratos = oXML.getElementsByTagName("contrato");
+for(var c=0; c<oContratos.length;c++){
+    var idContrato = oContratos[c].getElementsByTagName("id")[0].textContent;
+    var fechaInicio = oContratos[c].getElementsByTagName("fechaInicio")[0].textContent;
+    var fechaFin = oContratos[c].getElementsByTagName("fechaFin")[0].textContent;
+    var importe = oContratos[c].getElementsByTagName("importe")[0].textContent;
+    var cliente = oContratos[c].getElementsByTagName("objcliente")[0].textContent;
+    var evento = oContratos[c].getElementsByTagName("objevento")[0].textContent;
 
-    var oContratos = new Contrato(idContrato,fechaInicio,fechaFin,importe,cliente,evento);
-    oGestion.altaContrato(oContratos);
+    var oContrato = new Contrato(idContrato,fechaInicio,fechaFin,importe,cliente,evento);
+    oGestion.altaContrato(oContrato);
 }
 
 
@@ -165,6 +165,7 @@ function ocultarFormulario() {
     document.querySelector("#idContratos").style.display = "none";
     document.frmListaTrabajador.style.display = "none";
     document.getElementById('listaTrabajadoresTipo').style.display = "none";
+    document.getElementById('idTablaTrabajador').style.display = "none";
     ponerFechaActualInicio();
     ponerFechaActual();
     actualizarComboTrabajadores();
@@ -379,12 +380,17 @@ function bajaCliente() {
     var sMensaje = "";
     var clienteBaja = oForm.clienteBaja.value;
     var clienteMod = clienteBaja.substr(0, 9);
+    var errores = [];
 
     sMensaje = oGestion.darBajaCliente(clienteMod);
     rellenaComboBajaCliente();
 
     if (sMensaje == false) {
-        mostrarMensajeCorrecto("Cliente dado de alta");
+        errores.push("No hay clientes registrados")
+        mostrarMensajeDeError(errores);
+    }
+    else{
+        mostrarMensajeCorrecto("Cliente dado de baja");
     }
 }
 
