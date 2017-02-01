@@ -136,7 +136,7 @@
         <nombre>Dolores</nombre>
         <apellidos>Fuertes de Barriga</apellidos>
         <tipo>Tecnico</tipo>
-        <especialidad>Toca pelotas</especialidad>
+        <especialidad>Aguantar Calambres</especialidad>
         <herramientas>No</herramientas>
     </trabajador>
     <trabajador>
@@ -144,7 +144,7 @@
         <nombre>Genoveva</nombre>
         <apellidos>Sicon Duce</apellidos>
         <tipo>Tecnico</tipo>
-        <especialidad>Toca Glandes</especialidad>
+        <especialidad>Hacer empalmes</especialidad>
         <herramientas>Si</herramientas>
     </trabajador>
     <trabajador>
