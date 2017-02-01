@@ -787,17 +787,21 @@
 <!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
 <script type="text/JavaScript">
     var f = new Date();
+    if ((f.getDate() + 1) < 10)
+        var dia = "0" + (f.getDate());
     if ((f.getMonth() + 1) < 10)
         var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    var actual = (dia + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaEvento").value = actual;
 </script>
 
 <script type="text/JavaScript">
     var f = new Date();
+    if ((f.getDate()) < 10)
+        var dia = "0" + (f.getDate() + 1);
     if ((f.getMonth() + 1) < 10)
         var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    var actual = (dia + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaInicio").value = actual;
 </script>
 <script src="js/objetos.js"></script>

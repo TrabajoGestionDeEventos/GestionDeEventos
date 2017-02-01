@@ -743,9 +743,11 @@ function rellenaComboClientes() {
 
 function ponerFechaActualInicio() {
     var f = new Date();
+    if ((f.getDate() + 1) < 10)
+        var dia = "0" + (f.getDate());
     if ((f.getMonth() + 1) < 10)
         var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    var actual = (dia + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaInicio").value = actual;
 }
 
@@ -983,6 +985,10 @@ function altaEvento() {
     }
 
     //Validar combo Trabajadores
+    for (var i = 0; i < listaTrabajadores.options.length; ++i) {
+        if(listaTrabajadores.options[i].selected)
+            var trabajadores = listaTrabajadores.options[i].text;
+    }
     if (trabajadores == "No hay trabajadores disponibles") {
         if (bValido == true) {
             bValido = false;
@@ -1149,9 +1155,11 @@ function rellenaComboCancelarEvento() {
 //************************************************************************************************************************************************************************************************************
 function ponerFechaActual() {
     var f = new Date();
+    if ((f.getDate() + 1) < 10)
+        var dia = "0" + (f.getDate());
     if ((f.getMonth() + 1) < 10)
         var mes = "0" + (f.getMonth() + 1);
-    var actual = (f.getDate() + "/" + mes + "/" + f.getFullYear());
+    var actual = (dia + "/" + mes + "/" + f.getFullYear());
     document.getElementById("fechaEvento").value = actual;
 }
 
@@ -1710,7 +1718,7 @@ function mostrarListaEventos() {
             oCelda.appendChild(document.createTextNode(lista[i].trabajadores[j]));
             oCelda.appendChild(document.createElement("br"));
         }
-        oCelda.appendChild(document.createTextNode(listaTrabajadores));
+
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(document.createTextNode(lista[i].transporte));
         oCelda = oFila.insertCell(-1);
