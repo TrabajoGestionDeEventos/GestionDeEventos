@@ -748,39 +748,40 @@
             </form>
         </div>
     </div>
+    <!-- LISTA TRABAJADORES -->
+    <form class="form-horizontal" name="frmListaTrabajador" id="listaTrabajadoresTipo">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Listado por Tipo</legend>
+            <!-- Multiple Radios (inline) -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="radioTipoTrabajador"></label>
+                <div class="col-md-4">
+                    <label class="radio-inline" for="radioTipoTrabajador-0">
+                        <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-0" value="Artista" checked="checked">
+                        Artista
+                    </label>
+                    <label class="radio-inline" for="radioTipoTrabajador-1">
+                        <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-1" value="Tecnico">
+                        Tecnico
+                    </label>
+                    <label class="radio-inline" for="radioTipoTrabajador-2">
+                        <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-2" value="Sanitario">
+                        Sanitario
+                    </label>
+                    <label class="radio-inline" for="radioTipoTrabajador-3">
+                        <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-3" value="Limpieza">
+                        Limpieza
+                    </label>
+                    <button type="button" id="aceptarListadoTrabajador" name="aceptarListadoTrabajador" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div id="idTablaTrabajador"></div>
+
 </div>
 
-<!-- LISTA TRABAJADORES -->
-<form class="form-horizontal" name="frmListaTrabajador" id="idListaTrabajador">
-    <fieldset>
-        <!-- Form Name -->
-        <legend>Listado por Tipo</legend>
-        <!-- Multiple Radios (inline) -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="radioTipoTrabajador"></label>
-            <div class="col-md-4">
-                <label class="radio-inline" for="radioTipoTrabajador-0">
-                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-0" value="Artista">
-                    Artista
-                </label>
-                <label class="radio-inline" for="radioTipoTrabajador-1">
-                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-1" value="Tecnico">
-                    Tecnico
-                </label>
-                <label class="radio-inline" for="radioTipoTrabajador-2">
-                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-2" value="Sanitario">
-                    Sanitario
-                </label>
-                <label class="radio-inline" for="radioTipoTrabajador-3">
-                    <input type="radio" name="radioTipoTrabajador" id="radioTipoTrabajador-3" value="Limpieza">
-                    Limpieza
-                </label>
-                        <button id="aceptarListadoTrabajador" name="aceptarListadoTrabajador" class="btn btn-primary">Aceptar</button>
-            </div>
-        </div>
-    </fieldset>
-        <div id="tablaTrabajador"></div>
-</form>
 
 
 <!--SCRIPT QUE INTRODUCE LA FECHA ACTUAL EN LOS INPUT-->
@@ -876,7 +877,7 @@
     var btnAceptarLugar = document.getElementById("formuLugar");
     btnAceptarLugar.aceptar.addEventListener("click", altaLugar);
 
-    var btnAceptarListadoTrabajador = document.getElementById('idListaTrabajador');
+    var btnAceptarListadoTrabajador = document.getElementById('listaTrabajadoresTipo');
     btnAceptarListadoTrabajador.aceptarListadoTrabajador.addEventListener("click", mostrarListaTrabajadores);
 
     //Listados

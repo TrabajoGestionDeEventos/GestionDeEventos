@@ -2,10 +2,10 @@
 <!-- Edited by XMLSpy -->
 <gestion>
     <cliente>
-        <dni>49092533E</dni>
+        <dni>47815412A</dni>
         <nombre>Amanda</nombre>
         <apellidos>Paesos Tamos</apellidos>
-        <telefono>650520403</telefono>
+        <telefono>641157843</telefono>
     </cliente>
     <cliente>
         <dni>12345678A</dni>
@@ -16,7 +16,7 @@
     <cliente>
         <dni>45678912J</dni>
         <nombre>Esther</nombre>
-        <apellidos>Tampax Tausao</apellidos>
+        <apellidos>Pañuelo Tausao</apellidos>
         <telefono>690412715</telefono>
     </cliente>
     <cliente>
@@ -187,4 +187,28 @@
         <tipo>Sanitario</tipo>
         <especialidad>Camillero</especialidad>
     </trabajador>
+    <contrato>
+        <id>1</id>
+        <fechaInicio>01/02/2017</fechaInicio>
+        <fechaFin>15/05/2017</fechaFin>
+        <importe>10000</importe>
+        <cliente>47815412A Amanda</cliente>
+        <evento>FestivalOfColors(15/05/2017)</evento>
+    </contrato>
+    <contrato>
+        <id>2</id>
+        <fechaInicio>31/01/2017</fechaInicio>
+        <fechaFin>21/07/2018</fechaFin>
+        <importe>32154</importe>
+        <cliente>12345678A Alberto</cliente>
+        <evento>Concierto en acustico(21/07/2018)</evento>
+    </contrato>
+    <contrato>
+        <id>3</id>
+        <fechaInicio>25/01/2017</fechaInicio>
+        <fechaFin>20/09/2017</fechaFin>
+        <importe>15478</importe>
+        <cliente>45678912J Esther</cliente>
+        <evento>Musical Rey Leon(20/09/2017)</evento>
+    </contrato>
 </gestion>

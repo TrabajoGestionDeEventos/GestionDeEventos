@@ -80,9 +80,9 @@ function Sanitarios(dni, nombre, apellidos, especialidad) {
 Sanitarios.prototype = Object.create(Trabajador.prototype);
 Sanitarios.prototype.constructor = Sanitarios;
 
-function Limpieza(dni, nombre, apellidos, compañia) {
+function Limpieza(dni, nombre, apellidos, empresa) {
     Trabajador.call(this, dni, nombre, apellidos);
-    this.compañia = compañia;
+    this.empresa = empresa;
 }
 
 //Herencia de Trabajador
@@ -428,10 +428,3 @@ Gestion.prototype.cogerTodosLosContratos = function () {
     return arrayContratos;
 }
 
-Gestion.prototype.cogerTodosLosTrabajadores = function () {
-    var arrayTrabajadores = [];
-    for (var i = 0; i < this.trabajadores.length; i++) {
-        arrayTrabajadores.push(this.trabajadores[i]);
-    }
-    return arrayTrabajadores;
-}
